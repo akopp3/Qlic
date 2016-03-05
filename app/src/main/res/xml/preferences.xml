@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory />
+
+    <CheckBoxPreference android:title="Facebook"
+        android:key="fb" />
+    <CheckBoxPreference android:title="Instagram"
+        android:key="ig" />
+    <CheckBoxPreference android:title="Twitter"
+        android:key="twit" />
+    <CheckBoxPreference android:title="Phone Number"
+    android:key="phone" />
+    <CheckBoxPreference android:title="Contact Info"
+        android:key="contact" />
+    <CheckBoxPreference android:title="LinkedIn"
+        android:key="link" />
+
+
+</PreferenceScreen>
