@@ -13,12 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     SharedPreferences sharedPreferences;
-
+    private TextView facebookText;
+    private TextView instaText;
+    private TextView twitText;
+    private TextView phoneText;
+    private TextView contactText;
+    private TextView linkText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,12 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //THIS IS SO FAB ;)
+        facebookText = (TextView) findViewById(R.id.fb_text);
+        instaText = (TextView) findViewById(R.id.inst_text);
+        twitText = (TextView) findViewById(R.id.twit_text);
+        phoneText = (TextView) findViewById(R.id.phone_text);
+        contactText = (TextView) findViewById(R.id.cont_text);
+        linkText = (TextView) findViewById(R.id.link_text);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +49,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        setTextLayouts();
+
         /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -45,6 +61,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this); */
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTextLayouts();
     }
 
     @Override
@@ -64,6 +86,22 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void setTextLayouts() {
+        String[] ids = {"fb", "ig", "twit", "phone", "contact", "link"};
+        String[] descript = {"Facebook", "Instagram", "Twitter", "Phone", "Contact", "Linkedin"};
+        TextView[] textViews = {facebookText, instaText, twitText, phoneText, contactText, linkText};
+
+        for (int i = 0; i < ids.length; i++) {
+            boolean checked = sharedPreferences.getBoolean(ids[i], false);
+            if (checked) {
+                textViews[i].setVisibility(TextView.VISIBLE);
+                textViews[i].setText(descript[i]);
+            } else {
+                textViews[i].setVisibility(TextView.GONE);
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -72,7 +110,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.settings) {
+            Intent intent = new Intent(getApplicationContext(), PreferencesActivity.class);
+            startActivity(intent);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
