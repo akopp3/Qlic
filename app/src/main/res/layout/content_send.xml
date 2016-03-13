@@ -17,6 +17,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/send_btn"
             android:text="@string/send_btn"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/result_txt"/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
