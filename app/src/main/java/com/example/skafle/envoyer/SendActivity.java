@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -32,6 +33,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private GoogleApiClient mGoogleApiClient;
     private Message mDeviceInfoMessage;
     private MessageListener messageListener;
+    private TextView resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .build();
 
         sendBtn = (Button) findViewById(R.id.send_btn);
+        resultText = (TextView) findViewById(R.id.result_txt);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +63,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                                 Toast.makeText(SendActivity.this, "Sent", Toast.LENGTH_SHORT).show();
                                 publish();
                                 populateMessageListener();
+                                subscribe();
                             }
                         }).setNegativeButton("Not Ready", new DialogInterface.OnClickListener() {
                     @Override
@@ -76,12 +80,14 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     public void onStop() {
         super.onStop();
         unpublish();
+        unsubscribe();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         unpublish();
+        unsubscribe();
     }
 
     private void publish() {
@@ -138,6 +144,13 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 // Take appropriate action here (update UI, etc.)
             }
         };
+    }
+
+    private void unsubscribe() {
+        Log.i("TAG", "Trying to unsubscribe.");
+        if (messageListener != null) {
+            Nearby.Messages.unsubscribe(mGoogleApiClient, messageListener);
+        }
     }
 
     // Subscribe to receive messages.
