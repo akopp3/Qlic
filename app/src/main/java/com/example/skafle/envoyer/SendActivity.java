@@ -2,7 +2,10 @@ package com.example.skafle.envoyer;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -23,6 +27,7 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.messages.Message;
 import com.google.android.gms.nearby.messages.MessageListener;
+import com.google.android.gms.nearby.messages.NearbyMessagesStatusCodes;
 import com.google.android.gms.nearby.messages.PublishCallback;
 import com.google.android.gms.nearby.messages.PublishOptions;
 import com.google.android.gms.nearby.messages.SubscribeCallback;
@@ -34,6 +39,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private Message mDeviceInfoMessage;
     private MessageListener messageListener;
     private TextView resultText;
+    private boolean mResolvingError = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        //mGoogleApiClient.connect();
 
         sendBtn = (Button) findViewById(R.id.send_btn);
         resultText = (TextView) findViewById(R.id.result_txt);
@@ -77,18 +85,29 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_RESOLVE_ERROR) {
+            if (resultCode == RESULT_OK) {
+                publish();
+                populateMessageListener();
+                subscribe();
+            }
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         unpublish();
         unsubscribe();
     }
 
-    @Override
+    /* @Override
     public void onPause() {
         super.onPause();
         unpublish();
         unsubscribe();
-    }
+    } */
 
     private void publish() {
         Log.i("TAG", "Trying to publish.");
@@ -135,7 +154,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 final String nearbyMessageString = new String(message.getContent());
 
                 // Do something with the message string.
-                Log.i("TAG", nearbyMessageString);
+                resultText.setText(nearbyMessageString);
+                Log.i("FOUND", nearbyMessageString);
             }
 
             // Called when a message is no longer detectable nearby.
@@ -196,12 +216,36 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     private void handleUnsuccessfulNearbyResult(Status status) {
-        Log.i("TAG", "handleUnsuccessfulNearbyResult");
+        Log.i("TAG", "Processing error, status = " + status);
+        if (mResolvingError) {
+            // Already attempting to resolve an error.
+            return;
+        } else if (status.hasResolution()) {
+            try {
+                mResolvingError = true;
+                status.startResolutionForResult(SendActivity.this,
+                        Constants.REQUEST_RESOLVE_ERROR);
+            } catch (IntentSender.SendIntentException e) {
+                mResolvingError = false;
+                Log.i("TAG", "Failed to resolve error status.", e);
+            }
+        } else {
+            if (status.getStatusCode() == CommonStatusCodes.NETWORK_ERROR) {
+                Toast.makeText(getApplicationContext(),
+                        "No connectivity, cannot proceed. Fix in 'Settings' and try again.",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                // To keep things simple, pop a toast for all other error messages.
+                Toast.makeText(getApplicationContext(), "Unsuccessful: " +
+                        status.getStatusMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-
+        publish();
+        subscribe();
     }
 
     @Override
