@@ -18,9 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.nearby.Nearby;
-
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
