@@ -10,9 +10,11 @@ import java.util.Map;
  */
 
 public class Carrier {
+    private String name;
     private Map<String, Social> socialMap;
 
-    public Carrier() {
+    public Carrier(String name) {
+        this.name = name;
         socialMap = new HashMap<>();
     }
 
@@ -25,7 +27,7 @@ public class Carrier {
     }
 
     public String toString() {
-        String repStr = "";
+        String repStr = name + "\n";
 
         for (Social soc : socialMap.values()) {
             boolean activated = soc.isActivated();

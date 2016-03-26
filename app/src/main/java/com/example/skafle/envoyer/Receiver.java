@@ -10,11 +10,13 @@ import java.util.Scanner;
  */
 
 public class Receiver {
+    private String name;
     private Map<String, Social> socialMap;
 
     public Receiver(String rep) {
         Scanner scanner = new Scanner(rep);
 
+        name = scanner.nextLine();
         while(scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] info = line.split("|");
@@ -27,6 +29,10 @@ public class Receiver {
                 socialMap.put(type, social);
             }
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Social getSocial(String type) {
