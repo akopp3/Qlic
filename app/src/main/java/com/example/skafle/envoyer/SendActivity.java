@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,18 +30,17 @@ import com.google.android.gms.nearby.messages.PublishOptions;
 import com.google.android.gms.nearby.messages.SubscribeCallback;
 import com.google.android.gms.nearby.messages.SubscribeOptions;
 
-import javax.xml.datatype.Duration;
 
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
+    private SharedPreferences pref;
     private Button sendBtn;
-    private EditText nameInput;
     private GoogleApiClient mGoogleApiClient;
     private Message mDeviceInfoMessage;
     private MessageListener messageListener;
     private TextView resultText;
     private boolean mResolvingError = false;
-    private String message;
     private View parentLayout;
+    private Carrier carrier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,35 +58,30 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         parentLayout = findViewById(R.id.root_view);
         sendBtn = (Button) findViewById(R.id.send_btn);
         resultText = (TextView) findViewById(R.id.result_txt);
-        nameInput = (EditText) findViewById(R.id.name_txt);
-        message = "";
+        carrier = new Carrier(pref.getString("name", "default"));
+        setCarrier();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                message = nameInput.getText().toString();
-                if (message.isEmpty()) {
-                    Snackbar.make(parentLayout, "Please write in a name", Snackbar.LENGTH_SHORT);
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SendActivity.this);
-                    builder.setMessage(R.string.dialog_message)
-                            .setTitle(R.string.dialog_title)
-                            .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT);
-                                    publish();
-                                    populateMessageListener();
-                                    subscribe();
-                                }
-                            }).setNegativeButton("Not Ready", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Snackbar.make(parentLayout, "Not Ready", Snackbar.LENGTH_SHORT);
-                        }
-                    });
-                    builder.show();
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(SendActivity.this);
+                builder.setMessage(R.string.dialog_message)
+                        .setTitle(R.string.dialog_title)
+                        .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
+                                publish();
+                                populateMessageListener();
+                                subscribe();
+                            }
+                        }).setNegativeButton("Not Ready", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Snackbar.make(parentLayout, "Not Ready", Snackbar.LENGTH_SHORT);
+                    }
+                });
+                builder.show();
             }
         });
     }
@@ -113,7 +107,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private void publish() {
         Log.i("TAG", "Trying to publish.");
         // Set a simple message payload.
-        mDeviceInfoMessage = new Message(message.getBytes());
+        mDeviceInfoMessage = new Message(carrier.toString().getBytes());
         // Cannot proceed without a connected GoogleApiClient.
         // Reconnect and execute the pending task in onConnected().
         if (!mGoogleApiClient.isConnected()) {
@@ -257,5 +251,31 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i("ConFailed", "Connection Failed");
+    }
+
+    private void setCarrier() {
+        for (String key : MainActivity.keys) {
+            if (pref.contains(key)) {
+                Social newSocial = getSocial(key);
+                carrier.addSocial(newSocial);
+            }
+        }
+    }
+
+    private Social getSocial(String key) {
+        // TODO: Add functionality for other Socials
+
+        Social soc = null;
+        String mess = pref.getString(key, "");
+        switch (key) {
+            case "phone_name":
+                soc = new PhoneNumber();
+                soc.setKeyInfo(mess);
+                break;
+            default:
+                break;
+        }
+
+        return soc;
     }
 }

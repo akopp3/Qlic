@@ -15,6 +15,13 @@
         android:orientation="vertical">
         <TextView android:text="@string/intro_text" android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:id="@+id/name_txt" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

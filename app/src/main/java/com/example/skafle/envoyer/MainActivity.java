@@ -17,11 +17,14 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+    public static final String[] keys = {"fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
 
     SharedPreferences sharedPreferences;
+    private EditText nameText;
     private TextView facebookText;
     private TextView instaText;
     private TextView twitText;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //THIS IS SO FAB ;)
+        nameText = (EditText) findViewById(R.id.name_txt);
         facebookText = (TextView) findViewById(R.id.fb_text);
         instaText = (TextView) findViewById(R.id.inst_text);
         twitText = (TextView) findViewById(R.id.twit_text);
@@ -69,14 +73,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         contactButton = (Button) findViewById(R.id.cont_button);
         linkButton = (Button) findViewById(R.id.link_button);
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SendActivity.class);
-                startActivity(intent);
+                String name = nameText.getText().toString();
+                if (name.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter your name", Toast.LENGTH_SHORT).show();
+                } else {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name", name);
+                    editor.apply();
+                    Intent intent = new Intent(getApplicationContext(), SendActivity.class);
+                    startActivity(intent);
+                }
             }
         });
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 
@@ -131,10 +143,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
     private void setEditLayouts() {
         String[] ids = {"fb", "ig", "twit", "phone", "contact", "link"};
 
-        String[] keys = {"fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
         final String[] descript = {"Facebook", "Instagram", "Twitter", "Phone", "Contact", "Linkedin"};
         EditText[] editViews = {fbEdit, instaEdit, twitEdit, phoneEdit, contactEdit, linkEdit};
         Button[] buttons = {fbButton, instaButton, twitButton, phoneButton, contactButton, linkButton};
@@ -148,9 +160,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editor.putString(key, editText);
-                    Snackbar.make(findViewById(android.R.id.content), "Saved: " + name , Snackbar.LENGTH_LONG)
+                    if (editText.isEmpty()) {
+                        Snackbar.make(findViewById(android.R.id.content), "Put something in!" + name , Snackbar.LENGTH_LONG)
                             .show();
+                    } else {
+                        editor.putString(key, editText);
+                        Snackbar.make(findViewById(android.R.id.content), "Saved: " + name, Snackbar.LENGTH_LONG)
+                                .show();
+                    }
                 }
             });
             if (checked) {
@@ -206,7 +223,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START); */
         return true; // Will implement when necessary
-
-
     }
 }
