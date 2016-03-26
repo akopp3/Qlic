@@ -30,6 +30,9 @@ import com.google.android.gms.nearby.messages.PublishOptions;
 import com.google.android.gms.nearby.messages.SubscribeCallback;
 import com.google.android.gms.nearby.messages.SubscribeOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     private SharedPreferences pref;
@@ -37,10 +40,10 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private GoogleApiClient mGoogleApiClient;
     private Message mDeviceInfoMessage;
     private MessageListener messageListener;
-    private TextView resultText;
     private boolean mResolvingError = false;
     private View parentLayout;
     private Carrier carrier;
+    private List<Receiver> receivers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +60,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
 
         parentLayout = findViewById(R.id.root_view);
         sendBtn = (Button) findViewById(R.id.send_btn);
-        resultText = (TextView) findViewById(R.id.result_txt);
         carrier = new Carrier(pref.getString("name", "default"));
+        receivers = new ArrayList<>();
         setCarrier();
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -146,9 +149,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             @Override
             public void onFound(final Message message) {
                 final String nearbyMessageString = new String(message.getContent());
+                Receiver newReceiver = new Receiver(nearbyMessageString);
+                receivers.add(newReceiver);
 
-                // Do something with the message string.
-                resultText.setText(nearbyMessageString);
                 Log.i("FOUND", nearbyMessageString);
             }
 
