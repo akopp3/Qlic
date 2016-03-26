@@ -43,6 +43,17 @@ public class Receiver {
         }
     }
 
+    @Override
+    public String toString() {
+        // Return a nicely formatted list of info
+        String info = name + "\n";
+        for (Social soc : socialMap.values()) {
+            info += soc.type() + ": " + soc.stringRep() + "\n";
+        }
+
+        return info;
+    }
+
     private Social createSoc(String type, String message) {
         // TODO: Update this with all the different types of Social Media
         switch(type) {

@@ -18,4 +18,5 @@
     <string name="title_activity_preferences">Preferences</string>
     <string name="dialog_message">These are your current settings. Make sure they are correct.</string>
     <string name="dialog_title">Current Settings</string>
+    <string name="title_activity_people">PeopleActivity</string>
 </resources>

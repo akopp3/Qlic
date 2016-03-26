@@ -26,6 +26,7 @@ public class Carrier {
         return socialMap.get(key);
     }
 
+    @Override
     public String toString() {
         String repStr = name + "\n";
 

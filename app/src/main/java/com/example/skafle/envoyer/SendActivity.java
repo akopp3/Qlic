@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -35,6 +35,8 @@ import java.util.List;
 
 
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
+    public static final String PEOPLE_KEY = "people_key";
+
     private SharedPreferences pref;
     private Button sendBtn;
     private GoogleApiClient mGoogleApiClient;
@@ -44,6 +46,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private View parentLayout;
     private Carrier carrier;
     private List<Receiver> receivers;
+    private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .build();
 
         parentLayout = findViewById(R.id.root_view);
+        layout = (LinearLayout) findViewById(R.id.peopleHolder);
         sendBtn = (Button) findViewById(R.id.send_btn);
         carrier = new Carrier(pref.getString("name", "default"));
         receivers = new ArrayList<>();
@@ -149,8 +153,28 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             @Override
             public void onFound(final Message message) {
                 final String nearbyMessageString = new String(message.getContent());
-                Receiver newReceiver = new Receiver(nearbyMessageString);
+                final Receiver newReceiver = new Receiver(nearbyMessageString);
                 receivers.add(newReceiver);
+                String name = newReceiver.getName();
+
+                Button button = new Button(SendActivity.this);
+                button.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+                ));
+
+                button.setText(name);
+                layout.addView(button);
+
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: Fix this
+                        // Pretty inefficient, need to figure out a better way
+                        Intent intent = new Intent(getApplicationContext(), PeopleActivity.class);
+                        intent.putExtra(PEOPLE_KEY, nearbyMessageString);
+                        startActivity(intent);
+                    }
+                });
 
                 Log.i("FOUND", nearbyMessageString);
             }
