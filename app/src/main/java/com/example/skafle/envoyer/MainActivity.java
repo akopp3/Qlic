@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 editViews[i].setEnabled(false);
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
     @Override
