@@ -148,11 +148,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String[] ids = {"fb", "ig", "twit", "phone", "contact", "link"};
 
         final String[] descript = {"Facebook", "Instagram", "Twitter", "Phone", "Contact", "Linkedin"};
-        EditText[] editViews = {fbEdit, instaEdit, twitEdit, phoneEdit, contactEdit, linkEdit};
+        final EditText[] editViews = {fbEdit, instaEdit, twitEdit, phoneEdit, contactEdit, linkEdit};
         Button[] buttons = {fbButton, instaButton, twitButton, phoneButton, contactButton, linkButton};
 
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         for (int i = 0; i < ids.length; i++) {
+            final int j= i;
             boolean checked = sharedPreferences.getBoolean(ids[i], false);
             final String editText= editViews[i].getText().toString();
             final String key =  keys[i];
@@ -160,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (editText.isEmpty()) {
-                        Snackbar.make(findViewById(android.R.id.content), "Put something in!" + name , Snackbar.LENGTH_LONG)
+                    if (editViews[j].getText().toString().equals("")) {
+                        Snackbar.make(findViewById(android.R.id.content), "Put something in to " + name , Snackbar.LENGTH_LONG)
                             .show();
                     } else {
                         editor.putString(key, editText);

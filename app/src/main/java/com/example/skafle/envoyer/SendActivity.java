@@ -117,7 +117,10 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private void publish() {
         Log.i("TAG", "Trying to publish.");
         // Set a simple message payload.
-        mDeviceInfoMessage = new Message(carrier.toString().getBytes());
+        Log.i("codyisdumb", carrier.toString());
+        String s = "Hello";
+        mDeviceInfoMessage = new Message(s.getBytes());
+        //mDeviceInfoMessage = new Message(carrier.toString().getBytes());
         // Cannot proceed without a connected GoogleApiClient.
         // Reconnect and execute the pending task in onConnected().
         if (!mGoogleApiClient.isConnected()) {
@@ -156,16 +159,17 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             @Override
             public void onFound(final Message message) {
                 final String nearbyMessageString = new String(message.getContent());
-                final Receiver newReceiver = new Receiver(nearbyMessageString);
+                /* final Receiver newReceiver = new Receiver(nearbyMessageString);
                 receivers.add(newReceiver);
-                String name = newReceiver.getName();
+                String name = newReceiver.getName();*/
 
                 Button button = new Button(SendActivity.this);
                 button.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
                 ));
 
-                button.setText(name);
+                //button.setText(name);
+                button.setText(nearbyMessageString);
                 layout.addView(button);
 
                 button.setOnClickListener(new View.OnClickListener() {
