@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +61,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         parentLayout = findViewById(R.id.root_view);
         layout = (LinearLayout) findViewById(R.id.peopleHolder);
