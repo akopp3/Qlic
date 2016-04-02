@@ -308,4 +308,10 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
 
         return soc;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
 }

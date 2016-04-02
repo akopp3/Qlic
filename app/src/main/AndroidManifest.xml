@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
-            android:value="AIzaSyCFj4uGfHfvfcrjgadeMeY5v9zVP42bwCw" />
+            android:value="AIzaSyB3AF7OhVPgSndjzNdYoge85103aTmXrlc" />
 
         <activity
             android:name=".MainActivity"
