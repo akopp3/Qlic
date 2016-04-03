@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static final String[] keys = {"fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
+    public static final String[] types = {"Facebook", "Instagram", "Twitter", "Phone", "Contact Info", "LinkedIn"};
 
     SharedPreferences sharedPreferences;
     private EditText nameText;
@@ -155,19 +156,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         for (int i = 0; i < ids.length; i++) {
-            final int j= i;
+            final int j = i;
             boolean checked = sharedPreferences.getBoolean(ids[i], false);
-            final String editText= editViews[i].getText().toString();
-            final String key =  keys[i];
+            final String key = keys[i];
             final String name = descript[i];
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (editViews[j].getText().toString().equals("")) {
+                    String editText = editViews[j].getText().toString();
+                    if (editText.equals("")) {
                         Snackbar.make(findViewById(android.R.id.content), "Put something in to " + name , Snackbar.LENGTH_LONG)
                             .show();
                     } else {
                         editor.putString(key, editText);
+                        editor.apply();
                         Snackbar.make(findViewById(android.R.id.content), "Saved: " + name, Snackbar.LENGTH_LONG)
                                 .show();
                     }
