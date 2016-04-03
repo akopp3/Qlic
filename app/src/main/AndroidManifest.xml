@@ -31,10 +31,6 @@
             android:name=".PreferencesActivity"
             android:label="@string/title_activity_preferences" >
         </activity>
-        <activity
-            android:name=".PeopleActivity"
-            android:label="@string/title_activity_people" >
-        </activity>
     </application>
 
 </manifest>

@@ -176,7 +176,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                     @Override
                     public void onClick(View v) {
                         // Pretty inefficient, need to figure out a better way
-                        Intent intent = new Intent(getApplicationContext(), PeopleActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
                         intent.putExtra(PEOPLE_KEY, nearbyMessageString);
                         startActivity(intent);
                     }
