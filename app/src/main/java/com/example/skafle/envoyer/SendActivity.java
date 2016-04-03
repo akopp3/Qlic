@@ -168,7 +168,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                         LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
                 ));
 
-                button.setText(name);
+                //button.setText(name);
                 button.setText(nearbyMessageString);
                 layout.addView(button);
 
@@ -310,6 +310,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             case "phone_name":
                 soc = new PhoneNumber();
                 soc.setKeyInfo(mess);
+                soc.activate();
                 break;
             default:
                 break;

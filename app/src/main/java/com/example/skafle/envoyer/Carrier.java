@@ -35,7 +35,7 @@ public class Carrier {
             String type = soc.type();
             String rep = soc.stringRep();
 
-            repStr += activated + "|" + type + "|" + rep + "\n";
+            repStr += activated + Constants.DELIMETER + type + Constants.DELIMETER + rep + "\n";
         }
 
         return repStr;

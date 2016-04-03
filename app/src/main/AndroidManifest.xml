@@ -31,6 +31,10 @@
             android:name=".PreferencesActivity"
             android:label="@string/title_activity_preferences" >
         </activity>
+        <activity
+            android:name=".ContactViewActivity"
+            android:label="hi" >
+        </activity>
     </application>
 
 </manifest>
