@@ -154,19 +154,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         for (int i = 0; i < ids.length; i++) {
-            final int j= i;
+            final int j = i;
             boolean checked = sharedPreferences.getBoolean(ids[i], false);
-            final String editText= editViews[i].getText().toString();
-            final String key =  keys[i];
+            final String key = keys[i];
             final String name = descript[i];
             buttons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (editViews[j].getText().toString().equals("")) {
+                    String editText = editViews[j].getText().toString();
+                    if (editText.equals("")) {
                         Snackbar.make(findViewById(android.R.id.content), "Put something in to " + name , Snackbar.LENGTH_LONG)
                             .show();
                     } else {
                         editor.putString(key, editText);
+                        editor.apply();
                         Snackbar.make(findViewById(android.R.id.content), "Saved: " + name, Snackbar.LENGTH_LONG)
                                 .show();
                     }

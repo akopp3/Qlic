@@ -8,9 +8,12 @@ package com.example.skafle.envoyer;
 
 public interface Social {
     void activate();
+
     boolean isActivated();
+
     void setKeyInfo(String info);
-    String keyInfo();
+
     String type();
+
     String stringRep();
 }
