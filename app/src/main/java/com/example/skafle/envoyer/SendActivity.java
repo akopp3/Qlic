@@ -55,6 +55,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Log.d("ONCREATE", "EXISTS");
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Nearby.MESSAGES_API)
                 .addConnectionCallbacks(this)
@@ -282,17 +284,19 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         Log.i("ConSusp", "Connection Suspended");
     }
 
-
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i("ConFailed", "Connection Failed");
     }
 
     private void setCarrier() {
+        Log.i("CARRIER", "goes here");
+        Log.i("CARRIER2", MainActivity.keys.length + "");
         for (String key : MainActivity.keys) {
             if (pref.contains(key)) {
                 Social newSocial = getSocial(key);
                 carrier.addSocial(newSocial);
+                Log.i("SOCIAL", key);
             }
         }
     }
