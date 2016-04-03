@@ -59,21 +59,39 @@ public class Receiver {
     }
 
     private Social createSoc(String type, String message) {
-        // TODO: Update this with all the different types of Social Media
         Log.i("TYPE", type);
         switch(type) {
+            case "Facebook":
+                FacebookClass fb = new FacebookClass();
+                fb.setKeyInfo(message);
+                fb.activate();
+                return fb;
+            case "Twitter":
+                TwitterSocial twit = new TwitterSocial();
+                twit.setKeyInfo(message);
+                twit.activate();
+                return twit;
+            case "Instagram":
+                InstagramSocial inst = new InstagramSocial();
+                inst.setKeyInfo(message);
+                inst.activate();
+                return inst;
             case "Phone":
                 Log.i("CREATESOC", "goes here");
                 PhoneNumber phone = new PhoneNumber();
                 phone.setKeyInfo(message);
                 phone.activate();
                 return phone;
-            case "PHONE":
-                Log.i("CREATESOC", "goes here2");
-                PhoneNumber phone2 = new PhoneNumber();
-                phone2.setKeyInfo(message);
-                phone2.activate();
-                return phone2;
+            case "Contact Info":
+                ContactSocial contact = new ContactSocial();
+                contact.setKeyInfo(message);
+                contact.activate();
+                return contact;
+            case "LinkedIn":
+                LinkedinSocial link = new LinkedinSocial();
+                link.setKeyInfo(message);
+                link.activate();
+                return link;
             default:
                 return null;
         }

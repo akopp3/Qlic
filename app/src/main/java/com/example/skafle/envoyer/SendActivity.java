@@ -168,8 +168,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                         LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
                 ));
 
-                //button.setText(name);
-                button.setText(nearbyMessageString);
+                button.setText(name);
                 layout.addView(button);
 
                 button.setOnClickListener(new View.OnClickListener() {
@@ -307,8 +306,33 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         Social soc = null;
         String mess = pref.getString(key, "");
         switch (key) {
+            case "fb_name":
+                soc = new FacebookClass();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "ig_name":
+                soc = new InstagramSocial();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "twit_name":
+                soc = new TwitterSocial();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
             case "phone_name":
                 soc = new PhoneNumber();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "contact_name":
+                soc = new ContactSocial();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "link_name":
+                soc = new LinkedinSocial();
                 soc.setKeyInfo(mess);
                 soc.activate();
                 break;
