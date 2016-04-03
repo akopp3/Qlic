@@ -112,15 +112,14 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         super.onStop();
         unpublish();
         unsubscribe();
+        mGoogleApiClient.disconnect();
     }
 
     private void publish() {
         Log.i("TAG", "Trying to publish.");
         // Set a simple message payload.
         Log.i("codyisdumb", carrier.toString());
-        String s = "Hello";
-        mDeviceInfoMessage = new Message(s.getBytes());
-        //mDeviceInfoMessage = new Message(carrier.toString().getBytes());
+        mDeviceInfoMessage = new Message(carrier.toString().getBytes());
         // Cannot proceed without a connected GoogleApiClient.
         // Reconnect and execute the pending task in onConnected().
         if (!mGoogleApiClient.isConnected()) {
@@ -316,6 +315,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        mGoogleApiClient.disconnect();
         this.finish();
     }
 }
