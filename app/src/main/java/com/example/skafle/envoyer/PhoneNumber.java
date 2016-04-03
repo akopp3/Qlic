@@ -14,7 +14,12 @@ public class PhoneNumber extends ActivateHandler {
 
     @Override
     public String type() {
-        return "phone";
+        return MainActivity.types[3];
+    }
+
+    @Override
+    public String keyInfo() {
+        return phoneNumber;
     }
 
     public String stringRep() {
