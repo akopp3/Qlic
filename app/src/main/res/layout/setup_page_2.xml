@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.redbooth.WelcomePageLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/welcome_page_top"
+    tools:background="@color/setup2">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/text_title_top"
+        android:layout_above="@+id/subtitle"
+        android:paddingTop="16dp"
+        android:text="Almost Done!"
+        />
+
+    <TextView
+        android:id="@+id/subtitle_top"
+        style="@style/text_subtitle"
+        android:layout_below="@+id/title"
+        android:text="Enter any information you \nwant to share with others" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subtitle_top"
+        android:orientation="vertical">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/name_txt"
+            style="@style/editTextElegant"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/phone_input"
+                style="@style/editTextElegant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Phone Number" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/cont_input"
+                style="@style/editTextElegant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/fb_input"
+            style="@style/editTextElegant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Facebook Name" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/inst_input"
+            style="@style/editTextElegant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Instagram Username" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/twit_input"
+            style="@style/editTextElegant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Twitter Username" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/link_input"
+            style="@style/editTextElegant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="LinkedIn Name" />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+</com.redbooth.WelcomePageLayout>

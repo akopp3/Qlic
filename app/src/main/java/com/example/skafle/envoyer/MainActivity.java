@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent = new Intent(getApplicationContext(),SetupActivity.class);
+        startActivity(intent);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //THIS IS SO FAB ;)
         nameText = (EditText) findViewById(R.id.name_txt);
