@@ -34,7 +34,6 @@ import com.google.android.gms.nearby.messages.SubscribeOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     public static final String PEOPLE_KEY = "people_key";
 
@@ -158,23 +157,22 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             @Override
             public void onFound(final Message message) {
                 final String nearbyMessageString = new String(message.getContent());
-                /* final Receiver newReceiver = new Receiver(nearbyMessageString);
+                final Receiver newReceiver = new Receiver(nearbyMessageString);
                 receivers.add(newReceiver);
-                String name = newReceiver.getName();*/
+                String name = newReceiver.getName();
 
                 Button button = new Button(SendActivity.this);
                 button.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
                 ));
 
-                //button.setText(name);
+                button.setText(name);
                 button.setText(nearbyMessageString);
                 layout.addView(button);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // TODO: Fix this
                         // Pretty inefficient, need to figure out a better way
                         Intent intent = new Intent(getApplicationContext(), PeopleActivity.class);
                         intent.putExtra(PEOPLE_KEY, nearbyMessageString);
@@ -196,7 +194,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private void unsubscribe() {
         Log.i("TAG", "Trying to unsubscribe.");
         if (messageListener != null) {
-            Nearby.Messages.unsubscribe(mGoogleApiClient, messageListener);
+            if (mGoogleApiClient.isConnected()) {
+                Nearby.Messages.unsubscribe(mGoogleApiClient, messageListener);
+            }
         }
     }
 
@@ -238,7 +238,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private void unpublish() {
         Log.i("TAG", "Trying to unpublish.");
         if (mDeviceInfoMessage != null) {
-            Nearby.Messages.unpublish(mGoogleApiClient, mDeviceInfoMessage);
+            if (mGoogleApiClient.isConnected()) {
+                Nearby.Messages.unpublish(mGoogleApiClient, mDeviceInfoMessage);
+            }
         }
     }
 

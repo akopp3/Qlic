@@ -6,4 +6,5 @@ package com.example.skafle.envoyer;
 
 public class Constants {
     public static final int REQUEST_RESOLVE_ERROR = 100;
+    public static final int PEOPLE_ACTIVITY_PEEK = 1000;
 }
