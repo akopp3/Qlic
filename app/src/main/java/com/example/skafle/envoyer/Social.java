@@ -13,6 +13,8 @@ public interface Social {
 
     void setKeyInfo(String info);
 
+    String keyInfo();
+
     String type();
 
     String stringRep();

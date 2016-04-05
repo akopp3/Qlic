@@ -1,28 +1,27 @@
 package com.example.skafle.envoyer;
 
 /**
- * Created by Sirjan Kafle on 3/25/16.
+ * Created by Abhinav on 4/2/2016.
  */
-
-public class PhoneNumber extends ActivateHandler {
-    private String phoneNumber;
+public class ContactSocial extends ActivateHandler {
+    private String email;
 
     @Override
     public void setKeyInfo(String info) {
-        phoneNumber = info;
+        email = info;
     }
 
     @Override
     public String type() {
-        return MainActivity.types[3];
+        return MainActivity.types[4];
     }
 
     @Override
     public String keyInfo() {
-        return phoneNumber;
+        return email;
     }
 
     public String stringRep() {
-        return phoneNumber;
+        return email;
     }
 }

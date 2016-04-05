@@ -169,14 +169,13 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 ));
 
                 button.setText(name);
-                button.setText(nearbyMessageString);
                 layout.addView(button);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // Pretty inefficient, need to figure out a better way
-                        Intent intent = new Intent(getApplicationContext(), PeopleActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
                         intent.putExtra(PEOPLE_KEY, nearbyMessageString);
                         startActivity(intent);
                     }
@@ -307,9 +306,35 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         Social soc = null;
         String mess = pref.getString(key, "");
         switch (key) {
+            case "fb_name":
+                soc = new FacebookClass();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "ig_name":
+                soc = new InstagramSocial();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "twit_name":
+                soc = new TwitterSocial();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
             case "phone_name":
                 soc = new PhoneNumber();
                 soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "contact_name":
+                soc = new ContactSocial();
+                soc.setKeyInfo(mess);
+                soc.activate();
+                break;
+            case "link_name":
+                soc = new LinkedinSocial();
+                soc.setKeyInfo(mess);
+                soc.activate();
                 break;
             default:
                 break;
