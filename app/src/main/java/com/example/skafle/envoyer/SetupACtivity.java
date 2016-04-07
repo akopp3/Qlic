@@ -45,7 +45,7 @@ import com.redbooth.WelcomeCoordinatorLayout;
 
 import java.util.zip.Inflater;
 
-public class SetupACtivity extends AppCompatActivity {
+public class SetupActivity extends AppCompatActivity {
     public static final String[] keys = {"name_name", "fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
     public static final String[] types = {"Facebook", "Instagram", "Twitter", "Phone", "Contact Info", "LinkedIn"};
     private boolean animationReady = false;
@@ -77,8 +77,9 @@ public class SetupACtivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         if(sharedPreferences.contains("tutorial")){
-            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
         } else{
             editor.putBoolean("tutorial", false);
         }

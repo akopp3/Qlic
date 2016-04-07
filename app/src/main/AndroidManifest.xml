@@ -25,10 +25,7 @@
             android:name=".PreferencesActivity"
             android:label="@string/title_activity_preferences"></activity>
         <activity
-            android:name=".PeopleActivity"
-            android:label="@string/title_activity_people"></activity>
-        <activity
-            android:name=".SetupACtivity">
+            android:name=".SetupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
