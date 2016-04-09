@@ -9,23 +9,89 @@
     tools:context="com.example.skafle.envoyer.SendActivity"
     tools:showIn="@layout/activity_send">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/peopleHolder">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/peopleHolder">
+        <Button
+            android:id="@+id/send_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_btn"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
-            <Button
-                android:id="@+id/send_btn"
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/send_btn"
+            android:layout_centerHorizontal="true">
+            <com.github.jorgecastilloprz.FABProgressCircle
+                android:id="@+id/fabProgressCircle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/send_btn" />
-        </LinearLayout>
-    </ScrollView>
+                app:arcWidth="80dp"
+                android:layout_gravity="center_horizontal">
+                <android.support.design.widget.FloatingActionButton
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_send_24dp"
+                    android:id="@+id/fab"
+                    app:borderWidth="0dp"
+                    android:layout_margin="25dp" />
+            </com.github.jorgecastilloprz.FABProgressCircle>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person1"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal|bottom"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person2"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_below="@+id/imageView5"
+                android:layout_toRightOf="@+id/fabProgressCircle"
+                android:layout_gravity="center_horizontal|top"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person3"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/fabProgressCircle"
+                android:layout_toStartOf="@+id/fabProgressCircle"
+                android:layout_gravity="left|center_vertical"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person4"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="right|center_vertical"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+        </FrameLayout>
+
+    </RelativeLayout>
+
 
 </android.support.v4.widget.NestedScrollView>
