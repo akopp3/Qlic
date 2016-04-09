@@ -3,6 +3,8 @@ package com.example.skafle.envoyer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,9 @@ import android.widget.TextView;
 public class ContactViewActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
+    FloatingActionButton fab;
+    String info;
+    Receiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +31,12 @@ public class ContactViewActivity extends AppCompatActivity {
 
         LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
 
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         Intent intent = getIntent();
         if (intent.hasExtra(SendActivity.PEOPLE_KEY)) {
-            String info = intent.getStringExtra(SendActivity.PEOPLE_KEY);
-            Receiver receiver = new Receiver(info);
+            info = intent.getStringExtra(SendActivity.PEOPLE_KEY);
+            receiver = new Receiver(info);
             String name = receiver.getName();
             //getSupportActionBar().setTitle(name);
             for (String typeVar : MainActivity.types) {
@@ -47,6 +54,27 @@ public class ContactViewActivity extends AppCompatActivity {
                     linearLayout.addView(tableRow);
                 }
             }
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent saveContactsIntent = new Intent(ContactsContract.Intents.Insert.ACTION);
+                    saveContactsIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+                    saveContactsIntent.putExtra(ContactsContract.Intents.Insert.NAME, receiver.getName());
+
+                    Social email = receiver.getSocial(MainActivity.types[4]);
+                    if (email != null) {
+                        saveContactsIntent.putExtra(ContactsContract.Intents.Insert.EMAIL, email.keyInfo());
+                    }
+
+                    Social phoneNumber = receiver.getSocial(MainActivity.types[3]);
+                    if (email != null) {
+                        saveContactsIntent.putExtra(ContactsContract.Intents.Insert.PHONE, phoneNumber.keyInfo());
+                    }
+
+                    startActivity(saveContactsIntent);
+                }
+            });
         }
 
     }
