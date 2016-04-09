@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/welcome_page_top"
+    android:theme="@style/AppTheme"
     tools:background="@color/setup2">
 
     <TextView
