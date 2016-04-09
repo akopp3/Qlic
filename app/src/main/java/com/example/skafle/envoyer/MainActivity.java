@@ -25,25 +25,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final String[] types = {"Facebook", "Instagram", "Twitter", "Phone", "Contact Info", "LinkedIn"};
 
     SharedPreferences sharedPreferences;
-    private EditText nameText;
-    private TextView facebookText;
-    private TextView instaText;
-    private TextView twitText;
-    private TextView phoneText;
-    private TextView contactText;
-    private TextView linkText;
-    private EditText fbEdit;
-    private EditText instaEdit;
-    private EditText twitEdit;
-    private EditText phoneEdit;
-    private EditText contactEdit;
-    private EditText linkEdit;
-    private Button fbButton;
-    private Button instaButton;
-    private Button twitButton;
-    private Button phoneButton;
-    private Button contactButton;
-    private Button linkButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,51 +34,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        Intent intent = new Intent(getApplicationContext(),SetupActivity.class);
-//        startActivity(intent);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //THIS IS SO FAB ;)
-        nameText = (EditText) findViewById(R.id.name_txt);
-        facebookText = (TextView) findViewById(R.id.fb_text);
-        instaText = (TextView) findViewById(R.id.inst_text);
-        twitText = (TextView) findViewById(R.id.twit_text);
-        phoneText = (TextView) findViewById(R.id.phone_text);
-        contactText = (TextView) findViewById(R.id.cont_text);
-        linkText = (TextView) findViewById(R.id.link_text);
-        fbEdit = (EditText) findViewById(R.id.fb_input);
-        instaEdit = (EditText) findViewById(R.id.inst_input);
-        twitEdit = (EditText) findViewById(R.id.twit_input);
-        phoneEdit = (EditText) findViewById(R.id.phone_input);
-        contactEdit = (EditText) findViewById(R.id.cont_input);
-        linkEdit = (EditText) findViewById(R.id.link_input);
-        fbButton = (Button) findViewById(R.id.fb_button);
-        instaButton = (Button) findViewById(R.id.inst_button);
-        twitButton = (Button) findViewById(R.id.twit_button);
-        phoneButton = (Button) findViewById(R.id.phone_button);
-        contactButton = (Button) findViewById(R.id.cont_button);
-        linkButton = (Button) findViewById(R.id.link_button);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = nameText.getText().toString();
-                if (name.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Please enter your name", Toast.LENGTH_SHORT).show();
-                } else {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("name", name);
-                    editor.apply();
                     Intent intent = new Intent(getApplicationContext(), SendActivity.class);
                     startActivity(intent);
-                }
             }
         });
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-
-        setTextLayouts();
-        setEditLayouts();
         /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -107,12 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this); */
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setTextLayouts();
-        setEditLayouts();
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -131,58 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    private void setTextLayouts() {
-        String[] ids = {"fb", "ig", "twit", "phone", "contact", "link"};
-        String[] descript = {"Facebook", "Instagram", "Twitter", "Phone", "Contact", "Linkedin"};
-        TextView[] textViews = {facebookText, instaText, twitText, phoneText, contactText, linkText};
-
-        for (int i = 0; i < ids.length; i++) {
-            boolean checked = sharedPreferences.getBoolean(ids[i], false);
-            if (checked) {
-                textViews[i].setVisibility(TextView.VISIBLE);
-                textViews[i].setText(descript[i]);
-            } else {
-                textViews[i].setVisibility(TextView.GONE);
-            }
-        }
-    }
-
-    private void setEditLayouts() {
-        String[] ids = {"fb", "ig", "twit", "phone", "contact", "link"};
-
-        final String[] descript = {"Facebook", "Instagram", "Twitter", "Phone", "Contact", "Linkedin"};
-        final EditText[] editViews = {fbEdit, instaEdit, twitEdit, phoneEdit, contactEdit, linkEdit};
-        Button[] buttons = {fbButton, instaButton, twitButton, phoneButton, contactButton, linkButton};
-
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        for (int i = 0; i < ids.length; i++) {
-            final int j = i;
-            boolean checked = sharedPreferences.getBoolean(ids[i], false);
-            final String key = keys[i];
-            final String name = descript[i];
-            buttons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String editText = editViews[j].getText().toString();
-                    if (editText.equals("")) {
-                        Snackbar.make(findViewById(android.R.id.content), "Put something in to " + name , Snackbar.LENGTH_LONG)
-                            .show();
-                    } else {
-                        editor.putString(key, editText);
-                        editor.apply();
-                        Snackbar.make(findViewById(android.R.id.content), "Saved: " + name, Snackbar.LENGTH_LONG)
-                                .show();
-                    }
-                }
-            });
-            if (checked) {
-                editViews[i].setEnabled(true);
-            } else {
-                editViews[i].setEnabled(false);
-            }
-        }
-        editor.apply();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
