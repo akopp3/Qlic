@@ -5,17 +5,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -46,7 +51,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private View parentLayout;
     private Carrier carrier;
     private List<Receiver> receivers;
-    private LinearLayout layout;
+    private RelativeLayout layout;
+
+    FloatingActionButton person1, person2, person3, person4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +71,17 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .build();
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fabProgressCircle.show();
+            }
+        });
 
         parentLayout = findViewById(R.id.root_view);
-        layout = (LinearLayout) findViewById(R.id.peopleHolder);
+        layout = (RelativeLayout) findViewById(R.id.peopleHolder);
         sendBtn = (Button) findViewById(R.id.send_btn);
         carrier = new Carrier(pref.getString("name", "default"));
         receivers = new ArrayList<>();
@@ -95,6 +110,11 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 builder.show();
             }
         });
+
+        person1 = (FloatingActionButton) findViewById(R.id.person1);
+        person2 = (FloatingActionButton) findViewById(R.id.person2);
+        person3 = (FloatingActionButton) findViewById(R.id.person3);
+        person4 = (FloatingActionButton) findViewById(R.id.person4);
     }
 
     @Override
@@ -163,15 +183,18 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 receivers.add(newReceiver);
                 String name = newReceiver.getName();
 
-                Button button = new Button(SendActivity.this);
-                button.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-                ));
+                FloatingActionButton fab = showAndGetNextFAB();
+                TextDrawable textDrawable = TextDrawable.builder().buildRect("A", Color.TRANSPARENT);
+                fab.setImageDrawable(textDrawable);
+//                Button button = new Button(SendActivity.this);
+//                button.setLayoutParams(new LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+//                ));
+//
+//                button.setText(name);
+//                layout.addView(button);
 
-                button.setText(name);
-                layout.addView(button);
-
-                button.setOnClickListener(new View.OnClickListener() {
+                fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         // Pretty inefficient, need to figure out a better way
@@ -348,5 +371,26 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         super.onBackPressed();
         mGoogleApiClient.disconnect();
         this.finish();
+    }
+
+    int numPeople = 0;
+    public FloatingActionButton showAndGetNextFAB() {
+        if (numPeople == 0) {
+            numPeople++;
+            return person1;
+        }
+        if (numPeople == 1) {
+            numPeople++;
+            return person2;
+        }
+        if (numPeople == 2) {
+            numPeople++;
+            return person3;
+        }
+        if (numPeople == 3) {
+            numPeople++;
+            return person4;
+        }
+        return null;
     }
 }
