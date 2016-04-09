@@ -65,15 +65,15 @@ public class SetupACtivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_activity);
-        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.setup_page_2, null);
+//        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.setup_page_2, null);
 
-        nameText = (EditText) view.findViewById(R.id.name_txt);
-        fbEdit = (EditText) view.findViewById(R.id.fb_input);
-        instaEdit = (EditText) view.findViewById(R.id.inst_input);
-        twitEdit = (EditText) view.findViewById(R.id.twit_input);
-        phoneEdit = (EditText) view.findViewById(R.id.phone_input);
-        contactEdit = (EditText) view.findViewById(R.id.cont_input);
-        linkEdit = (EditText) view.findViewById(R.id.link_input);
+//        nameText = (EditText) view.findViewById(R.id.name_txt);
+//        fbEdit = (EditText) view.findViewById(R.id.fb_input);
+//        instaEdit = (EditText) view.findViewById(R.id.inst_input);
+//        twitEdit = (EditText) view.findViewById(R.id.twit_input);
+//        phoneEdit = (EditText) view.findViewById(R.id.phone_input);
+//        contactEdit = (EditText) view.findViewById(R.id.cont_input);
+//        linkEdit = (EditText) view.findViewById(R.id.link_input);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         if(sharedPreferences.contains("tutorial")){
@@ -94,6 +94,7 @@ public class SetupACtivity extends AppCompatActivity {
                     backgroundAnimator.setDuration((long) maximum);
                 }
                 backgroundAnimator.setCurrentPlayTime((long) progress);
+
             }
 
             @Override
@@ -102,6 +103,13 @@ public class SetupACtivity extends AppCompatActivity {
                     case 0:
                         break;
                     case 1:
+                        nameText = (EditText) v.findViewById(R.id.name_txt);
+                        fbEdit = (EditText) v.findViewById(R.id.fb_input);
+                        instaEdit = (EditText) v.findViewById(R.id.inst_input);
+                        twitEdit = (EditText) v.findViewById(R.id.twit_input);
+                        phoneEdit = (EditText) v.findViewById(R.id.phone_input);
+                        contactEdit = (EditText) v.findViewById(R.id.cont_input);
+                        linkEdit = (EditText) v.findViewById(R.id.link_input);
                         break;
                     case 2:
                         break;
@@ -113,20 +121,34 @@ public class SetupACtivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (coordinatorLayout.getPageSelected() == coordinatorLayout.getNumOfPages() - 1) {
+                /*if (coordinatorLayout.getPageSelected() == coordinatorLayout.getNumOfPages() - 1) {
                     editor.putBoolean("tutorial", true);
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                 } else {
                     coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
-                }
-                if(coordinatorLayout.getPageSelected() == 2) {
+                } */
+
+                editor.putBoolean("tutorial", false);
+                coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
+                if (coordinatorLayout.getPageSelected() == 2) {
+
                     final EditText[] editViews = {nameText, fbEdit, instaEdit, twitEdit, phoneEdit, contactEdit, linkEdit};
+                    Log.i("name", nameText.getText().toString());
+                    String nameString = nameText.getText().toString();
+                    Log.i("fb", fbEdit.getText().toString());
+                    String fbString = fbEdit.getText().toString();
+                    Log.i("phone", phoneEdit.getText().toString());
+                    String phoneString = phoneEdit.getText().toString();
+                    Log.i("link", linkEdit.getText().toString());
+                    String linkString = linkEdit.getText().toString();
+
 
                     for (int i = 0; i < editViews.length; i++) {
+
                         String key = keys[i];
-                        final int j = i;
-                        editViews[j].setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+                        editViews[i].setOnEditorActionListener(new TextView.OnEditorActionListener() {
                             @Override
                             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                                 if (id == EditorInfo.IME_ACTION_DONE) {

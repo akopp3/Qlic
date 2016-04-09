@@ -29,12 +29,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.AppCompat">
-        <EditText
-            android:id="@+id/name_txt"
-            style="@style/editTextElegant"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name" />
+            <EditText
+                android:id="@+id/name_txt"
+                style="@style/editTextElegant"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -63,46 +63,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.AppCompat">
-        <EditText
-            android:id="@+id/fb_input"
-            style="@style/editTextElegant"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Facebook Name" />
+            <EditText
+                android:id="@+id/fb_input"
+                style="@style/editTextElegant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Facebook Name" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.AppCompat">
-        <EditText
-            android:id="@+id/inst_input"
-            style="@style/editTextElegant"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Instagram Username" />
+            <EditText
+                android:id="@+id/inst_input"
+                style="@style/editTextElegant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Instagram Username" />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.AppCompat">
-        <EditText
-            android:id="@+id/twit_input"
-            style="@style/editTextElegant"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Twitter Username" />
+            <EditText
+                android:id="@+id/twit_input"
+                style="@style/editTextElegant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Twitter Username" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.AppCompat">
-        <EditText
-            android:id="@+id/link_input"
-            style="@style/editTextElegant"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="LinkedIn Name" />
+            <EditText
+                android:id="@+id/link_input"
+                style="@style/editTextElegant"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="LinkedIn Name" />
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
