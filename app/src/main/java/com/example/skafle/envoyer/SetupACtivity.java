@@ -45,7 +45,7 @@ import com.redbooth.WelcomeCoordinatorLayout;
 
 import java.util.zip.Inflater;
 
-public class SetupActivity extends AppCompatActivity {
+public class SetupACtivity extends AppCompatActivity {
     public static final String[] keys = {"name_name", "fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
     public static final String[] types = {"Facebook", "Instagram", "Twitter", "Phone", "Contact Info", "LinkedIn"};
     private boolean animationReady = false;
