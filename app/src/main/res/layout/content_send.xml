@@ -66,6 +66,7 @@
                 android:layout_alignStart="@+id/imageView3"
                 android:layout_gravity="right|top"
                 android:visibility="invisible"
+                android:layout_margin="30dp"
                 app:backgroundTint="@color/colorPrimaryDark"/>
 
             <android.support.design.widget.FloatingActionButton
@@ -90,6 +91,7 @@
                 android:layout_alignStart="@+id/imageView3"
                 android:layout_gravity="right|bottom"
                 android:visibility="invisible"
+                android:layout_margin="30dp"
                 app:backgroundTint="@color/colorPrimaryDark"/>
 
             <android.support.design.widget.FloatingActionButton
@@ -114,6 +116,7 @@
                 android:layout_alignStart="@+id/imageView3"
                 android:layout_gravity="left|bottom"
                 android:visibility="invisible"
+                android:layout_margin="30dp"
                 app:backgroundTint="@color/colorPrimaryDark"/>
 
             <android.support.design.widget.FloatingActionButton
@@ -138,6 +141,7 @@
                 android:layout_alignStart="@+id/imageView3"
                 android:layout_gravity="left|top"
                 android:visibility="invisible"
+                android:layout_margin="30dp"
                 app:backgroundTint="@color/colorPrimaryDark"/>
         </FrameLayout>
     </RelativeLayout>
