@@ -15,8 +15,10 @@ import java.util.Scanner;
 public class Receiver {
     private String name;
     private Map<String, Social> socialMap;
+    private String messageData;
 
     public Receiver(String rep) {
+        messageData = rep;
         Scanner scanner = new Scanner(rep);
 
         name = scanner.nextLine();
@@ -37,6 +39,10 @@ public class Receiver {
 
     public String getName() {
         return name;
+    }
+
+    public String getMessageData() {
+        return messageData;
     }
 
     public Social getSocial(String type) {

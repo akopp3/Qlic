@@ -6,5 +6,8 @@
         android:id="@+id/settings" />
 
 
+    <item android:title="Profile"
+        android:id="@+id/profile"/>
+
 
 </menu>
