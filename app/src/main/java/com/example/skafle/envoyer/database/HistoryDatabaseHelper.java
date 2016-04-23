@@ -1,8 +1,11 @@
 package com.example.skafle.envoyer.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.skafle.envoyer.Receiver;
 
 /**
  * Created by aneeshjindal on 4/20/16.
@@ -45,5 +48,12 @@ public class HistoryDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public void addPersonToDatabase(Receiver receiver) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NAME, receiver.getName());
+        contentValues.put(DATA, receiver.getMessageData());
+        getWritableDatabase().insert(TABLE_NAME, null, contentValues);
     }
 }

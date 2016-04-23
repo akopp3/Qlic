@@ -91,6 +91,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
 
+        if (id == R.id.profile) {
+            Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
