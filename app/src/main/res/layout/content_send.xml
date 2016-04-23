@@ -49,9 +49,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/person1"
                 android:src="@drawable/ic_send_24dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal|bottom"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="center_horizontal|top"
                 android:visibility="invisible"
                 app:backgroundTint="@color/colorPrimaryDark"/>
 
@@ -60,9 +61,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/person2"
                 android:src="@drawable/ic_send_24dp"
-                android:layout_below="@+id/imageView5"
-                android:layout_toRightOf="@+id/fabProgressCircle"
-                android:layout_gravity="center_horizontal|top"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="right|top"
                 android:visibility="invisible"
                 app:backgroundTint="@color/colorPrimaryDark"/>
 
@@ -71,10 +73,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/person3"
                 android:src="@drawable/ic_send_24dp"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/fabProgressCircle"
-                android:layout_toStartOf="@+id/fabProgressCircle"
-                android:layout_gravity="left|center_vertical"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="right|center_vertical"
                 android:visibility="invisible"
                 app:backgroundTint="@color/colorPrimaryDark"/>
 
@@ -86,12 +88,58 @@
                 android:layout_alignTop="@+id/fabProgressCircle"
                 android:layout_alignLeft="@+id/imageView3"
                 android:layout_alignStart="@+id/imageView3"
-                android:layout_gravity="right|center_vertical"
+                android:layout_gravity="right|bottom"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person5"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="center_horizontal|bottom"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person6"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="left|bottom"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person7"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="left|center_vertical"
+                android:visibility="invisible"
+                app:backgroundTint="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/person8"
+                android:src="@drawable/ic_send_24dp"
+                android:layout_alignTop="@+id/fabProgressCircle"
+                android:layout_alignLeft="@+id/imageView3"
+                android:layout_alignStart="@+id/imageView3"
+                android:layout_gravity="left|top"
                 android:visibility="invisible"
                 app:backgroundTint="@color/colorPrimaryDark"/>
         </FrameLayout>
-
     </RelativeLayout>
-
 
 </android.support.v4.widget.NestedScrollView>

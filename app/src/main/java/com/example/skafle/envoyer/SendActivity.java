@@ -53,7 +53,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private List<Receiver> receivers;
     private RelativeLayout layout;
 
-    FloatingActionButton person1, person2, person3, person4;
+    FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +77,18 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             @Override
             public void onClick(View v) {
                 fabProgressCircle.show();
+                FloatingActionButton fab = showAndGetNextFAB();
+                TextDrawable textDrawable = TextDrawable.builder().buildRect("A", Color.TRANSPARENT);
+                fab.setImageDrawable(textDrawable);
+
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(SendActivity.this, "Aneesh is dumb", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AnimationUtils.circularReveal(fab);
             }
         });
 
@@ -115,6 +127,10 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         person2 = (FloatingActionButton) findViewById(R.id.person2);
         person3 = (FloatingActionButton) findViewById(R.id.person3);
         person4 = (FloatingActionButton) findViewById(R.id.person4);
+        person5 = (FloatingActionButton) findViewById(R.id.person5);
+        person6 = (FloatingActionButton) findViewById(R.id.person6);
+        person7 = (FloatingActionButton) findViewById(R.id.person7);
+        person8 = (FloatingActionButton) findViewById(R.id.person8);
     }
 
     @Override
@@ -186,13 +202,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 FloatingActionButton fab = showAndGetNextFAB();
                 TextDrawable textDrawable = TextDrawable.builder().buildRect("A", Color.TRANSPARENT);
                 fab.setImageDrawable(textDrawable);
-//                Button button = new Button(SendActivity.this);
-//                button.setLayoutParams(new LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
-//                ));
-//
-//                button.setText(name);
-//                layout.addView(button);
 
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -378,18 +387,27 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         if (numPeople == 0) {
             numPeople++;
             return person1;
-        }
-        if (numPeople == 1) {
+        } else if (numPeople == 1) {
             numPeople++;
             return person2;
-        }
-        if (numPeople == 2) {
+        } else if (numPeople == 2) {
             numPeople++;
             return person3;
-        }
-        if (numPeople == 3) {
+        } else if (numPeople == 3) {
             numPeople++;
             return person4;
+        } else if (numPeople == 4) {
+            numPeople++;
+            return person5;
+        } else if (numPeople == 5) {
+            numPeople++;
+            return person6;
+        } else if (numPeople == 6) {
+            numPeople++;
+            return person7;
+        } else if (numPeople == 7) {
+            numPeople++;
+            return person8;
         }
         return null;
     }
