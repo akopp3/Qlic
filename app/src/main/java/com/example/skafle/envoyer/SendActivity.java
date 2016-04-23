@@ -77,6 +77,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             @Override
             public void onClick(View v) {
                 fabProgressCircle.show();
+                // For testing purposes, delete later
                 FloatingActionButton fab = showAndGetNextFAB();
                 TextDrawable textDrawable = TextDrawable.builder().buildRect("A", Color.TRANSPARENT);
                 fab.setImageDrawable(textDrawable);
@@ -199,8 +200,10 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 receivers.add(newReceiver);
                 String name = newReceiver.getName();
 
+                String initial = Utils.getInitial(name);
+
                 FloatingActionButton fab = showAndGetNextFAB();
-                TextDrawable textDrawable = TextDrawable.builder().buildRect("A", Color.TRANSPARENT);
+                TextDrawable textDrawable = TextDrawable.builder().buildRect(initial, Color.TRANSPARENT);
                 fab.setImageDrawable(textDrawable);
 
                 fab.setOnClickListener(new View.OnClickListener() {
