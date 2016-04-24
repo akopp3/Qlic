@@ -23,11 +23,19 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fb_btn"
+            android:text="FACEBOOK TEST"
+            android:layout_below="@+id/send_btn"
+            android:layout_centerHorizontal="true" />
+
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_holders"
-            android:layout_below="@+id/send_btn"
+            android:layout_below="@+id/fb_btn"
             android:layout_centerHorizontal="true">
             <com.github.jorgecastilloprz.FABProgressCircle
                 android:id="@+id/fabProgressCircle"

@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -64,7 +65,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     BottomSheetBehavior bottomSheetBehavior;
     FloatingActionButton selectAllFAB;
     ImageView arrowImageView;
-
+    Button fbBtn;
     CheckBox[] bottomSheetCheckBoxes = new CheckBox[6];
 
     @Override
@@ -124,6 +125,16 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         carrier = new Carrier(pref.getString("name", "default"));
         extraHolder = (LinearLayout) findViewById(R.id.extra_holder);
         receivers = new ArrayList<>();
+       
+
+        fbBtn = (Button) findViewById(R.id.fb_btn);
+        fbBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent (getApplicationContext(), FacebookTesting.class);
+                startActivity(intent1);
+            }
+        });
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setPeekHeight(300);

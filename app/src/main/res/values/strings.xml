@@ -19,6 +19,7 @@
     <string name="dialog_message">These are your current settings. Make sure they are correct.</string>
     <string name="dialog_title">Current Settings</string>
     <string name="title_activity_people">PeopleActivity</string>
+    <string name= "facebook_app_id">612435478912782</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -109,4 +110,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_facebook_testing">FacebookTesting</string>
 </resources>

@@ -20,6 +20,8 @@ public class Receiver {
     public Receiver(String rep) {
         messageData = rep;
         Scanner scanner = new Scanner(rep);
+        Log.i("rep",rep);
+
 
         name = scanner.nextLine();
         socialMap = new HashMap<>();
