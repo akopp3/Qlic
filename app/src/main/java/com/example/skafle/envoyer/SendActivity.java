@@ -15,7 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -51,7 +51,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private View parentLayout;
     private Carrier carrier;
     private List<Receiver> receivers;
-    private RelativeLayout layout;
+    private LinearLayout extraHolder;
 
     FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
 
@@ -94,8 +94,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         });
 
         parentLayout = findViewById(R.id.root_view);
-        layout = (RelativeLayout) findViewById(R.id.peopleHolder);
         sendBtn = (Button) findViewById(R.id.send_btn);
+        extraHolder = (LinearLayout) findViewById(R.id.extra_holder);
         carrier = new Carrier(pref.getString("name", "default"));
         receivers = new ArrayList<>();
         setCarrier();
@@ -204,19 +204,21 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
 
                 FloatingActionButton fab = showAndGetNextFAB();
                 TextDrawable textDrawable = TextDrawable.builder().buildRect(initial, Color.TRANSPARENT);
-                fab.setImageDrawable(textDrawable);
+                if (fab != null) {
+                    fab.setImageDrawable(textDrawable);
 
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Pretty inefficient, need to figure out a better way
-                        Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
-                        intent.putExtra(PEOPLE_KEY, nearbyMessageString);
-                        startActivity(intent);
-                    }
-                });
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Pretty inefficient, need to figure out a better way
+                            Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
+                            intent.putExtra(PEOPLE_KEY, nearbyMessageString);
+                            startActivity(intent);
+                        }
+                    });
 
-                AnimationUtils.circularReveal(fab);
+                    AnimationUtils.circularReveal(fab);
+                }
 
                 Log.i("FOUND", nearbyMessageString);
             }
@@ -388,7 +390,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     int numPeople = 0;
-    public FloatingActionButton showAndGetNextFAB() {
+    private FloatingActionButton showAndGetNextFAB() {
         if (numPeople == 0) {
             numPeople++;
             return person1;
@@ -413,6 +415,18 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         } else if (numPeople == 7) {
             numPeople++;
             return person8;
+        } else if (numPeople > 7) {
+            numPeople++;
+            FloatingActionButton person = new FloatingActionButton(SendActivity.this);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+
+            params.setMargins(0, 20, 0, 20);
+            person.setLayoutParams(params);
+
+            extraHolder.addView(person);
+            return person;
         }
         return null;
     }

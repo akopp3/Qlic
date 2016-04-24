@@ -26,6 +26,7 @@
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/button_holders"
             android:layout_below="@+id/send_btn"
             android:layout_centerHorizontal="true">
             <com.github.jorgecastilloprz.FABProgressCircle
@@ -144,6 +145,15 @@
                 android:layout_margin="30dp"
                 app:backgroundTint="@color/colorPrimaryDark"/>
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/extra_holder"
+            android:layout_below="@+id/button_holders"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+        </LinearLayout>
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>
