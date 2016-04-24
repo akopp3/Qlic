@@ -14,7 +14,7 @@
     <string name="send_btn">Fire!</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_send">SendActivity</string>
+    <string name="title_activity_send">Share your information</string>
     <string name="title_activity_preferences">Preferences</string>
     <string name="dialog_message">These are your current settings. Make sure they are correct.</string>
     <string name="dialog_title">Current Settings</string>

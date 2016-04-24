@@ -94,16 +94,18 @@ public class ContactViewActivity extends AppCompatActivity {
         } else {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             for (int i = 0; i < MainActivity.keys.length; i++) {
-                RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row, null, false);
-                ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
-                TextView handleTextView = (TextView) tableRow.findViewById(R.id.handleTextView);
-                TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
-                CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
-                imageView.setImageResource(SOCIAL_ICON_IDS[i]);
-                handleTextView.setText(sharedPreferences.getString(MainActivity.keys[i], ""));
-                typeTextView.setText(MainActivity.types[i]);
-                checkBox.setChecked(sharedPreferences.getBoolean(MainActivity.enabledKeys[i], false));
-                linearLayout.addView(tableRow);
+                if (!sharedPreferences.getString(MainActivity.keys[i], "").equals("")) {
+                    RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row, null, false);
+                    ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
+                    TextView handleTextView = (TextView) tableRow.findViewById(R.id.handleTextView);
+                    TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
+                    CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
+                    imageView.setImageResource(SOCIAL_ICON_IDS[i]);
+                    handleTextView.setText(sharedPreferences.getString(MainActivity.keys[i], ""));
+                    typeTextView.setText(MainActivity.types[i]);
+                    checkBox.setChecked(sharedPreferences.getBoolean(MainActivity.enabledKeys[i], false));
+                    linearLayout.addView(tableRow);
+                }
             }
             collapsingToolbarLayout.setTitle(sharedPreferences.getString("name", ""));
             fab.setImageResource(R.drawable.edit);
