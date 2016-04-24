@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -23,6 +22,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Utils {
     public static byte[] salt;
+    public static String iv;
 
     public static void initialize() {
         /* final Random r = new SecureRandom();
@@ -33,6 +33,13 @@ public class Utils {
         salt[0] = 3;
         salt[1] = 4;
         salt[2] = 6;
+
+        byte[] bt = new byte[16];
+        for (byte i = 0; i < 16; i++) {
+            bt[i] = i;
+        }
+
+        iv = new String(bt);
     }
 
     public static String getInitial(String name) {

@@ -14,7 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -85,12 +85,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         bottomSheet = findViewById(R.id.bottom_sheet);
         selectAllFAB = (FloatingActionButton) findViewById(R.id.selectAllFab);
         arrowImageView = (ImageView) findViewById(R.id.arrow);
-        facebookCheckBox = (CheckBox) findViewById(R.id.facebookCheckBox);
-        instagramCheckBox = (CheckBox) findViewById(R.id.instagramCheckBox);
-        twitterCheckBox = (CheckBox) findViewById(R.id.twitterCheckBox);
-        phoneNumberCheckBox = (CheckBox) findViewById(R.id.phoneNumberCheckBox);
-        contactInfoCheckBox = (CheckBox) findViewById(R.id.contactInfoCheckBox);
-        linkedInCheckBox = (CheckBox) findViewById(R.id.linkedInCheckBox);
         Utils.initialize();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -254,7 +248,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         Log.i("TAG", "Trying to publish.");
         // Set a simple message payload.
         String messageString = carrier.toString();
-        String encrypted = Utils.encrypt(key, "", messageString);
+        String encrypted = Utils.encrypt(key, Utils.iv, messageString);
         mDeviceInfoMessage = new Message(encrypted.getBytes());
         // Cannot proceed without a connected GoogleApiClient.
         // Reconnect and execute the pending task in onConnected().
@@ -297,7 +291,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 final String nearbyMessageString;
 
                 try {
-                    nearbyMessageString = Utils.decrypt(key, "", messageString);
+                    nearbyMessageString = Utils.decrypt(key, Utils.iv, messageString);
                 } catch (IOException e) {
                     Toast.makeText(SendActivity.this, "Passwords Don't Match", Toast.LENGTH_SHORT).show();
                     return;
