@@ -22,9 +22,9 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_toEndOf="@id/imageView"
-        android:layout_toLeftOf="@+id/chkState8"
+        android:layout_toLeftOf="@+id/checkBox"
         android:layout_toRightOf="@id/imageView"
-        android:layout_toStartOf="@+id/chkState8"
+        android:layout_toStartOf="@+id/checkBox"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="h@golfswing"
@@ -41,10 +41,11 @@
         android:layout_toRightOf="@id/imageView"
         android:text="Facebook"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textSize="16dp"
         android:id="@+id/typeTextView"/>
 
     <CheckBox
-        android:id="@+id/chkState8"
+        android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

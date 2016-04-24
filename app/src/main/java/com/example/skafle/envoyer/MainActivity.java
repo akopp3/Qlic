@@ -23,6 +23,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static final String[] keys = {"fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
     public static final String[] types = {"Facebook", "Instagram", "Twitter", "Phone", "Contact Info", "LinkedIn"};
+    public static final String[] enabledKeys = {"fb_enabled", "ig_enabled", "twit_enabled", "phone_enabled", "contact_enabled", "link_enabled"};
 
     SharedPreferences sharedPreferences;
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //THIS IS SO FAB ;)
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this); */
+
+
     }
 
 

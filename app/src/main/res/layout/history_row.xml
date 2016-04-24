@@ -63,19 +63,19 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/instagram"
+                android:src="@drawable/phone"
                 android:layout_marginRight="10dp"/>
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/instagram"
+                android:src="@drawable/email"
                 android:layout_marginRight="10dp"/>
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/instagram"
+                android:src="@drawable/linkedin"
                 android:layout_marginRight="10dp"/>
         </LinearLayout>
     </LinearLayout>

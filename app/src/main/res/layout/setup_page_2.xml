@@ -105,5 +105,5 @@
                 android:hint="LinkedIn Name" />
         </android.support.design.widget.TextInputLayout>
 
-    </LinearLayout>
+        </LinearLayout>
 </com.redbooth.WelcomePageLayout>

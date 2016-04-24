@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -27,6 +28,10 @@ public class ContactViewActivity extends AppCompatActivity {
     String info;
     Receiver receiver;
 
+    Intent intent;
+    SharedPreferences sharedPreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,7 @@ public class ContactViewActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
     }
 
@@ -43,7 +49,7 @@ public class ContactViewActivity extends AppCompatActivity {
         super.onResume();
         linearLayout.removeAllViews();
         LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-        Intent intent = getIntent();
+        intent = getIntent();
         if (intent.hasExtra(SendActivity.PEOPLE_KEY)) {
             info = intent.getStringExtra(SendActivity.PEOPLE_KEY);
             receiver = new Receiver(info);
@@ -92,9 +98,11 @@ public class ContactViewActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
                 TextView handleTextView = (TextView) tableRow.findViewById(R.id.handleTextView);
                 TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
+                CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
                 imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                 handleTextView.setText(sharedPreferences.getString(MainActivity.keys[i], ""));
                 typeTextView.setText(MainActivity.types[i]);
+                checkBox.setChecked(sharedPreferences.getBoolean(MainActivity.enabledKeys[i], false));
                 linearLayout.addView(tableRow);
             }
             collapsingToolbarLayout.setTitle(sharedPreferences.getString("name", ""));
@@ -106,6 +114,20 @@ public class ContactViewActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (!intent.hasExtra(SendActivity.PEOPLE_KEY)) {
+            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                RelativeLayout view = (RelativeLayout) linearLayout.getChildAt(i);
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+                editor.putBoolean(MainActivity.enabledKeys[i], checkBox.isChecked());
+            }
+            editor.apply();
         }
     }
 }

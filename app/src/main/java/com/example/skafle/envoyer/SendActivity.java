@@ -15,10 +15,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,6 +50,7 @@ import java.util.List;
 
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     public static final String PEOPLE_KEY = "people_key";
+    public boolean[] enabled = {false, false, false, false, false , false};
 
     private SharedPreferences pref;
     private GoogleApiClient mGoogleApiClient;
@@ -69,12 +70,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     BottomSheetBehavior bottomSheetBehavior;
     FloatingActionButton selectAllFAB;
     ImageView arrowImageView;
-    CheckBox facebookCheckBox;
-    CheckBox instagramCheckBox;
-    CheckBox twitterCheckBox;
-    CheckBox phoneNumberCheckBox;
-    CheckBox contactInfoCheckBox;
-    CheckBox linkedInCheckBox;
+    Button fbBtn;
+    CheckBox[] bottomSheetCheckBoxes = new CheckBox[6];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +106,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    setCarrier();
                     if (fabProgressCircle != null) {
                         fabProgressCircle.show();
                     }
@@ -175,6 +173,15 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         receivers = new ArrayList<>();
         setCarrier();
 
+        fbBtn = (Button) findViewById(R.id.fb_btn);
+        fbBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent (getApplicationContext(), FacebookTesting.class);
+                startActivity(intent1);
+            }
+        });
+
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setPeekHeight(300);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -220,9 +227,11 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         person6 = (FloatingActionButton) findViewById(R.id.person6);
         person7 = (FloatingActionButton) findViewById(R.id.person7);
         person8 = (FloatingActionButton) findViewById(R.id.person8);
+
+        setInitialBottomSheetBoxes();
     }
 
-    /* @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_RESOLVE_ERROR) {
             if (resultCode == RESULT_OK) {
@@ -231,7 +240,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 subscribe();
             }
         }
-    } */
+    }
 
     @Override
     public void onStop() {
@@ -242,6 +251,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     private void publish() {
+        Log.i("TAG", "Trying to publish.");
         // Set a simple message payload.
         String messageString = carrier.toString();
         String encrypted = Utils.encrypt(key, "", messageString);
@@ -426,17 +436,43 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private void setCarrier() {
         Log.i("CARRIER", "goes here");
         Log.i("CARRIER2", MainActivity.keys.length + "");
-        for (String key : MainActivity.keys) {
-            if (pref.contains(key)) {
-                Social newSocial = getSocial(key);
+        for (int i = 0; i < MainActivity.keys.length; i++) {
+//        for (String key : MainActivity.keys) {
+//            if (pref.contains(key)) {
+            if (enabled[i]) {
+                Log.i("setCarrier", "" + i);
+                Social newSocial = getSocial(MainActivity.keys[i]);
                 carrier.addSocial(newSocial);
-                Log.i("SOCIAL", key);
+                Log.i("SOCIAL", MainActivity.keys[i]);
             }
+        }
+    }
+
+    private void setInitialBottomSheetBoxes() {
+        bottomSheetCheckBoxes[0] = (CheckBox) findViewById(R.id.facebookCheckBox);
+        bottomSheetCheckBoxes[1] = (CheckBox) findViewById(R.id.instagramCheckBox);
+        bottomSheetCheckBoxes[2] = (CheckBox) findViewById(R.id.twitterCheckBox);
+        bottomSheetCheckBoxes[3] = (CheckBox) findViewById(R.id.phoneNumberCheckBox);
+        bottomSheetCheckBoxes[4] = (CheckBox) findViewById(R.id.contactInfoCheckBox);
+        bottomSheetCheckBoxes[5] = (CheckBox) findViewById(R.id.linkedInCheckBox);
+
+        for (int i = 0; i < enabled.length; i++) {
+            Log.i("setInitialBottomBoxes", i + " is " + MainActivity.enabledKeys[i]);
+            enabled[i] = pref.getBoolean(MainActivity.enabledKeys[i], false);
+            bottomSheetCheckBoxes[i].setChecked(enabled[i]);
+            bottomSheetCheckBoxes[i].setTag(i);
+            bottomSheetCheckBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    enabled[(int) buttonView.getTag()] = isChecked;
+                }
+            });
         }
     }
 
     private Social getSocial(String key) {
         Social soc = null;
+        Log.i("crash", key);
         String mess = pref.getString(key, "");
         switch (key) {
             case "fb_name":

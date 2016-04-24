@@ -19,7 +19,16 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.LoggingBehavior;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.redbooth.WelcomeCoordinatorLayout;
+import com.facebook.FacebookSdk;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -40,9 +49,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.redbooth.WelcomeCoordinatorLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.zip.Inflater;
 
 public class SetupACtivity extends AppCompatActivity {
@@ -60,6 +75,7 @@ public class SetupACtivity extends AppCompatActivity {
     private EditText linkEdit;
     private EditText nameText;
     private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,16 +134,17 @@ public class SetupACtivity extends AppCompatActivity {
                 }
             }
         });
+
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (coordinatorLayout.getPageSelected() == coordinatorLayout.getNumOfPages() - 1) {
+                if (coordinatorLayout.getPageSelected() == coordinatorLayout.getNumOfPages() - 1) {
                     editor.putBoolean("tutorial", true);
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                 } else {
                     coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
-                } */
+                }
 
                 editor.putBoolean("tutorial", false);
                 coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
