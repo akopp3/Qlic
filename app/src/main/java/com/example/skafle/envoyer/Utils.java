@@ -29,10 +29,15 @@ public class Utils {
         salt = new byte[32];
         r.nextBytes(salt); */
 
-        salt = new byte[3];
-        salt[0] = 3;
-        salt[1] = 4;
-        salt[2] = 6;
+//        salt = new byte[3];
+//        salt[0] = 3;
+//        salt[1] = 4;
+//        salt[2] = 6;
+
+        salt = new byte[16];
+        for (byte i = 0; i < 16; i++) {
+            salt[i] = i;
+        }
 
         byte[] bt = new byte[16];
         for (byte i = 0; i < 16; i++) {
@@ -66,40 +71,41 @@ public class Utils {
         SecretKeyFactory keyFactory = SecretKeyFactory
                 .getInstance("PBKDF2WithHmacSHA1");
         byte[] keyBytes = keyFactory.generateSecret(keySpec).getEncoded();
-        SecretKey key = new SecretKeySpec(keyBytes, "AES");
-        Cipher cipher;
-
-        try {
-            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        } catch (javax.crypto.NoSuchPaddingException e) {
-            Log.i("Error", e.toString());
-            return "";
-        }
-
-        byte[] iv = new byte[cipher.getBlockSize()];
-        random.nextBytes(iv);
-        IvParameterSpec ivParams = new IvParameterSpec(iv);
-        try {
-            cipher.init(Cipher.ENCRYPT_MODE, key, ivParams);
-        } catch (java.security.InvalidAlgorithmParameterException|java.security.InvalidKeyException e) {
-            Log.i("Error", e.toString());
-            return "";
-        }
-
-        try {
-            byte[] ciphertext = cipher.doFinal();
-            String encoded = new String(ciphertext);
-            return encoded;
-        } catch (javax.crypto.IllegalBlockSizeException|javax.crypto.BadPaddingException e) {
-            Log.i("Error", e.toString());
-            return "";
-        }
+        return Base64.encodeToString(keyBytes, Base64.NO_WRAP);
+//        SecretKey key = new SecretKeySpec(keyBytes, "AES");
+//        Cipher cipher;
+//
+//        try {
+//            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+//        } catch (javax.crypto.NoSuchPaddingException e) {
+//            Log.i("Error", e.toString());
+//            return "";
+//        }
+//
+//        byte[] iv = new byte[cipher.getBlockSize()];
+//        random.nextBytes(iv);
+//        IvParameterSpec ivParams = new IvParameterSpec(iv);
+//        try {
+//            cipher.init(Cipher.ENCRYPT_MODE, key, ivParams);
+//        } catch (java.security.InvalidAlgorithmParameterException|java.security.InvalidKeyException e) {
+//            Log.i("Error", e.toString());
+//            return "";
+//        }
+//
+//        try {
+//            byte[] ciphertext = cipher.doFinal();
+//            String encoded = new String(ciphertext);
+//            return encoded;
+//        } catch (javax.crypto.IllegalBlockSizeException|javax.crypto.BadPaddingException e) {
+//            Log.i("Error", e.toString());
+//            return "";
+//        }
     }
 
     public static String encrypt(String key, String initVector, String value) {
         try {
             IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+            SecretKeySpec skeySpec = new SecretKeySpec(Base64.decode(key, Base64.NO_WRAP), "AES");
 
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
