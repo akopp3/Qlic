@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:clipToPadding="true"
-        android:background="#263238"
+        android:background="#546e7a"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <include layout="@layout/bottom_sheet"/>

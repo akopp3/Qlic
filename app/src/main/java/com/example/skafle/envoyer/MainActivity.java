@@ -1,7 +1,9 @@
 package com.example.skafle.envoyer;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -38,15 +40,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //THIS IS SO FAB ;)
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); //THIS IS SO FAB ;)
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), SendActivity.class);
-                    startActivity(intent);
-            }
-        });
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), SendActivity.class);
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        ActivityOptions options = ActivityOptions
+                                .makeSceneTransitionAnimation(MainActivity.this, fab, "fab");
+                        startActivity(intent, options.toBundle());
+                    } else {
+                        startActivity(intent);
+                    }
+                }
+            });
+        }
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 

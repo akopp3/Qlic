@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -70,7 +71,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     BottomSheetBehavior bottomSheetBehavior;
     FloatingActionButton selectAllFAB;
     ImageView arrowImageView;
-    Button fbBtn;
+    TableRow bottomSheetHeader;
     CheckBox[] bottomSheetCheckBoxes = new CheckBox[6];
 
     @Override
@@ -85,6 +86,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         bottomSheet = findViewById(R.id.bottom_sheet);
         selectAllFAB = (FloatingActionButton) findViewById(R.id.selectAllFab);
         arrowImageView = (ImageView) findViewById(R.id.arrow);
+        bottomSheetHeader = (TableRow) findViewById(R.id.header);
         Utils.initialize();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -101,9 +103,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 @Override
                 public void onClick(View v) {
                     setCarrier();
-                    if (fabProgressCircle != null) {
-                        fabProgressCircle.show();
-                    }
                     AlertDialog.Builder alert = new AlertDialog.Builder(SendActivity.this);
                     /* builder.setMessage(R.string.dialog_message)
                             .setTitle(R.string.dialog_title)
@@ -133,9 +132,15 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
                             String password = edittext.getText().toString();
+                            if (fabProgressCircle != null) {
+                                fabProgressCircle.show();
+                            }
+                            bottomSheetBehavior.setPeekHeight(0);
+                            bottomSheetBehavior.setHideable(true);
+                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
                             if (!password.isEmpty()) {
-                                Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
+//                                Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
                                 try {
                                     key = Utils.generateKey(Utils.salt, password);
                                     publish();
@@ -167,20 +172,11 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         receivers = new ArrayList<>();
         setCarrier();
 
-        fbBtn = (Button) findViewById(R.id.fb_btn);
-        fbBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent (getApplicationContext(), FacebookTesting.class);
-                startActivity(intent1);
-            }
-        });
-
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setPeekHeight(300);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
-        arrowImageView.setOnClickListener(new View.OnClickListener() {
+        bottomSheetHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
@@ -192,6 +188,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 }
             }
         });
+
 
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -210,6 +207,15 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
 //                ArgbEvaluator evaluator = new ArgbEvaluator();
 //                Log.i("test", "" + (Integer) evaluator.evaluate(slideOffset, R.color.colorAccent, R.color.colorPrimary));
 //                bottomSheet.setBackgroundColor((Integer) evaluator.evaluate(slideOffset, R.color.colorAccent, R.color.colorPrimary));
+            }
+        });
+
+        selectAllFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < bottomSheetCheckBoxes.length; i++) {
+                    bottomSheetCheckBoxes[i].setChecked(true);
+                }
             }
         });
 

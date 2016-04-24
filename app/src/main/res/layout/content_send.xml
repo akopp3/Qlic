@@ -14,20 +14,13 @@
         android:layout_height="match_parent"
         android:id="@+id/peopleHolder">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fb_btn"
-            android:text="FACEBOOK TEST"
-            android:layout_gravity="center_horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button_holders"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp">
+
             <com.github.jorgecastilloprz.FABProgressCircle
                 android:id="@+id/fabProgressCircle"
                 android:layout_width="wrap_content"
@@ -38,10 +31,11 @@
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:clickable="true"
-                    android:src="@drawable/ic_send_24dp"
+                    android:src="@drawable/broadcast"
                     android:id="@+id/big_fab"
                     app:borderWidth="0dp"
                     android:layout_margin="25dp"
+                    android:transitionName="fab"
                     />
             </com.github.jorgecastilloprz.FABProgressCircle>
 
