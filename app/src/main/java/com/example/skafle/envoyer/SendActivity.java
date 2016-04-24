@@ -14,10 +14,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,6 +42,9 @@ import com.google.android.gms.nearby.messages.PublishOptions;
 import com.google.android.gms.nearby.messages.SubscribeCallback;
 import com.google.android.gms.nearby.messages.SubscribeOptions;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +61,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private List<Receiver> receivers;
     private RelativeLayout layout;
     private LinearLayout extraHolder;
+    private String key;
 
     FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
 
@@ -88,6 +94,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         phoneNumberCheckBox = (CheckBox) findViewById(R.id.phoneNumberCheckBox);
         contactInfoCheckBox = (CheckBox) findViewById(R.id.contactInfoCheckBox);
         linkedInCheckBox = (CheckBox) findViewById(R.id.linkedInCheckBox);
+        Utils.initialize();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Nearby.MESSAGES_API)
@@ -105,8 +112,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                     if (fabProgressCircle != null) {
                         fabProgressCircle.show();
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(SendActivity.this);
-                    builder.setMessage(R.string.dialog_message)
+                    AlertDialog.Builder alert = new AlertDialog.Builder(SendActivity.this);
+                    /* builder.setMessage(R.string.dialog_message)
                             .setTitle(R.string.dialog_title)
                             .setPositiveButton("Send", new DialogInterface.OnClickListener() {
                                 @Override
@@ -122,7 +129,41 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                             Snackbar.make(parentLayout, "Not Ready", Snackbar.LENGTH_SHORT);
                         }
                     });
-                    builder.show();
+                    builder.show(); */
+
+                    final EditText edittext = new EditText(SendActivity.this);
+                    alert.setMessage(R.string.dialog_message);
+                    alert.setTitle(R.string.dialog_title);
+
+                    alert.setView(edittext);
+
+                    alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            String password = edittext.getText().toString();
+
+                            if (!password.isEmpty()) {
+                                Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
+                                try {
+                                    key = Utils.generateKey(Utils.salt, password);
+                                    publish();
+                                    populateMessageListener();
+                                    subscribe();
+                                } catch (NoSuchAlgorithmException|InvalidKeySpecException e) {
+                                    Log.i("Error", e.toString());
+                                }
+                            }
+                        }
+                    });
+
+                    alert.setNegativeButton("Not Ready", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Snackbar.make(parentLayout, "Not Ready", Snackbar.LENGTH_SHORT);
+                        }
+                    });
+
+                    alert.show();
                 }
             });
         }
@@ -181,7 +222,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         person8 = (FloatingActionButton) findViewById(R.id.person8);
     }
 
-    @Override
+    /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_RESOLVE_ERROR) {
             if (resultCode == RESULT_OK) {
@@ -190,7 +231,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 subscribe();
             }
         }
-    }
+    } */
 
     @Override
     public void onStop() {
@@ -201,10 +242,10 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     private void publish() {
-        Log.i("TAG", "Trying to publish.");
         // Set a simple message payload.
-        Log.i("codyisdumb", carrier.toString());
-        mDeviceInfoMessage = new Message(carrier.toString().getBytes());
+        String messageString = carrier.toString();
+        String encrypted = Utils.encrypt(key, "", messageString);
+        mDeviceInfoMessage = new Message(encrypted.getBytes());
         // Cannot proceed without a connected GoogleApiClient.
         // Reconnect and execute the pending task in onConnected().
         if (!mGoogleApiClient.isConnected()) {
@@ -242,7 +283,15 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         messageListener = new MessageListener() {
             @Override
             public void onFound(final Message message) {
-                final String nearbyMessageString = new String(message.getContent());
+                String messageString = new String(message.getContent());
+                final String nearbyMessageString;
+
+                try {
+                    nearbyMessageString = Utils.decrypt(key, "", messageString);
+                } catch (IOException e) {
+                    Toast.makeText(SendActivity.this, "Passwords Don't Match", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 final Receiver newReceiver = new Receiver(nearbyMessageString);
                 receivers.add(newReceiver);
                 String name = newReceiver.getName();
@@ -254,15 +303,15 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 if (fab != null) {
                     fab.setImageDrawable(textDrawable);
 
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Pretty inefficient, need to figure out a better way
-                        Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
-                        intent.putExtra(PEOPLE_KEY, nearbyMessageString);
-                        startActivity(intent);
-                    }
-                });
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Pretty inefficient, need to figure out a better way
+                            Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
+                            intent.putExtra(PEOPLE_KEY, nearbyMessageString);
+                            startActivity(intent);
+                        }
+                    });
 
                     AnimationUtils.circularReveal(fab);
                 }
