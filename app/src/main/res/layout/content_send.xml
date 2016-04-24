@@ -40,7 +40,7 @@
                     android:layout_height="200dp"
                     android:clickable="true"
                     android:src="@drawable/ic_send_24dp"
-                    android:id="@+id/fab"
+                    android:id="@+id/big_fab"
                     app:borderWidth="0dp"
                     android:layout_margin="25dp"
                     />

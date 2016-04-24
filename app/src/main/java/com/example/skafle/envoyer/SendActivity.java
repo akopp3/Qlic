@@ -17,7 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -45,7 +47,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     public static final String PEOPLE_KEY = "people_key";
 
     private SharedPreferences pref;
-    private Button sendBtn;
     private GoogleApiClient mGoogleApiClient;
     private Message mDeviceInfoMessage;
     private MessageListener messageListener;
@@ -54,6 +55,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private Carrier carrier;
     private List<Receiver> receivers;
     private RelativeLayout layout;
+    private LinearLayout extraHolder;
 
     FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
 
@@ -87,7 +89,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         contactInfoCheckBox = (CheckBox) findViewById(R.id.contactInfoCheckBox);
         linkedInCheckBox = (CheckBox) findViewById(R.id.linkedInCheckBox);
 
-
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Nearby.MESSAGES_API)
                 .addConnectionCallbacks(this)
@@ -96,57 +97,42 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fabProgressCircle.show();
-                // For testing purposes, delete later
-                FloatingActionButton fab = showAndGetNextFAB();
-                TextDrawable textDrawable = TextDrawable.builder().buildRect("A", Color.TRANSPARENT);
-                fab.setImageDrawable(textDrawable);
-
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(SendActivity.this, "Aneesh is dumb", Toast.LENGTH_SHORT).show();
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.big_fab);
+        if (floatingActionButton != null) {
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (fabProgressCircle != null) {
+                        fabProgressCircle.show();
                     }
-                });
-
-                AnimationUtils.circularReveal(fab);
-            }
-        });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SendActivity.this);
+                    builder.setMessage(R.string.dialog_message)
+                            .setTitle(R.string.dialog_title)
+                            .setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
+                                    publish();
+                                    populateMessageListener();
+                                    subscribe();
+                                }
+                            }).setNegativeButton("Not Ready", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Snackbar.make(parentLayout, "Not Ready", Snackbar.LENGTH_SHORT);
+                        }
+                    });
+                    builder.show();
+                }
+            });
+        }
 
         parentLayout = findViewById(R.id.root_view);
         layout = (RelativeLayout) findViewById(R.id.peopleHolder);
-        sendBtn = (Button) findViewById(R.id.send_btn);
         carrier = new Carrier(pref.getString("name", "default"));
+        extraHolder = (LinearLayout) findViewById(R.id.extra_holder);
         receivers = new ArrayList<>();
         setCarrier();
-
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SendActivity.this);
-                builder.setMessage(R.string.dialog_message)
-                        .setTitle(R.string.dialog_title)
-                        .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
-                                publish();
-                                populateMessageListener();
-                                subscribe();
-                            }
-                        }).setNegativeButton("Not Ready", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Snackbar.make(parentLayout, "Not Ready", Snackbar.LENGTH_SHORT);
-                    }
-                });
-                builder.show();
-            }
-        });
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         bottomSheetBehavior.setPeekHeight(300);
@@ -401,8 +387,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     }
 
     private Social getSocial(String key) {
-        // TODO: Add functionality for other Socials
-
         Social soc = null;
         String mess = pref.getString(key, "");
         switch (key) {
