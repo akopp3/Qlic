@@ -46,7 +46,7 @@ import com.redbooth.WelcomeCoordinatorLayout;
 import java.util.zip.Inflater;
 
 public class SetupACtivity extends AppCompatActivity {
-    public static final String[] keys = {"name_name", "fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
+    public static final String[] keys = {"name", "fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
     public static final String[] types = {"Name", "Facebook", "Instagram", "Twitter", "Phone", "Contact Info", "LinkedIn"};
     private boolean animationReady = false;
     private ValueAnimator backgroundAnimator;
@@ -158,6 +158,7 @@ public class SetupACtivity extends AppCompatActivity {
                             }
                         });
                         editor.putString(key, editViews[i].getText().toString());
+                        System.out.println(editViews[i].getText().toString());
                     }
 
                     editor.apply();

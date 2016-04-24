@@ -28,8 +28,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="h@golfswing"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#212121"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,20 +41,17 @@
         android:layout_toRightOf="@id/imageView"
         android:text="Facebook"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="#727272"
         android:id="@+id/typeTextView"/>
 
     <CheckBox
         android:id="@+id/chkState8"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:checked="true"
-        android:padding="6dp" />
+        android:layout_marginRight="12dp"/>
 
 
     <View xmlns:android="http://schemas.android.com/apk/res/android"

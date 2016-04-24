@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -51,9 +53,20 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private View parentLayout;
     private Carrier carrier;
     private List<Receiver> receivers;
-    private LinearLayout extraHolder;
+    private RelativeLayout layout;
 
     FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
+
+    View bottomSheet;
+    BottomSheetBehavior bottomSheetBehavior;
+    FloatingActionButton selectAllFAB;
+    ImageView arrowImageView;
+    CheckBox facebookCheckBox;
+    CheckBox instagramCheckBox;
+    CheckBox twitterCheckBox;
+    CheckBox phoneNumberCheckBox;
+    CheckBox contactInfoCheckBox;
+    CheckBox linkedInCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +76,17 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         setSupportActionBar(toolbar);
 
         Log.d("ONCREATE", "EXISTS");
+
+        bottomSheet = findViewById(R.id.bottom_sheet);
+        selectAllFAB = (FloatingActionButton) findViewById(R.id.selectAllFab);
+        arrowImageView = (ImageView) findViewById(R.id.arrow);
+        facebookCheckBox = (CheckBox) findViewById(R.id.facebookCheckBox);
+        instagramCheckBox = (CheckBox) findViewById(R.id.instagramCheckBox);
+        twitterCheckBox = (CheckBox) findViewById(R.id.twitterCheckBox);
+        phoneNumberCheckBox = (CheckBox) findViewById(R.id.phoneNumberCheckBox);
+        contactInfoCheckBox = (CheckBox) findViewById(R.id.contactInfoCheckBox);
+        linkedInCheckBox = (CheckBox) findViewById(R.id.linkedInCheckBox);
+
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Nearby.MESSAGES_API)
@@ -94,8 +118,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         });
 
         parentLayout = findViewById(R.id.root_view);
+        layout = (RelativeLayout) findViewById(R.id.peopleHolder);
         sendBtn = (Button) findViewById(R.id.send_btn);
-        extraHolder = (LinearLayout) findViewById(R.id.extra_holder);
         carrier = new Carrier(pref.getString("name", "default"));
         receivers = new ArrayList<>();
         setCarrier();
@@ -121,6 +145,43 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                     }
                 });
                 builder.show();
+            }
+        });
+
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        bottomSheetBehavior.setPeekHeight(300);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        arrowImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    arrowImageView.setImageResource(R.drawable.down_arrow);
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    arrowImageView.setImageResource(R.drawable.up_arrow);
+                }
+            }
+        });
+
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    arrowImageView.setImageResource(R.drawable.up_arrow);
+                    AnimationUtils.circularHide(selectAllFAB);
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED){
+                    arrowImageView.setImageResource(R.drawable.down_arrow);
+                    AnimationUtils.circularReveal(selectAllFAB);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+//                ArgbEvaluator evaluator = new ArgbEvaluator();
+//                Log.i("test", "" + (Integer) evaluator.evaluate(slideOffset, R.color.colorAccent, R.color.colorPrimary));
+//                bottomSheet.setBackgroundColor((Integer) evaluator.evaluate(slideOffset, R.color.colorAccent, R.color.colorPrimary));
             }
         });
 
@@ -207,15 +268,15 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 if (fab != null) {
                     fab.setImageDrawable(textDrawable);
 
-                    fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // Pretty inefficient, need to figure out a better way
-                            Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
-                            intent.putExtra(PEOPLE_KEY, nearbyMessageString);
-                            startActivity(intent);
-                        }
-                    });
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Pretty inefficient, need to figure out a better way
+                        Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
+                        intent.putExtra(PEOPLE_KEY, nearbyMessageString);
+                        startActivity(intent);
+                    }
+                });
 
                     AnimationUtils.circularReveal(fab);
                 }
