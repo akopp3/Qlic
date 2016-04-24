@@ -3,6 +3,7 @@ package com.example.skafle.envoyer;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 public class EditProfileActivity extends AppCompatActivity {
 
     LinearLayout linearLayout;
+    CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton fab;
 
     @Override
@@ -23,23 +25,25 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_view);
 
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        for (int i = 0; i < SetupACtivity.keys.length; i++) {
+        for (int i = 0; i < MainActivity.keys.length; i++) {
             RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_row_edit, null, false);
             ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
             EditText handleEditText = (EditText) tableRow.findViewById(R.id.handleEditText);
             TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
             imageView.setImageResource(ContactViewActivity.SOCIAL_ICON_IDS[i]);
-            handleEditText.setText(sharedPreferences.getString(SetupACtivity.keys[i], ""));
-            typeTextView.setText(SetupACtivity.types[i]);
+            handleEditText.setText(sharedPreferences.getString(MainActivity.keys[i], ""));
+            typeTextView.setText(MainActivity.types[i]);
             linearLayout.addView(tableRow);
         }
 
+        collapsingToolbarLayout.setTitle(sharedPreferences.getString("name", ""));
         fab.setImageResource(R.drawable.save);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +53,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     EditText editText = (EditText) relativeLayout.findViewById(R.id.handleEditText);
                     editor.putString(MainActivity.keys[i], editText.getText().toString());
                 }
-                editor.commit();
+                editor.apply();
                 finish();
             }
         });

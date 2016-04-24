@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class ContactViewActivity extends AppCompatActivity {
 
-    public static final int[] SOCIAL_ICON_IDS = {R.drawable.name, R.drawable.facebook, R.drawable.instagram,
+    public static final int[] SOCIAL_ICON_IDS = {R.drawable.facebook, R.drawable.instagram,
             R.drawable.twitter, R.drawable.phone, R.drawable.email, R.drawable.linkedin};
 
     LinearLayout linearLayout;
@@ -87,17 +87,17 @@ public class ContactViewActivity extends AppCompatActivity {
             });
         } else {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            for (int i = 0; i < SetupACtivity.keys.length; i++) {
+            for (int i = 0; i < MainActivity.keys.length; i++) {
                 RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row, null, false);
                 ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
                 TextView handleTextView = (TextView) tableRow.findViewById(R.id.handleTextView);
                 TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
                 imageView.setImageResource(SOCIAL_ICON_IDS[i]);
-                handleTextView.setText(sharedPreferences.getString(SetupACtivity.keys[i], ""));
-                typeTextView.setText(SetupACtivity.types[i]);
+                handleTextView.setText(sharedPreferences.getString(MainActivity.keys[i], ""));
+                typeTextView.setText(MainActivity.types[i]);
                 linearLayout.addView(tableRow);
             }
-            collapsingToolbarLayout.setTitle(sharedPreferences.getString(SetupACtivity.keys[5], ""));
+            collapsingToolbarLayout.setTitle(sharedPreferences.getString("name", ""));
             fab.setImageResource(R.drawable.edit);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override

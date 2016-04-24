@@ -41,7 +41,8 @@
                     android:src="@drawable/ic_send_24dp"
                     android:id="@+id/fab"
                     app:borderWidth="0dp"
-                    android:layout_margin="25dp" />
+                    android:layout_margin="25dp"
+                    />
             </com.github.jorgecastilloprz.FABProgressCircle>
 
             <android.support.design.widget.FloatingActionButton
