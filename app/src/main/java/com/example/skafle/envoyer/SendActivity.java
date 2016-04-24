@@ -278,6 +278,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                     }
                 });
 
+                AnimationUtils.circularReveal(fab);
+
                 Log.i("FOUND", nearbyMessageString);
             }
 
