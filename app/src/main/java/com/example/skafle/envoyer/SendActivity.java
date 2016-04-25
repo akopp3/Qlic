@@ -104,23 +104,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 public void onClick(View v) {
                     setCarrier();
                     AlertDialog.Builder alert = new AlertDialog.Builder(SendActivity.this);
-                    /* builder.setMessage(R.string.dialog_message)
-                            .setTitle(R.string.dialog_title)
-                            .setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
-                                    publish();
-                                    populateMessageListener();
-                                    subscribe();
-                                }
-                            }).setNegativeButton("Not Ready", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Snackbar.make(parentLayout, "Not Ready", Snackbar.LENGTH_SHORT);
-                        }
-                    });
-                    builder.show(); */
 
                     final EditText edittext = new EditText(SendActivity.this);
                     alert.setMessage(R.string.dialog_message);
@@ -140,7 +123,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
                             if (!password.isEmpty()) {
-//                                Snackbar.make(parentLayout, "Sent", Snackbar.LENGTH_SHORT).show();
                                 try {
                                     key = Utils.generateKey(Utils.salt, password);
                                     publish();
