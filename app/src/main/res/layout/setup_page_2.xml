@@ -34,7 +34,9 @@
                 style="@style/editTextElegant"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name" />
+                android:hint="Name"
+                android:inputType="textImeMultiLine"
+                />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -46,7 +48,9 @@
                 style="@style/editTextElegant"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Phone Number" />
+                android:hint="Phone Number"
+                android:inputType="number"
+                android:imeOptions="actionNext"/>
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -57,7 +61,9 @@
                 style="@style/editTextElegant"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Email" />
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionNext"/>
         </android.support.design.widget.TextInputLayout>
         <!--<android.support.design.widget.TextInputLayout-->
             <!--android:layout_width="match_parent"-->
@@ -80,7 +86,9 @@
                 style="@style/editTextElegant"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Instagram Username" />
+                android:hint="Instagram Username"
+                android:inputType="textImeMultiLine"
+                />
         </android.support.design.widget.TextInputLayout>
         <!--<android.support.design.widget.TextInputLayout-->
             <!--android:layout_width="match_parent"-->
@@ -103,7 +111,10 @@
                 style="@style/editTextElegant"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="LinkedIn Name" />
+                android:hint="LinkedIn Name"
+                android:inputType="textImeMultiLine"
+                android:imeOptions="actionNone"
+                />
         </android.support.design.widget.TextInputLayout>
         <TableLayout
             android:layout_width="wrap_content"
