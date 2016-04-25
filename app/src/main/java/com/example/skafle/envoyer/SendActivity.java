@@ -14,8 +14,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -109,25 +111,30 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                     alert.setMessage(R.string.dialog_message);
                     alert.setTitle(R.string.dialog_title);
 
+                    edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+
                     alert.setView(edittext);
 
                     alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
                             String password = edittext.getText().toString();
-                            if (fabProgressCircle != null) {
-                                fabProgressCircle.show();
-                            }
+
                             bottomSheetBehavior.setPeekHeight(0);
                             bottomSheetBehavior.setHideable(true);
                             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
                             if (!password.isEmpty()) {
                                 try {
-                                    key = Utils.generateKey(Utils.salt, password);
-                                    publish();
-                                    populateMessageListener();
-                                    subscribe();
+                                    if (password.length() != 4) {
+                                        Toast.makeText(SendActivity.this, "Password must be length 4", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        key = Utils.generateKey(Utils.salt, password);
+                                        fabProgressCircle.show();
+                                        publish();
+                                        populateMessageListener();
+                                        subscribe();
+                                    }
                                 } catch (NoSuchAlgorithmException|InvalidKeySpecException e) {
                                     Log.i("Error", e.toString());
                                 }
