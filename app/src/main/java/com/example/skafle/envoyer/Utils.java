@@ -25,24 +25,10 @@ public class Utils {
     public static String iv;
 
     public static void initialize() {
-        /* final Random r = new SecureRandom();
-        salt = new byte[32];
-        r.nextBytes(salt); */
+        byte[] saltInit = {95, 105, 6, 70, 107, 26, 46, 117, 7, 82, 20, 69, 88, 123, 20, 40};
+        salt = saltInit;
 
-//        salt = new byte[3];
-//        salt[0] = 3;
-//        salt[1] = 4;
-//        salt[2] = 6;
-
-        salt = new byte[16];
-        for (byte i = 0; i < 16; i++) {
-            salt[i] = i;
-        }
-
-        byte[] bt = new byte[16];
-        for (byte i = 0; i < 16; i++) {
-            bt[i] = i;
-        }
+        byte[] bt = {114, 27, 26, 26, 64, 96, 81, 63, 58, 120, 91, 122, 48, 126, 124, 67};
 
         iv = new String(bt);
     }
