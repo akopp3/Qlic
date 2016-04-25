@@ -44,12 +44,11 @@
         <activity android:name=".ContactViewActivity" />
         <activity
             android:name=".EditProfileActivity"
-            android:label="@string/title_activity_edit_profile"/>
-            
+            android:label="@string/title_activity_edit_profile" />
         <activity
             android:name=".FacebookTesting"
             android:label="@string/title_activity_facebook_testing" >
         </activity>
-    </application>
+        </application>
 
 </manifest>
