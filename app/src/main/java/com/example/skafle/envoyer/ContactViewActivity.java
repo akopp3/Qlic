@@ -60,7 +60,7 @@ public class ContactViewActivity extends AppCompatActivity {
             collapsingToolbarLayout.setTitle(name);
             for (int i = 0; i < MainActivity.types.length; i++) {
                 String typeVar = MainActivity.types[i];
-                Social social = receiver.getSocial(typeVar);
+                final Social social = receiver.getSocial(typeVar);
                 if (social != null) {
                     Log.i("test", "added");
                     final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
