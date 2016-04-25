@@ -4,20 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/welcome_page_top"
     android:theme="@style/AppTheme"
-    tools:background="@color/setup2">
+    tools:background="@color/setup2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
+
         android:id="@+id/title"
         style="@style/text_title_top"
         android:layout_above="@+id/subtitle"
         android:paddingTop="16dp"
         android:text="Almost Done!"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
         />
 
     <TextView
         android:id="@+id/subtitle_top"
         style="@style/text_subtitle"
         android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="Enter any information you \nwant to share with others" />
 
     <LinearLayout

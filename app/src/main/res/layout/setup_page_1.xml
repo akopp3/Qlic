@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/welcome_page"
-    tools:background="@color/setup1">
+    tools:background="@color/setup1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/rocketimg"
@@ -17,12 +19,16 @@
         android:id="@+id/title"
         style="@style/text_title"
         android:layout_above="@+id/subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Envoyer" />
 
     <TextView
         android:id="@+id/subtitle"
         style="@style/text_subtitle"
         android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Share your contact \ninformation simply and elegantly" />
 
 </com.redbooth.WelcomePageLayout>

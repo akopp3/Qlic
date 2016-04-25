@@ -3,19 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/welcome_page_top"
-    tools:background="@color/setup3">
+    tools:background="@color/setup3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/title"
         style="@style/text_title_top"
         android:paddingTop="16dp"
         android:text="You're Done!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"/>
 
     <TextView
         android:id="@+id/subtitle_top"
         style="@style/text_subtitle"
         android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Press NEXT and start sharing \ninfo with friends!" />
     <ImageView
         android:id="@+id/checkmark"
