@@ -59,7 +59,7 @@ public class ContactViewActivity extends AppCompatActivity {
             String name = receiver.getName();
             collapsingToolbarLayout.setTitle(name);
             for (String typeVar : MainActivity.types) {
-                Social social = receiver.getSocial(typeVar);
+                final Social social = receiver.getSocial(typeVar);
                 if (social != null) {
                     Log.i("test", "added");
                     final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
@@ -69,7 +69,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         signin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent facebookIntent = getOpenFacebookIntent(getApplicationContext());
+                                Intent facebookIntent = getOpenFacebookIntent(getApplicationContext(), social);
                                 startActivity(facebookIntent);
                             }
                         });
@@ -79,7 +79,7 @@ public class ContactViewActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent lit = new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse("https://www.Instagram.com/" + sharedPreferences.getString(MainActivity.keys[1], "")));
+                                        Uri.parse(social.keyInfo()));
                                 startActivity(lit);
                             }
                         });
@@ -89,7 +89,7 @@ public class ContactViewActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent lit1 = new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse("https://www.Twitter.com/" + sharedPreferences.getString(MainActivity.keys[2], "")));
+                                        Uri.parse("https://www.Twitter.com/" + social.keyInfo()));
                                 startActivity(lit1);
                             }
                         });
@@ -161,16 +161,16 @@ public class ContactViewActivity extends AppCompatActivity {
         }
     }
 
-    public static Intent getOpenFacebookIntent(Context context) {
+    public static Intent getOpenFacebookIntent(Context context, Social soc) {
 
         try {
             context.getPackageManager()
                     .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
             return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.facebook.com/app_scoped_user_id/" + sharedPreferences.getString(MainActivity.keys[0], ""))); //Trys to make intent with FB's URI
+                    Uri.parse(soc.keyInfo())); //Trys to make intent with FB's URI
         } catch (Exception e) {
             return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.facebook.com/app_scoped_user_id/" + sharedPreferences.getString(MainActivity.keys[0], ""))); //catches and opens a url to the desired page
+                    Uri.parse(soc.keyInfo())); //catches and opens a url to the desired page
         }
     }
 

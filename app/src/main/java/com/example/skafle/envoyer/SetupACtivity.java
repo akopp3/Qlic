@@ -209,22 +209,25 @@ public class SetupACtivity extends AppCompatActivity {
                 if (coordinatorLayout.getPageSelected() == 2) {
 
 
-                    final EditText[] editViews = {nameText /*fbEdit*/, instaEdit /*twitEdit*/, phoneEdit, contactEdit, linkEdit};
+                    final EditText[] editViews = {nameText, instaEdit, phoneEdit, contactEdit, linkEdit};
 
 
-                    for (int i = 0; i < editViews.length+2; i++) {
 
-                        String key = keys[i];
 
-                        if (i == 1) {
-                            editor.putString(key, id);
-                            System.out.println(id);
-                        }else if (i == 3) {
-                            editor.putString(key, id);
-                            System.out.println(id);
-                        } else {
+                        String fbKey = keys[1];
+                        String twitKey = keys[3];
+                        editor.putString(fbKey, id);
+                        System.out.println(id);
 
-                            editViews[i].setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                        editor.putString(twitKey, id);
+                        System.out.println(id);
+
+                    int j = 0;
+                    for (int i = 0; i < keys.length; i++) {
+
+                        if (i != 1 && i != 3) {
+                            String key = keys[i];
+                            editViews[j].setOnEditorActionListener(new TextView.OnEditorActionListener() {
                                 @Override
                                 public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                                     if (id == EditorInfo.IME_ACTION_DONE) {
@@ -233,9 +236,13 @@ public class SetupACtivity extends AppCompatActivity {
                                     return false;
                                 }
                             });
-                            editor.putString(key, editViews[i].getText().toString());
-                            System.out.println(editViews[i].getText().toString());
+                            editor.putString(key, editViews[j].getText().toString());
+                            System.out.println(editViews[j].getText().toString());
+                            j++;
+
                         }
+
+
                     }
 
                     editor.apply();
@@ -280,6 +287,12 @@ public class SetupACtivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
