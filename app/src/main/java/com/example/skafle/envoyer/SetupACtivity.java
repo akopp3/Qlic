@@ -75,11 +75,15 @@ public class SetupACtivity extends AppCompatActivity {
     private EditText linkEdit;
     private EditText nameText;
     private SharedPreferences sharedPreferences;
+    private CallbackManager callbackManager;
+    public static String name, id;
+    private LoginButton loginButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_setup_activity);
 //        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.setup_page_2, null);
 
@@ -92,16 +96,18 @@ public class SetupACtivity extends AppCompatActivity {
 //        linkEdit = (EditText) view.findViewById(R.id.link_input);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-        if(sharedPreferences.contains("tutorial")){
+        if (sharedPreferences.contains("tutorial")) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-        } else{
+        } else {
             editor.putBoolean("tutorial", false);
         }
         editor.apply();
         coordinatorLayout = (WelcomeCoordinatorLayout) findViewById(R.id.coordinator);
         skip = (Button) findViewById(R.id.skip);
+
+
         coordinatorLayout.setOnPageScrollListener(new WelcomeCoordinatorLayout.OnPageScrollListener() {
             @Override
             public void onScrollPage(View v, float progress, float maximum) {
@@ -120,12 +126,64 @@ public class SetupACtivity extends AppCompatActivity {
                         break;
                     case 1:
                         nameText = (EditText) v.findViewById(R.id.name_txt);
-                        fbEdit = (EditText) v.findViewById(R.id.fb_input);
+                        //fbEdit = (EditText) v.findViewById(R.id.fb_input);
                         instaEdit = (EditText) v.findViewById(R.id.inst_input);
-                        twitEdit = (EditText) v.findViewById(R.id.twit_input);
+                        //twitEdit = (EditText) v.findViewById(R.id.twit_input);
                         phoneEdit = (EditText) v.findViewById(R.id.phone_input);
                         contactEdit = (EditText) v.findViewById(R.id.cont_input);
                         linkEdit = (EditText) v.findViewById(R.id.link_input);
+
+                        FacebookSdk.addLoggingBehavior(LoggingBehavior.REQUESTS);
+                        loginButton = (LoginButton) findViewById(R.id.fb_login);
+                        List<String> permissionList = Arrays.asList("user_friends", "public_profile");
+                        loginButton.setReadPermissions(permissionList);
+                        callbackManager = CallbackManager.Factory.create();
+
+                        loginButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                                    @Override
+                                    public void onSuccess(LoginResult loginResult) {
+                                        Log.v("FacebookLogin", "SUCCESS");
+                                        GraphRequest request = GraphRequest.newMeRequest(
+                                                loginResult.getAccessToken(),
+                                                new GraphRequest.GraphJSONObjectCallback() {
+                                                    @Override
+                                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                                        Log.v("LoginActivity", response.toString());
+                                                        try {
+                                                            name = object.getString("name");
+                                                            id = object.getString("id");
+                                                            //List <String> = object.getJSONArray()
+                                                            Toast.makeText(getApplicationContext(), "Facebook Login Successful", Toast.LENGTH_LONG).show();
+                                                            Log.i("NAME", name);
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                        Bundle parameters = new Bundle();
+                                        parameters.putString("fields", "id,name,email,gender,birthday");
+                                        request.setParameters(parameters);
+                                        request.executeAsync();
+                                    }
+
+                                    @Override
+                                    public void onCancel() {
+                                        Log.v("FacebookLogin", "LOGIN CANCEL");
+                                    }
+
+                                    @Override
+                                    public void onError(FacebookException exception) {
+                                        Log.v("FacebookLoginError", exception.getCause().toString());
+                                    }
+                                });
+                            }
+                        });
+
+
                         break;
                     case 2:
                         break;
@@ -140,47 +198,50 @@ public class SetupACtivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (coordinatorLayout.getPageSelected() == coordinatorLayout.getNumOfPages() - 1) {
                     editor.putBoolean("tutorial", true);
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
                     coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
                 }
 
                 editor.putBoolean("tutorial", false);
-                coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
+                //coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 2, true);
                 if (coordinatorLayout.getPageSelected() == 2) {
 
-                    final EditText[] editViews = {nameText, fbEdit, instaEdit, twitEdit, phoneEdit, contactEdit, linkEdit};
-                    Log.i("name", nameText.getText().toString());
-                    String nameString = nameText.getText().toString();
-                    Log.i("fb", fbEdit.getText().toString());
-                    String fbString = fbEdit.getText().toString();
-                    Log.i("phone", phoneEdit.getText().toString());
-                    String phoneString = phoneEdit.getText().toString();
-                    Log.i("link", linkEdit.getText().toString());
-                    String linkString = linkEdit.getText().toString();
+
+                    final EditText[] editViews = {nameText /*fbEdit*/, instaEdit /*twitEdit*/, phoneEdit, contactEdit, linkEdit};
 
 
-                    for (int i = 0; i < editViews.length; i++) {
+                    for (int i = 0; i < editViews.length+2; i++) {
 
                         String key = keys[i];
 
-                        editViews[i].setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                            @Override
-                            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                                if (id == EditorInfo.IME_ACTION_DONE) {
-                                    return true;
+                        if (i == 1) {
+                            editor.putString(key, id);
+                            System.out.println(id);
+                        }else if (i == 3) {
+                            editor.putString(key, id);
+                            System.out.println(id);
+                        } else {
+
+                            editViews[i].setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                                @Override
+                                public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                                    if (id == EditorInfo.IME_ACTION_DONE) {
+                                        return true;
+                                    }
+                                    return false;
                                 }
-                                return false;
-                            }
-                        });
-                        editor.putString(key, editViews[i].getText().toString());
-                        System.out.println(editViews[i].getText().toString());
+                            });
+                            editor.putString(key, editViews[i].getText().toString());
+                            System.out.println(editViews[i].getText().toString());
+                        }
                     }
 
                     editor.apply();
                     Snackbar.make(findViewById(android.R.id.content), "Saved", Snackbar.LENGTH_LONG)
                             .show();
+
                 }
             }
         });
@@ -188,12 +249,20 @@ public class SetupACtivity extends AppCompatActivity {
         initializeBackgroundTransitions();
     }
 
+
+
+
     @Override
     public void onBackPressed() {
-        if(coordinatorLayout.getPageSelected()!=0){
+        if (coordinatorLayout.getPageSelected() != 0) {
             coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() - 1, true);
+        } else {
+            coordinatorLayout.setCurrentPage(0, true);
         }
+
     }
+
+
     private void initializeBackgroundTransitions() {
         final Resources resources = getResources();
 

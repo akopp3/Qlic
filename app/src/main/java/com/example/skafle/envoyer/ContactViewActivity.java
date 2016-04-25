@@ -1,7 +1,9 @@
 package com.example.skafle.envoyer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +32,7 @@ public class ContactViewActivity extends AppCompatActivity {
     Receiver receiver;
 
     Intent intent;
-    SharedPreferences sharedPreferences;
+    public static SharedPreferences sharedPreferences;
 
 
     @Override
@@ -59,14 +62,39 @@ public class ContactViewActivity extends AppCompatActivity {
                 Social social = receiver.getSocial(typeVar);
                 if (social != null) {
                     Log.i("test", "added");
-                    String type = social.type();
-                    String handle = social.keyInfo();
-                    final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row, null, false);
+                    final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
                     ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
-                    TextView handleTextView = (TextView) tableRow.findViewById(R.id.handleTextView);
-                    TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
-                    handleTextView.setText(handle);
-                    typeTextView.setText(type);
+                    Button signin = (Button) tableRow.findViewById(R.id.signIn);
+                    if (typeVar.equalsIgnoreCase("Facebook")) {
+                        signin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent facebookIntent = getOpenFacebookIntent(getApplicationContext());
+                                startActivity(facebookIntent);
+                            }
+                        });
+                    }
+                    else if (typeVar.equalsIgnoreCase("Instagram"))  {
+                        signin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent lit = new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse("https://www.Instagram.com/" + sharedPreferences.getString(MainActivity.keys[1], "")));
+                                startActivity(lit);
+                            }
+                        });
+                    }
+                    else if (typeVar.equalsIgnoreCase("Twitter"))  {
+                        signin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent lit1 = new Intent(Intent.ACTION_VIEW,
+                                        Uri.parse("https://www.Twitter.com/" + sharedPreferences.getString(MainActivity.keys[2], "")));
+                                startActivity(lit1);
+                            }
+                        });
+                    }
+
                     linearLayout.addView(tableRow);
                 }
             }
@@ -132,5 +160,20 @@ public class ContactViewActivity extends AppCompatActivity {
             editor.apply();
         }
     }
+
+    public static Intent getOpenFacebookIntent(Context context) {
+
+        try {
+            context.getPackageManager()
+                    .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/app_scoped_user_id/" + sharedPreferences.getString(MainActivity.keys[0], ""))); //Trys to make intent with FB's URI
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/app_scoped_user_id/" + sharedPreferences.getString(MainActivity.keys[0], ""))); //catches and opens a url to the desired page
+        }
+    }
+
+
 }
 

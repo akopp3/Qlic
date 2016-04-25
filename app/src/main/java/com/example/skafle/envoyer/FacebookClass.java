@@ -4,11 +4,11 @@ package com.example.skafle.envoyer;
  * Created by Abhinav on 4/2/2016.
  */
 public class FacebookClass extends ActivateHandler {
-    private String username;
+    private String id;
 
     @Override
     public void setKeyInfo(String info) {
-        username = info;
+        id = info;
     }
 
     @Override
@@ -18,10 +18,10 @@ public class FacebookClass extends ActivateHandler {
 
     @Override
     public String keyInfo() {
-        return "https://www.facebook.com/" + username;
+        return "https://www.facebook.com/app_scoped_user_id/" + id;
     }
 
     public String stringRep() {
-        return username;
+        return id;
     }
 }

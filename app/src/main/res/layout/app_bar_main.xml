@@ -17,6 +17,13 @@
 
     <include layout="@layout/content_main" />
 
+    <!--<com.facebook.login.widget.LoginButton-->
+        <!--android:id="@+id/fb_login"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_above="@+id/link_input"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
     <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
         android:layout_width="wrap_content" android:layout_height="wrap_content"

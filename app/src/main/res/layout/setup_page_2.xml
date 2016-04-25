@@ -59,17 +59,18 @@
                 android:layout_height="match_parent"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/Theme.AppCompat">
-            <EditText
-                android:id="@+id/fb_input"
-                style="@style/editTextElegant"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Facebook Name" />
-        </android.support.design.widget.TextInputLayout>
+        <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:theme="@style/Theme.AppCompat">-->
+            <!--<EditText-->
+                <!--android:id="@+id/fb_input"-->
+                <!--style="@style/editTextElegant"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:hint="Facebook Name" />-->
+        <!--</android.support.design.widget.TextInputLayout>-->
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,17 +82,17 @@
                 android:layout_height="match_parent"
                 android:hint="Instagram Username" />
         </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/Theme.AppCompat">
-            <EditText
-                android:id="@+id/twit_input"
-                style="@style/editTextElegant"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Twitter Username" />
-        </android.support.design.widget.TextInputLayout>
+        <!--<android.support.design.widget.TextInputLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:theme="@style/Theme.AppCompat">-->
+            <!--<EditText-->
+                <!--android:id="@+id/twit_input"-->
+                <!--style="@style/editTextElegant"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:hint="Twitter Username" />-->
+        <!--</android.support.design.widget.TextInputLayout>-->
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -104,6 +105,30 @@
                 android:layout_height="match_parent"
                 android:hint="LinkedIn Name" />
         </android.support.design.widget.TextInputLayout>
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dip"
+            android:stretchColumns="1,2">
 
-        </LinearLayout>
+            <TableRow>
+                <!--<Button-->
+                <!--android:id="@+id/twit_login"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Twitter"-->
+                <!--android:layout_centerVertical = "true"-->
+                />
+            </TableRow>
+        </TableLayout>
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fb_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_horizontal" />
+
+
+    </LinearLayout>
 </com.redbooth.WelcomePageLayout>
