@@ -2,6 +2,8 @@ package com.example.skafle.envoyer;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -100,8 +102,6 @@ public class SetupACtivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            editor.putBoolean("tutorial", false);
         }
         editor.apply();
         coordinatorLayout = (WelcomeCoordinatorLayout) findViewById(R.id.coordinator);
@@ -182,10 +182,22 @@ public class SetupACtivity extends AppCompatActivity {
                                 });
                             }
                         });
-
-
                         break;
                     case 2:
+                        if (nameText.getText().toString().isEmpty()) {
+                            coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() - 1, true);
+                            AlertDialog.Builder alert = new AlertDialog.Builder(SetupACtivity.this);
+                            alert.setTitle(R.string.name_error_title);
+                            alert.setMessage(R.string.name_error_txt);
+
+                            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                }
+                            });
+
+                            alert.show();
+                        }
                         break;
                     case 3:
                         break;
@@ -196,7 +208,9 @@ public class SetupACtivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (coordinatorLayout.getPageSelected() == coordinatorLayout.getNumOfPages() - 1) {
+                int numPage = coordinatorLayout.getPageSelected();
+                int totalPages = coordinatorLayout.getNumOfPages() - 1;
+                if (numPage == totalPages) {
                     editor.putBoolean("tutorial", true);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
@@ -204,23 +218,17 @@ public class SetupACtivity extends AppCompatActivity {
                     coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
                 }
 
-                editor.putBoolean("tutorial", false);
                 //coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 2, true);
                 if (coordinatorLayout.getPageSelected() == 2) {
-
-
                     final EditText[] editViews = {nameText, instaEdit, phoneEdit, contactEdit, linkEdit};
+                    String fbKey = keys[1];
+                    String twitKey = keys[3];
+                    editor.putString(fbKey, id);
+                    System.out.println(id);
+                    editor.putString(twitKey, id);
+                    System.out.println(id);
 
-
-
-
-                        String fbKey = keys[1];
-                        String twitKey = keys[3];
-                        editor.putString(fbKey, id);
-                        System.out.println(id);
-
-                        editor.putString(twitKey, id);
-                        System.out.println(id);
+                    nameText.setError("You must put a Name in");
 
                     int j = 0;
                     for (int i = 0; i < keys.length; i++) {
@@ -236,13 +244,13 @@ public class SetupACtivity extends AppCompatActivity {
                                     return false;
                                 }
                             });
-                            editor.putString(key, editViews[j].getText().toString());
+
+                            String text = editViews[j].getText().toString();
+
+                            editor.putString(key, text);
                             System.out.println(editViews[j].getText().toString());
                             j++;
-
                         }
-
-
                     }
 
                     editor.apply();
@@ -256,9 +264,6 @@ public class SetupACtivity extends AppCompatActivity {
         initializeBackgroundTransitions();
     }
 
-
-
-
     @Override
     public void onBackPressed() {
         if (coordinatorLayout.getPageSelected() != 0) {
@@ -268,7 +273,6 @@ public class SetupACtivity extends AppCompatActivity {
         }
 
     }
-
 
     private void initializeBackgroundTransitions() {
         final Resources resources = getResources();
@@ -285,8 +289,6 @@ public class SetupACtivity extends AppCompatActivity {
                 coordinatorLayout.setBackgroundColor((int) animation.getAnimatedValue());
             }
         });
-
-
     }
 
     @Override
@@ -294,6 +296,4 @@ public class SetupACtivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
-
 }
