@@ -8,6 +8,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -122,5 +125,11 @@ public class Utils {
         } catch (Exception ex) {
             throw new IOException("Password does not match");
         }
+    }
+
+    public static String dateString(Calendar calendar) {
+        Date date = calendar.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
+        return sdf.format(date);
     }
 }

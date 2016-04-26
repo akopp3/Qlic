@@ -50,10 +50,11 @@ public class HistoryDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addPersonToDatabase(Receiver receiver) {
+    public void addPersonToDatabase(Receiver receiver, String timestamp) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NAME, receiver.getName());
         contentValues.put(DATA, receiver.getMessageData());
+        contentValues.put(DATE, timestamp);
         getWritableDatabase().insert(TABLE_NAME, null, contentValues);
     }
 }

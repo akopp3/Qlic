@@ -2,6 +2,9 @@ package com.example.skafle.envoyer;
 
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,7 +24,6 @@ public class Receiver {
         messageData = rep;
         Scanner scanner = new Scanner(rep);
         Log.i("rep",rep);
-
 
         name = scanner.nextLine();
         socialMap = new HashMap<>();

@@ -33,9 +33,11 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
         cursor.moveToPosition(position);
         String data = cursor.getString(1);
+        String date = cursor.getString(2);
         Receiver receiver = new Receiver(data);
         holder.nameTextView.setText(receiver.getName());
-        // TODO: 4/21/16 Have to format the date 
+        // TODO: 4/21/16 Have to format the date
+        holder.dateTextView.setText(date);
     }
 
     @Override
