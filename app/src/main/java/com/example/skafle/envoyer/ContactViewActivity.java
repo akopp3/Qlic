@@ -58,7 +58,8 @@ public class ContactViewActivity extends AppCompatActivity {
             receiver = new Receiver(info);
             String name = receiver.getName();
             collapsingToolbarLayout.setTitle(name);
-            for (String typeVar : MainActivity.types) {
+            for (int i = 0; i < MainActivity.types.length; i++) {
+                String typeVar = MainActivity.types[i];
                 final Social social = receiver.getSocial(typeVar);
                 if (social != null) {
                     Log.i("test", "added");
@@ -95,6 +96,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         });
                     }
 
+                    imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                     linearLayout.addView(tableRow);
                 }
             }

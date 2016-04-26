@@ -501,9 +501,13 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        mGoogleApiClient.disconnect();
-        this.finish();
+        if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+            super.onBackPressed();
+            mGoogleApiClient.disconnect();
+            this.finish();
+        } else {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     int numPeople = 0;
