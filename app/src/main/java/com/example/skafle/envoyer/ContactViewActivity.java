@@ -129,11 +129,17 @@ public class ContactViewActivity extends AppCompatActivity {
                     ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
                     TextView handleTextView = (TextView) tableRow.findViewById(R.id.handleTextView);
                     TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
-                    CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
+                    final CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
                     imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                     handleTextView.setText(sharedPreferences.getString(MainActivity.keys[i], ""));
                     typeTextView.setText(MainActivity.types[i]);
                     checkBox.setChecked(sharedPreferences.getBoolean(MainActivity.enabledKeys[i], false));
+                    tableRow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            checkBox.setChecked(!checkBox.isChecked());
+                        }
+                    });
                     linearLayout.addView(tableRow);
                 }
             }
