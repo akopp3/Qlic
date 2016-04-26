@@ -2,6 +2,8 @@ package com.example.skafle.envoyer;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.content.Context;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -54,6 +56,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.redbooth.WelcomeCoordinatorLayout;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+
+import io.fabric.sdk.android.Fabric;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,24 +91,23 @@ public class SetupACtivity extends AppCompatActivity {
     private EditText nameText;
     private SharedPreferences sharedPreferences;
     private CallbackManager callbackManager;
-    public static String name, id;
+    public static String name, id, userID;
     private LoginButton loginButton;
+    private static final String TWITTER_KEY = "NptijinFDrlzgdVWhoci8sWYy";
+    private static final String TWITTER_SECRET = "XJPTTs8D4YkgipBzXegfRlC3O26qfGBjYrzkTtyzToJsytaOAT";
 
+    private TwitterLoginButton loginButton2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_setup_activity);
-//        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.setup_page_2, null);
+        //View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.setup_page_2, null);
 
-//        nameText = (EditText) view.findViewById(R.id.name_txt);
-//        fbEdit = (EditText) view.findViewById(R.id.fb_input);
-//        instaEdit = (EditText) view.findViewById(R.id.inst_input);
-//        twitEdit = (EditText) view.findViewById(R.id.twit_input);
-//        phoneEdit = (EditText) view.findViewById(R.id.phone_input);
-//        contactEdit = (EditText) view.findViewById(R.id.cont_input);
-//        linkEdit = (EditText) view.findViewById(R.id.link_input);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         if (sharedPreferences.contains("tutorial")) {
@@ -106,7 +118,7 @@ public class SetupACtivity extends AppCompatActivity {
         editor.apply();
         coordinatorLayout = (WelcomeCoordinatorLayout) findViewById(R.id.coordinator);
         skip = (Button) findViewById(R.id.skip);
-
+        loginButton2 = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
 
         coordinatorLayout.setOnPageScrollListener(new WelcomeCoordinatorLayout.OnPageScrollListener() {
             @Override
@@ -123,6 +135,7 @@ public class SetupACtivity extends AppCompatActivity {
             public void onPageSelected(View v, int pageSelected) {
                 switch (pageSelected) {
                     case 0:
+                        loginButton2.setVisibility(View.GONE);
                         break;
                     case 1:
                         nameText = (EditText) v.findViewById(R.id.name_txt);
@@ -135,6 +148,7 @@ public class SetupACtivity extends AppCompatActivity {
 
                         FacebookSdk.addLoggingBehavior(LoggingBehavior.REQUESTS);
                         loginButton = (LoginButton) findViewById(R.id.fb_login);
+                        AnimationUtils.circularReveal(loginButton);
                         List<String> permissionList = Arrays.asList("user_friends", "public_profile");
                         loginButton.setReadPermissions(permissionList);
                         callbackManager = CallbackManager.Factory.create();
@@ -182,14 +196,37 @@ public class SetupACtivity extends AppCompatActivity {
                                 });
                             }
                         });
-                        break;
+                        AnimationUtils.circularReveal(loginButton2);
+                        //loginButton2.setVisibility(View.VISIBLE);
+                        if (loginButton2 != null) {
+                            loginButton2.setCallback(new Callback<TwitterSession>() {
+                                @Override
+                                public void success(Result<TwitterSession> result) {
+                                    // The TwitterSession is also available through:
+                                    // Twitter.getInstance().core.getSessionManager().getActiveSession()
+                                    TwitterSession session = result.data;
+                                    // TODO: Remove toast and use the TwitterSession's userID
+                                    // with your app's user model
+                                    String msg = "@" + session.getUserName() + " logged in!";
+                                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                                    userID = String.valueOf(session.getUserId());
+                                    Log.i("UserID", userID);
+                                }
+
+                                @Override
+                                public void failure(TwitterException exception) {
+                                    Log.d("TwitterKit", "Login with Twitter failure", exception);
+                                }
+                            });
+                        }
+                                    break;
                     case 2:
+                        loginButton2.setVisibility(View.GONE);
                         if (nameText.getText().toString().isEmpty()) {
                             coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() - 1, true);
                             AlertDialog.Builder alert = new AlertDialog.Builder(SetupACtivity.this);
                             alert.setTitle(R.string.name_error_title);
                             alert.setMessage(R.string.name_error_txt);
-
                             alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -198,8 +235,9 @@ public class SetupACtivity extends AppCompatActivity {
 
                             alert.show();
                         }
-                        break;
+                      break;
                     case 3:
+                        loginButton2.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -221,12 +259,16 @@ public class SetupACtivity extends AppCompatActivity {
                 //coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 2, true);
                 if (coordinatorLayout.getPageSelected() == 2) {
                     final EditText[] editViews = {nameText, instaEdit, phoneEdit, contactEdit, linkEdit};
+
+                    
+
                     String fbKey = keys[1];
                     String twitKey = keys[3];
                     editor.putString(fbKey, id);
                     System.out.println(id);
-                    editor.putString(twitKey, id);
-                    System.out.println(id);
+
+                    editor.putString(twitKey, userID);
+                    System.out.println(userID);
 
                     nameText.setError("You must put a Name in");
 
@@ -264,6 +306,9 @@ public class SetupACtivity extends AppCompatActivity {
         initializeBackgroundTransitions();
     }
 
+
+
+
     @Override
     public void onBackPressed() {
         if (coordinatorLayout.getPageSelected() != 0) {
@@ -294,6 +339,12 @@ public class SetupACtivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 140) {
+            loginButton2.onActivityResult(requestCode, resultCode, data);
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
     }
+
+
 }

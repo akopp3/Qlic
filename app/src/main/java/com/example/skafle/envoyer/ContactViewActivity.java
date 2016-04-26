@@ -76,6 +76,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         });
                     }
                     else if (typeVar.equalsIgnoreCase("Instagram"))  {
+                        signin.setText("Open Instagram Profile");
                         signin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -86,6 +87,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         });
                     }
                     else if (typeVar.equalsIgnoreCase("Twitter"))  {
+                        signin.setText("Follow on Twitter");
                         signin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

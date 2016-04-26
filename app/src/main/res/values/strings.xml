@@ -23,6 +23,8 @@
     <string name="dialog_title">Ready to Launch!</string>
     <string name="title_activity_people">PeopleActivity</string>
     <string name= "facebook_app_id">612435478912782</string>
+    <string name="twitter_consumer_key">IXUHdLhfNoDGkTjJL5yIOdnqO</string>
+    <string name="twitter_consumer_secret">eNEo7848TxhWSUc2XW5c6QrK6wIMkyeZ6RPK4BAzULQ77tk5Ao</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
