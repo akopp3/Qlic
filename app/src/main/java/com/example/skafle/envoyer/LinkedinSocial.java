@@ -13,7 +13,7 @@ public class LinkedinSocial extends ActivateHandler {
 
     @Override
     public String type() {
-        return MainActivity.types[5];
+        return SendActivity.types[5];
     }
 
     @Override

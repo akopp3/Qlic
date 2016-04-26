@@ -13,7 +13,7 @@ public class TwitterSocial extends ActivateHandler {
 
     @Override
     public String type() {
-        return MainActivity.types[2];
+        return SendActivity.types[2];
     }
 
     @Override

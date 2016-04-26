@@ -58,8 +58,8 @@ public class ContactViewActivity extends AppCompatActivity {
             receiver = new Receiver(info);
             String name = receiver.getName();
             collapsingToolbarLayout.setTitle(name);
-            for (int i = 0; i < MainActivity.types.length; i++) {
-                String typeVar = MainActivity.types[i];
+            for (int i = 0; i < SendActivity.types.length; i++) {
+                String typeVar = SendActivity.types[i];
                 final Social social = receiver.getSocial(typeVar);
                 if (social != null) {
                     Log.i("test", "added");
@@ -110,12 +110,12 @@ public class ContactViewActivity extends AppCompatActivity {
                     saveContactsIntent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
                     saveContactsIntent.putExtra(ContactsContract.Intents.Insert.NAME, receiver.getName());
 
-                    Social email = receiver.getSocial(MainActivity.types[4]);
+                    Social email = receiver.getSocial(SendActivity.types[4]);
                     if (email != null) {
                         saveContactsIntent.putExtra(ContactsContract.Intents.Insert.EMAIL, email.keyInfo());
                     }
 
-                    Social phoneNumber = receiver.getSocial(MainActivity.types[3]);
+                    Social phoneNumber = receiver.getSocial(SendActivity.types[3]);
                     if (email != null) {
                         saveContactsIntent.putExtra(ContactsContract.Intents.Insert.PHONE, phoneNumber.keyInfo());
                     }
@@ -125,17 +125,17 @@ public class ContactViewActivity extends AppCompatActivity {
             });
         } else {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            for (int i = 0; i < MainActivity.keys.length; i++) {
-                if (!sharedPreferences.getString(MainActivity.keys[i], "").equals("")) {
+            for (int i = 0; i < SendActivity.keys.length; i++) {
+                if (!sharedPreferences.getString(SendActivity.keys[i], "").equals("")) {
                     RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row, null, false);
                     ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
                     TextView handleTextView = (TextView) tableRow.findViewById(R.id.handleTextView);
                     TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
                     final CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
                     imageView.setImageResource(SOCIAL_ICON_IDS[i]);
-                    handleTextView.setText(sharedPreferences.getString(MainActivity.keys[i], ""));
-                    typeTextView.setText(MainActivity.types[i]);
-                    checkBox.setChecked(sharedPreferences.getBoolean(MainActivity.enabledKeys[i], false));
+                    handleTextView.setText(sharedPreferences.getString(SendActivity.keys[i], ""));
+                    typeTextView.setText(SendActivity.types[i]);
+                    checkBox.setChecked(sharedPreferences.getBoolean(SendActivity.enabledKeys[i], false));
                     tableRow.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -165,7 +165,7 @@ public class ContactViewActivity extends AppCompatActivity {
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 RelativeLayout view = (RelativeLayout) linearLayout.getChildAt(i);
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
-                editor.putBoolean(MainActivity.enabledKeys[i], checkBox.isChecked());
+                editor.putBoolean(SendActivity.enabledKeys[i], checkBox.isChecked());
             }
             editor.apply();
         }

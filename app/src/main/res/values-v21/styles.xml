@@ -11,6 +11,8 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowContentTransitions">true</item>
+
     </style>
     <style name="welcome_page" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:layout_width">match_parent</item>

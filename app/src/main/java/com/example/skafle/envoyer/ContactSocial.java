@@ -13,7 +13,7 @@ public class ContactSocial extends ActivateHandler {
 
     @Override
     public String type() {
-        return MainActivity.types[4];
+        return SendActivity.types[4];
     }
 
     @Override

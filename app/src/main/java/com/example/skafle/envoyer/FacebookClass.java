@@ -13,7 +13,7 @@ public class FacebookClass extends ActivateHandler {
 
     @Override
     public String type() {
-        return MainActivity.types[0];
+        return SendActivity.types[0];
     }
 
     @Override

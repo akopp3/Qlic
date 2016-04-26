@@ -13,7 +13,7 @@ public class InstagramSocial extends ActivateHandler {
 
     @Override
     public String type() {
-            return MainActivity.types[1];
+            return SendActivity.types[1];
         }
 
     @Override

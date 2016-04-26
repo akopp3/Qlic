@@ -57,6 +57,9 @@ import java.util.List;
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     public static final String PEOPLE_KEY = "people_key";
     public boolean[] enabled = {false, false, false, false, false , false};
+    public static final String[] keys = {"fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
+    public static final String[] types = {"Facebook", "Instagram", "Twitter", "Phone", "Contact Info", "LinkedIn"};
+    public static final String[] enabledKeys = {"fb_enabled", "ig_enabled", "twit_enabled", "phone_enabled", "contact_enabled", "link_enabled"};
 
     private SharedPreferences pref;
     private GoogleApiClient mGoogleApiClient;
@@ -429,17 +432,15 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
 
     private void setCarrier() {
         Log.i("CARRIER", "goes here");
-        Log.i("CARRIER2", MainActivity.keys.length + "");
-        for (int i = 0; i < MainActivity.keys.length; i++) {
-//        for (String key : MainActivity.keys) {
-//            if (pref.contains(key)) {
+        Log.i("CARRIER2", keys.length + "");
+        for (int i = 0; i < keys.length; i++) {
             if (enabled[i]) {
                 Log.i("setCarrier", "" + i);
-                Social newSocial = getSocial(MainActivity.keys[i]);
+                Social newSocial = getSocial(keys[i]);
                 if (!newSocial.keyInfo().equals("")) {
                     carrier.addSocial(newSocial);
             }
-                Log.i("SOCIAL", MainActivity.keys[i] + " " + getSocial(MainActivity.keys[i]).keyInfo());
+                Log.i("SOCIAL", keys[i] + " " + getSocial(keys[i]).keyInfo());
             }
         }
     }
@@ -453,8 +454,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         bottomSheetCheckBoxes[5] = (CheckBox) findViewById(R.id.linkedInCheckBox);
 
         for (int i = 0; i < enabled.length; i++) {
-            Log.i("setInitialBottomBoxes", i + " is " + MainActivity.enabledKeys[i]);
-            enabled[i] = pref.getBoolean(MainActivity.enabledKeys[i], false);
+            Log.i("setInitialBottomBoxes", i + " is " + enabledKeys[i]);
+            enabled[i] = pref.getBoolean(enabledKeys[i], false);
             bottomSheetCheckBoxes[i].setChecked(enabled[i]);
             bottomSheetCheckBoxes[i].setTag(i);
             bottomSheetCheckBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

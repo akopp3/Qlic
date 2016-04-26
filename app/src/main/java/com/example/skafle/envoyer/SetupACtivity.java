@@ -111,7 +111,7 @@ public class SetupACtivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         if (sharedPreferences.contains("tutorial")) {
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SendActivity.class);
             startActivity(intent);
             finish();
         }
@@ -197,7 +197,7 @@ public class SetupACtivity extends AppCompatActivity {
                             }
                         });
                         AnimationUtils.circularReveal(loginButton2);
-                        //loginButton2.setVisibility(View.VISIBLE);
+                        loginButton2.setVisibility(View.VISIBLE);
                         if (loginButton2 != null) {
                             loginButton2.setCallback(new Callback<TwitterSession>() {
                                 @Override
@@ -248,16 +248,20 @@ public class SetupACtivity extends AppCompatActivity {
             public void onClick(View v) {
                 int numPage = coordinatorLayout.getPageSelected();
                 int totalPages = coordinatorLayout.getNumOfPages() - 1;
+                System.out.println("num " + numPage);
+                System.out.println("totalPages " + totalPages);
+                System.out.println(numPage + " / " + totalPages);
                 if (numPage == totalPages) {
                     editor.putBoolean("tutorial", true);
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    editor.apply();
+                    Intent intent = new Intent(getApplicationContext(), SendActivity.class);
                     startActivity(intent);
-                } else {
-                    coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
+                    finish();
+                    return;
                 }
 
                 //coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 2, true);
-                if (coordinatorLayout.getPageSelected() == 2) {
+                else if (coordinatorLayout.getPageSelected() == 2) {
                     final EditText[] editViews = {nameText, instaEdit, phoneEdit, contactEdit, linkEdit};
 
                     
@@ -299,6 +303,10 @@ public class SetupACtivity extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "Saved", Snackbar.LENGTH_LONG)
                             .show();
 
+                }
+
+                else {
+                    coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
                 }
             }
         });

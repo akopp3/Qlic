@@ -14,7 +14,7 @@ public class PhoneNumber extends ActivateHandler {
 
     @Override
     public String type() {
-        return MainActivity.types[3];
+        return SendActivity.types[3];
     }
 
     @Override
