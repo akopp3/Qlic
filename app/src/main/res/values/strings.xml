@@ -13,6 +13,9 @@
 
     <string name="send_btn">Fire!</string>
 
+    <string name="name_error_txt">Please state your name in the second page!</string>
+    <string name="name_error_title">No Name</string>
+
     <string name="action_settings">Settings</string>
     <string name="title_activity_send">Qlic To Share!</string>
     <string name="title_activity_preferences">Preferences</string>
