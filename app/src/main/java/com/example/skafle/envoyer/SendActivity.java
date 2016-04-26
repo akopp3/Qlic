@@ -16,7 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -105,13 +110,13 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                     setCarrier();
                     AlertDialog.Builder alert = new AlertDialog.Builder(SendActivity.this);
 
-                    final EditText edittext = new EditText(SendActivity.this);
+                    LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
+                    LinearLayout pinView = (LinearLayout) layoutInflater.inflate(R.layout.pin_dialog, null, false);
+                    final EditText edittext = (EditText) pinView.findViewById(R.id.editText);
                     alert.setMessage(R.string.dialog_message);
                     alert.setTitle(R.string.dialog_title);
 
-                    edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-                    alert.setView(edittext);
+                    alert.setView(pinView);
 
                     alert.setPositiveButton("Send", new DialogInterface.OnClickListener() {
                         @Override
@@ -147,7 +152,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                         }
                     });
 
-                    alert.show();
+                    AlertDialog alertDialog = alert.create();
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                    alertDialog.show();
                 }
             });
         }
@@ -429,8 +436,10 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
             if (enabled[i]) {
                 Log.i("setCarrier", "" + i);
                 Social newSocial = getSocial(MainActivity.keys[i]);
-                carrier.addSocial(newSocial);
-                Log.i("SOCIAL", MainActivity.keys[i]);
+                if (!newSocial.keyInfo().equals("")) {
+                    carrier.addSocial(newSocial);
+            }
+                Log.i("SOCIAL", MainActivity.keys[i] + " " + getSocial(MainActivity.keys[i]).keyInfo());
             }
         }
     }
