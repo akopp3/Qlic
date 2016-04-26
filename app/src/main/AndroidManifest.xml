@@ -26,9 +26,6 @@
             android:label="@string/title_activity_send"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PreferencesActivity"
-            android:label="@string/title_activity_preferences" />
-        <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
