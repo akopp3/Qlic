@@ -257,11 +257,13 @@ public class SetupACtivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), SendActivity.class);
                     startActivity(intent);
                     finish();
-                    return;
+                }
+                else {
+                    coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
                 }
 
                 //coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 2, true);
-                else if (coordinatorLayout.getPageSelected() == 2) {
+                 if (coordinatorLayout.getPageSelected() == 2) {
                     final EditText[] editViews = {nameText, instaEdit, phoneEdit, contactEdit, linkEdit};
 
                     
@@ -269,10 +271,10 @@ public class SetupACtivity extends AppCompatActivity {
                     String fbKey = keys[1];
                     String twitKey = keys[3];
                     editor.putString(fbKey, id);
-                    System.out.println(id);
+                    //System.out.println(id);
 
                     editor.putString(twitKey, userID);
-                    System.out.println(userID);
+                    //System.out.println(userID);
 
                     nameText.setError("You must put a Name in");
 
@@ -305,9 +307,7 @@ public class SetupACtivity extends AppCompatActivity {
 
                 }
 
-                else {
-                    coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
-                }
+
             }
         });
         coordinatorLayout.addPage(R.layout.setup_page_1, R.layout.setup_page_2, R.layout.setup_page_3);

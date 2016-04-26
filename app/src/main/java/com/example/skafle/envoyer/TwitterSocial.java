@@ -18,7 +18,7 @@ public class TwitterSocial extends ActivateHandler {
 
     @Override
     public String keyInfo() {
-        return "https://www.twitter.com/" + username;
+        return "https://twitter.com/intent/follow?user_id=" + username;
     }
 
     public String stringRep() {
