@@ -532,6 +532,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         for (int i = 0; i < enabled.length; i++) {
             Log.i("setInitialBottomBoxes", i + " is " + enabledKeys[i]);
             enabled[i] = pref.getBoolean(enabledKeys[i], false);
+            bottomSheetCheckBoxes[i].setEnabled(!pref.getString(keys[i], "").equals(""));
             bottomSheetCheckBoxes[i].setChecked(enabled[i]);
             bottomSheetCheckBoxes[i].setTag(i);
             bottomSheetCheckBoxes[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
