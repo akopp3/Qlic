@@ -3,6 +3,7 @@ package com.example.skafle.envoyer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -63,10 +64,13 @@ public class ContactViewActivity extends AppCompatActivity {
                 final Social social = receiver.getSocial(typeVar);
                 if (social != null) {
                     Log.i("test", "added");
-                    final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
-                    ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
-                    Button signin = (Button) tableRow.findViewById(R.id.signIn);
+                    //final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
+                    //ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
+                    //Button signin = (Button) tableRow.findViewById(R.id.signIn);
                     if (typeVar.equalsIgnoreCase("Facebook")) {
+                        final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
+                        ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
+                        Button signin = (Button) tableRow.findViewById(R.id.signIn);
                         signin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -74,18 +78,29 @@ public class ContactViewActivity extends AppCompatActivity {
                                 startActivity(facebookIntent);
                             }
                         });
+                        imageView.setImageResource(SOCIAL_ICON_IDS[i]);
+                        linearLayout.addView(tableRow);
                     }
                     else if (typeVar.equalsIgnoreCase("Instagram"))  {
+                        final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
+                        ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
+                        Button signin = (Button) tableRow.findViewById(R.id.signIn);
                         signin.setText("Open Instagram Profile");
                         signin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent lit = getOpenIGIntent(getApplicationContext(), social);
                                 startActivity(lit);
+
                             }
                         });
+                        imageView.setImageResource(SOCIAL_ICON_IDS[i]);
+                        linearLayout.addView(tableRow);
                     }
                     else if (typeVar.equalsIgnoreCase("Twitter"))  {
+                        final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
+                        ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
+                        Button signin = (Button) tableRow.findViewById(R.id.signIn);
                         signin.setText("Follow on Twitter");
                         signin.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -95,12 +110,23 @@ public class ContactViewActivity extends AppCompatActivity {
                                 startActivity(lit1);
                             }
                         });
+                        imageView.setImageResource(SOCIAL_ICON_IDS[i]);
+                        linearLayout.addView(tableRow);
+                    }
+                    else {
+                        final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row, null, false);
+                        ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
+                        TextView textView = (TextView) tableRow.findViewById(R.id.handleTextView);
+                        textView.setText(social.keyInfo());
+                        imageView.setImageResource(SOCIAL_ICON_IDS[i]);
+                        linearLayout.addView(tableRow);
+
                     }
 
 
 
-                    imageView.setImageResource(SOCIAL_ICON_IDS[i]);
-                    linearLayout.addView(tableRow);
+                    //imageView.setImageResource(SOCIAL_ICON_IDS[i]);
+                    //linearLayout.addView(tableRow);
                 }
             }
 
