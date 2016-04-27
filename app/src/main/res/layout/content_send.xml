@@ -150,11 +150,13 @@
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stop_btn"
             android:gravity="center_horizontal"
             android:layout_below="@+id/extra_holder"
+            android:src="@drawable/ic_cancel_24dp"
+            android:visibility="gone"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 

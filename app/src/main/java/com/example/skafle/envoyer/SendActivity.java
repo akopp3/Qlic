@@ -82,6 +82,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private LinearLayout extraHolder;
     private FloatingActionButton stopBtn;
     private String key;
+    private ExplosionField explosionField;
 
     FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
 
@@ -108,6 +109,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         arrowImageView = (ImageView) findViewById(R.id.arrow);
         bottomSheetHeader = (TableRow) findViewById(R.id.header);
         stopBtn = (FloatingActionButton) findViewById(R.id.stop_btn);
+        int color = getResources().getColor(R.color.tw__composer_red);
+        stopBtn.setBackgroundColor(color);
         historyDatabaseHelper = new HistoryDatabaseHelper(getApplicationContext());
         Utils.initialize();
 
@@ -118,6 +121,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .build();
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        explosionField= ExplosionField.attach2Window(SendActivity.this);
         final SmallBang mSmallBang = SmallBang.attach2Window(this);
         final FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
         final FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.big_fab);
@@ -142,7 +146,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                         public void onClick(DialogInterface dialog, int whichButton) {
                             String password = edittext.getText().toString();
 
-                            bottomSheetBehavior.setPeekHeight(0);
                             bottomSheetBehavior.setHideable(true);
                             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
@@ -162,6 +165,20 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                                     Log.i("Error", e.toString());
                                 }
                             }
+
+                            AnimationUtils.circularReveal(stopBtn);
+                            stopBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    fabProgressCircle.hide();
+                                    unpublish();
+                                    unsubscribe();
+                                    AnimationUtils.circularHide(stopBtn);
+                                    //explosionField.explode(stopBtn);
+                                    bottomSheetBehavior.setHideable(false);
+                                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                                }
+                            });
                         }
                     });
 
@@ -243,6 +260,12 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         person8 = (FloatingActionButton) findViewById(R.id.person8);
 
         setInitialBottomSheetBoxes();
+    }
+
+    @Override
+    protected void onResume() {
+        refreshInitialBottomSheetBoxes();
+        super.onResume();
     }
 
     @Override
@@ -349,7 +372,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                             alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    ExplosionField explosionField = ExplosionField.attach2Window(SendActivity.this);
+
                                     explosionField.explode(fab);
                                     Toast.makeText(SendActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
                                 }
@@ -503,7 +526,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         bottomSheetCheckBoxes[3] = (CheckBox) findViewById(R.id.phoneNumberCheckBox);
         bottomSheetCheckBoxes[4] = (CheckBox) findViewById(R.id.contactInfoCheckBox);
         bottomSheetCheckBoxes[5] = (CheckBox) findViewById(R.id.linkedInCheckBox);
+    }
 
+    public void refreshInitialBottomSheetBoxes() {
         for (int i = 0; i < enabled.length; i++) {
             Log.i("setInitialBottomBoxes", i + " is " + enabledKeys[i]);
             enabled[i] = pref.getBoolean(enabledKeys[i], false);
