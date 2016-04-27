@@ -43,9 +43,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             String typeVar = SendActivity.types[i];
             Social social = receiver.getSocial(typeVar);
             if (social != null) {
-                ImageView imageView = (ImageView) layoutInflater.inflate(R.layout.history_row_icon_view, null, false);
+                LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.history_row_icon_view, null, false);
+                ImageView imageView = (ImageView) linearLayout.findViewById(R.id.imageView);
                 imageView.setImageResource(ContactViewActivity.SOCIAL_ICON_IDS[i]);
-                holder.iconLinearLayout.addView(imageView);
+                holder.iconLinearLayout.addView(linearLayout);
             }
         }
     }
