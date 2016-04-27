@@ -18,6 +18,9 @@ public class TwitterSocial extends ActivateHandler {
 
     @Override
     public String keyInfo() {
+        if (username.contains("@")) {
+            username = username.replace("@", "");
+        }
         return "https://twitter.com/intent/follow?user_id=" + username;
     }
 
