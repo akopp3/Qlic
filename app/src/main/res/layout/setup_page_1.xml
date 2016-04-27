@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/rocket" />
+        android:src="@drawable/white_logo" />
 
     <TextView
         android:id="@+id/title"
@@ -30,6 +30,6 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Share your contact \ninformation simply and elegantly" />
+        android:text="Forming a clique \nis only a click away" />
 
 </com.redbooth.WelcomePageLayout>

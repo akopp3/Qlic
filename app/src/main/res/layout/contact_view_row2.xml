@@ -31,7 +31,8 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:text="Go to Profile"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginLeft="32dp"
+            android:layout_toRightOf="@+id/imageView"/>
 
     </RelativeLayout>
 
