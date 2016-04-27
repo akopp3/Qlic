@@ -148,6 +148,14 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
         </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/stop_btn"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/extra_holder"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

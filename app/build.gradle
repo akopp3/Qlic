@@ -42,6 +42,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-nearby:8.4.0'
     compile 'com.redbooth:WelcomeCoordinator:1.0.1'
     compile 'com.android.support:cardview-v7:23.0.+'
+    compile 'hanks.xyz:smallbang-library:0.1.2'
+    compile 'tyrantgit:explosionfield:1.0.1'
     compile 'com.github.jorgecastilloprz:fabprogresscircle:1.01@aar'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'

@@ -80,8 +80,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         signin.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent lit = new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse(social.keyInfo()));
+                                Intent lit = getOpenIGIntent(getApplicationContext(), social);
                                 startActivity(lit);
                             }
                         });
@@ -97,6 +96,9 @@ public class ContactViewActivity extends AppCompatActivity {
                             }
                         });
                     }
+
+
+
 
                     imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                     linearLayout.addView(tableRow);
@@ -177,10 +179,20 @@ public class ContactViewActivity extends AppCompatActivity {
             context.getPackageManager()
                     .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
             return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(soc.keyInfo())); //Trys to make intent with FB's URI
+                    Uri.parse("fb://facewebmodal/f?href=" + soc.keyInfo())); //Trys to make intent with FB's URI
         } catch (Exception e) {
             return new Intent(Intent.ACTION_VIEW,
                     Uri.parse(soc.keyInfo())); //catches and opens a url to the desired page
+        }
+    }
+
+    public static Intent getOpenIGIntent (Context context, Social soc) {
+        try{
+            context.getPackageManager().getPackageInfo("com.instagram.android", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("instagram://user?username=" + soc.keyInfo()));
+        } catch (Exception e) {
+            return new Intent (Intent.ACTION_VIEW, Uri.parse("http://instagram.com/" + soc.keyInfo()));
+
         }
     }
 

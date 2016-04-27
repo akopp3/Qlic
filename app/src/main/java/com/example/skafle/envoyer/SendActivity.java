@@ -60,6 +60,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import tyrantgit.explosionfield.ExplosionField;
+import xyz.hanks.library.SmallBang;
+
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     public static final String PEOPLE_KEY = "people_key";
     public boolean[] enabled = {false, false, false, false, false , false};
@@ -77,6 +80,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private List<Receiver> receivers;
     private RelativeLayout layout;
     private LinearLayout extraHolder;
+    private FloatingActionButton stopBtn;
     private String key;
 
     FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
@@ -103,6 +107,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         selectAllFAB = (FloatingActionButton) findViewById(R.id.selectAllFab);
         arrowImageView = (ImageView) findViewById(R.id.arrow);
         bottomSheetHeader = (TableRow) findViewById(R.id.header);
+        stopBtn = (FloatingActionButton) findViewById(R.id.stop_btn);
         historyDatabaseHelper = new HistoryDatabaseHelper(getApplicationContext());
         Utils.initialize();
 
@@ -113,12 +118,14 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .build();
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SmallBang mSmallBang = SmallBang.attach2Window(this);
         final FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.big_fab);
+        final FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.big_fab);
         if (floatingActionButton != null) {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     setCarrier();
                     AlertDialog.Builder alert = new AlertDialog.Builder(SendActivity.this);
 
@@ -144,6 +151,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                                     if (password.length() != 4) {
                                         Toast.makeText(SendActivity.this, "Password must be length 4", Toast.LENGTH_SHORT).show();
                                     } else {
+                                        mSmallBang.bang(floatingActionButton);
                                         key = Utils.generateKey(Utils.salt, password);
                                         fabProgressCircle.show();
                                         publish();
@@ -311,13 +319,13 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 final Receiver newReceiver = new Receiver(nearbyMessageString);
                 receivers.add(newReceiver);
                 Date date = Calendar.getInstance().getTime();
-                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
                 historyDatabaseHelper.addPersonToDatabase(newReceiver, format.format(date));
                 String name = newReceiver.getName();
 
                 String initial = Utils.getInitial(name);
 
-                FloatingActionButton fab = showAndGetNextFAB();
+                final FloatingActionButton fab = showAndGetNextFAB();
                 TextDrawable textDrawable = TextDrawable.builder().buildRect(initial, Color.TRANSPARENT);
                 if (fab != null) {
                     fab.setImageDrawable(textDrawable);
@@ -329,6 +337,36 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                             Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
                             intent.putExtra(PEOPLE_KEY, nearbyMessageString);
                             startActivity(intent);
+                        }
+                    });
+                    fab.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+
+                            AlertDialog.Builder alert = new AlertDialog.Builder(SendActivity.this);
+                            alert.setMessage("Are you sure?");
+                            alert.setTitle("Delete Contact");
+                            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    ExplosionField explosionField = ExplosionField.attach2Window(SendActivity.this);
+                                    explosionField.explode(fab);
+                                    Toast.makeText(SendActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                            AlertDialog alertDialog = alert.create();
+                            alertDialog.show();
+
+
+                            return true;
+
+
                         }
                     });
 

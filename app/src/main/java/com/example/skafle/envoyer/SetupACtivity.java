@@ -29,6 +29,7 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.LoggingBehavior;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.redbooth.WelcomeCoordinatorLayout;
@@ -160,6 +161,10 @@ public class SetupACtivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(LoginResult loginResult) {
                                         Log.v("FacebookLogin", "SUCCESS");
+                                        Profile profile = Profile.getCurrentProfile();
+                                        System.out.println(profile.getLinkUri());
+                                        String fbUserID = loginResult.getAccessToken().getUserId();
+                                        Log.i("FB ID???", fbUserID);
                                         GraphRequest request = GraphRequest.newMeRequest(
                                                 loginResult.getAccessToken(),
                                                 new GraphRequest.GraphJSONObjectCallback() {
@@ -172,6 +177,7 @@ public class SetupACtivity extends AppCompatActivity {
                                                             //List <String> = object.getJSONArray()
                                                             Toast.makeText(getApplicationContext(), "Facebook Login Successful", Toast.LENGTH_LONG).show();
                                                             Log.i("NAME", name);
+                                                            Log.i("ID", id);
 
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();

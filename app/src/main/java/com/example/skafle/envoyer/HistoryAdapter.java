@@ -26,24 +26,24 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_view_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_row, parent, false);
         return new HistoryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
         cursor.moveToPosition(position);
-        String data = cursor.getString(1);
-        String date = cursor.getString(2);
+        String data = cursor.getString(2);
+        String date = cursor.getString(3);
         Receiver receiver = new Receiver(data);
         holder.nameTextView.setText(receiver.getName());
         holder.dateTextView.setText(date);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         for (int i = 0; i < SendActivity.types.length; i++) {
             String typeVar = SendActivity.types[i];
             Social social = receiver.getSocial(typeVar);
             if (social != null) {
-                ImageView imageView = new ImageView(context);
-                imageView.setPadding(0, 0, 10, 0);
+                ImageView imageView = (ImageView) layoutInflater.inflate(R.layout.history_row_icon_view, null, false);
                 imageView.setImageResource(ContactViewActivity.SOCIAL_ICON_IDS[i]);
                 holder.iconLinearLayout.addView(imageView);
             }
@@ -72,7 +72,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ContactViewActivity.class);
                     cursor.moveToPosition(getAdapterPosition());
-                    intent.putExtra(SendActivity.PEOPLE_KEY, cursor.getString(1));
+                    intent.putExtra(SendActivity.PEOPLE_KEY, cursor.getString(2));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
             });

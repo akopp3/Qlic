@@ -18,7 +18,7 @@ public class InstagramSocial extends ActivateHandler {
 
     @Override
     public String keyInfo() {
-            return "https://www.instagram.com/" + username;
+            return username;
         }
 
     public String stringRep() {
