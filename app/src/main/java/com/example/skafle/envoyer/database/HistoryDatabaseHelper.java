@@ -32,7 +32,7 @@ public class HistoryDatabaseHelper extends SQLiteOpenHelper {
                     _ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
                     NAME + TEXT_TYPE + COMMA_SEP +
                     DATA + TEXT_TYPE + COMMA_SEP +
-                    DATE + INTEGER_TYPE +
+                    DATE + TEXT_TYPE +
                     " )";
 
 

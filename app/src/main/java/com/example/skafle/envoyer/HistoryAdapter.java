@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,8 +37,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         String date = cursor.getString(2);
         Receiver receiver = new Receiver(data);
         holder.nameTextView.setText(receiver.getName());
-        // TODO: 4/21/16 Have to format the date
         holder.dateTextView.setText(date);
+        for (int i = 0; i < SendActivity.types.length; i++) {
+            String typeVar = SendActivity.types[i];
+            Social social = receiver.getSocial(typeVar);
+            if (social != null) {
+                ImageView imageView = new ImageView(context);
+                imageView.setPadding(0, 0, 10, 0);
+                imageView.setImageResource(ContactViewActivity.SOCIAL_ICON_IDS[i]);
+                holder.iconLinearLayout.addView(imageView);
+            }
+        }
     }
 
     @Override

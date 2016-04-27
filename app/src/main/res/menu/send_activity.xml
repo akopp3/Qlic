@@ -4,4 +4,7 @@
     <item android:title="Profile"
         android:id="@+id/profile"/>
 
+    <item android:title="History"
+        android:id="@+id/history"/>
+
 </menu>

@@ -34,6 +34,7 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.example.skafle.envoyer.database.HistoryDatabaseHelper;
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -53,7 +54,10 @@ import com.google.android.gms.nearby.messages.SubscribeOptions;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
@@ -84,6 +88,8 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     TableRow bottomSheetHeader;
     CheckBox[] bottomSheetCheckBoxes = new CheckBox[6];
 
+    HistoryDatabaseHelper historyDatabaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +103,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         selectAllFAB = (FloatingActionButton) findViewById(R.id.selectAllFab);
         arrowImageView = (ImageView) findViewById(R.id.arrow);
         bottomSheetHeader = (TableRow) findViewById(R.id.header);
+        historyDatabaseHelper = new HistoryDatabaseHelper(getApplicationContext());
         Utils.initialize();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -303,6 +310,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 }
                 final Receiver newReceiver = new Receiver(nearbyMessageString);
                 receivers.add(newReceiver);
+                Date date = Calendar.getInstance().getTime();
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                historyDatabaseHelper.addPersonToDatabase(newReceiver, format.format(date));
                 String name = newReceiver.getName();
 
                 String initial = Utils.getInitial(name);
@@ -441,8 +451,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 Social newSocial = getSocial(keys[i]);
                 if (!newSocial.keyInfo().equals("")) {
                     carrier.addSocial(newSocial);
+                    Log.i("SOCIAL", keys[i]);
             }
-                Log.i("SOCIAL", keys[i] + " " + getSocial(keys[i]).keyInfo());
+//                Log.i("SOCIAL", keys[i] + " " + getSocial(keys[i]).keyInfo());
             }
         }
     }
@@ -535,6 +546,9 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 Intent intent = new Intent(getApplicationContext(), ContactViewActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.history:
+                Intent intent1 = new Intent(getApplicationContext(), HistoryActivity.class);
+                startActivity(intent1);
         }
         return super.onOptionsItemSelected(item);
     }
