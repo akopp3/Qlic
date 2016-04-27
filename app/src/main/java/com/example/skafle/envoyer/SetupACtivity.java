@@ -282,8 +282,6 @@ public class SetupACtivity extends AppCompatActivity {
                     editor.putString(twitKey, userID);
                     //System.out.println(userID);
 
-                    nameText.setError("You must put a Name in");
-
                     int j = 0;
                     for (int i = 0; i < keys.length; i++) {
 
