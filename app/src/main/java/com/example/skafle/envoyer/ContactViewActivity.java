@@ -92,7 +92,7 @@ public class ContactViewActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 Intent lit1 = new Intent(Intent.ACTION_VIEW,
-                                        Uri.parse("https://www.Twitter.com/" + social.keyInfo()));
+                                        Uri.parse(social.keyInfo()));
                                 startActivity(lit1);
                             }
                         });
