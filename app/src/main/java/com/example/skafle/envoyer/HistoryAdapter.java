@@ -38,17 +38,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         Receiver receiver = new Receiver(data);
         holder.nameTextView.setText(receiver.getName());
         holder.dateTextView.setText(date);
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        for (int i = 0; i < SendActivity.types.length; i++) {
-            String typeVar = SendActivity.types[i];
-            Social social = receiver.getSocial(typeVar);
-            if (social != null) {
-                LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.history_row_icon_view, null, false);
-                ImageView imageView = (ImageView) linearLayout.findViewById(R.id.imageView);
-                imageView.setImageResource(ContactViewActivity.SOCIAL_ICON_IDS[i]);
-                holder.iconLinearLayout.addView(linearLayout);
-            }
-        }
+//        LayoutInflater layoutInflater = LayoutInflater.from(context);
+//        for (int i = 0; i < SendActivity.types.length; i++) {
+//            String typeVar = SendActivity.types[i];
+//            Social social = receiver.getSocial(typeVar);
+//            if (social != null) {
+//                LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.history_row_icon_view, null, false);
+//                ImageView imageView = (ImageView) linearLayout.findViewById(R.id.imageView);
+//                imageView.setImageResource(ContactViewActivity.SOCIAL_ICON_IDS[i]);
+//                holder.iconLinearLayout.addView(linearLayout);
+//            }
+//        }
     }
 
     @Override
@@ -60,13 +60,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         TextView nameTextView;
         TextView dateTextView;
-        LinearLayout iconLinearLayout;
+//        LinearLayout iconLinearLayout;
 
         public HistoryViewHolder(View itemView) {
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.nameTextView);
             dateTextView = (TextView) itemView.findViewById(R.id.dateTextView);
-            iconLinearLayout = (LinearLayout) itemView.findViewById(R.id.iconLinearLayout);
+//            iconLinearLayout = (LinearLayout) itemView.findViewById(R.id.iconLinearLayout);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

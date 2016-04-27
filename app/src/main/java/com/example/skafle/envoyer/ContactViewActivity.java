@@ -99,7 +99,7 @@ public class ContactViewActivity extends AppCompatActivity {
 
 
 
-
+                    tableRow.setTag(SendActivity.enabledKeys[i]);
                     imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                     linearLayout.addView(tableRow);
                 }
@@ -167,7 +167,7 @@ public class ContactViewActivity extends AppCompatActivity {
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 RelativeLayout view = (RelativeLayout) linearLayout.getChildAt(i);
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
-                editor.putBoolean(SendActivity.enabledKeys[i], checkBox.isChecked());
+                editor.putBoolean((String) view.getTag(), checkBox.isChecked());
             }
             editor.apply();
         }
