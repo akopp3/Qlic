@@ -16,13 +16,17 @@ public class HistoryDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String TABLE_NAME = "Contacts";
 
-    /**Columns*/
+    /**
+     * Columns
+     */
     public static final String _ID = "_id";
     public static final String NAME = "name";
     public static final String DATA = "data";
     public static final String DATE = "date";
     public static final String[] ALL_COLUMNS = {_ID, NAME, DATA, DATE};
-    /**End column stuff*/
+    /**
+     * End column stuff
+     */
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";

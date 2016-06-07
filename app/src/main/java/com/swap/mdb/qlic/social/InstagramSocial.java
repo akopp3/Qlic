@@ -10,20 +10,20 @@ public class InstagramSocial extends ActivateHandler {
 
     @Override
     public void setKeyInfo(String info) {
-            username = info;
-        }
+        username = info;
+    }
 
     @Override
     public String type() {
-            return SendActivity.types[1];
-        }
+        return SendActivity.types[1];
+    }
 
     @Override
     public String keyInfo() {
-            return username;
-        }
+        return username;
+    }
 
     public String stringRep() {
-            return username;
-        }
+        return username;
+    }
 }

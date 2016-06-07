@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.redbooth.WelcomePageLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/welcome_page"
-    tools:background="@color/setup1"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="@color/setup1">
 
     <ImageView
         android:id="@+id/rocketimg"
@@ -18,18 +17,18 @@
     <TextView
         android:id="@+id/title"
         style="@style/text_title"
-        android:layout_above="@+id/subtitle"
-        android:text="Qlic"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-        
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/subtitle"
+        android:text="Qlic" />
+
 
     <TextView
         android:id="@+id/subtitle"
         style="@style/text_subtitle"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:text="Forming a clique \nis only a click away" />
 
 </com.redbooth.WelcomePageLayout>

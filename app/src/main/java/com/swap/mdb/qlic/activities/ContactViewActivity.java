@@ -21,23 +21,46 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.swap.mdb.qlic.R;
-import com.swap.mdb.qlic.transfer.Receiver;
 import com.swap.mdb.qlic.social.Social;
+import com.swap.mdb.qlic.transfer.Receiver;
 
 public class ContactViewActivity extends AppCompatActivity {
 
     public static final int[] SOCIAL_ICON_IDS = {R.drawable.facebook, R.drawable.instagram,
             R.drawable.twitter, R.drawable.phone, R.drawable.email, R.drawable.linkedin};
-
+    public static SharedPreferences sharedPreferences;
     LinearLayout linearLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton fab;
     String info;
     Receiver receiver;
-
     Intent intent;
-    public static SharedPreferences sharedPreferences;
 
+    public static Intent getOpenFacebookIntent(Context context, Social soc) {
+
+        try {
+            context.getPackageManager()
+                    .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("fb://facewebmodal/f?href=" + soc.keyInfo())); //Trys to make intent with FB's URI
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(soc.keyInfo())); //catches and opens a url to the desired page
+        }
+    }
+
+    public static Intent getOpenIGIntent(Context context, Social soc) {
+        Intent intent;
+        try {
+            context.getPackageManager().getPackageInfo("com.instagram.android", 0);
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("instagram://user?username=" + soc.keyInfo()));
+
+        } catch (Exception e) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/" + soc.keyInfo()));
+        }
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +103,7 @@ public class ContactViewActivity extends AppCompatActivity {
                                 try {
                                     Intent facebookIntent = getOpenFacebookIntent(getApplicationContext(), social);
                                     startActivity(facebookIntent);
-                                }
-                                catch(Exception e) {
+                                } catch (Exception e) {
                                     Intent intent = new Intent(Intent.ACTION_VIEW,
                                             Uri.parse(social.keyInfo()));
                                     startActivity(intent);
@@ -90,8 +112,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         });
                         imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                         linearLayout.addView(tableRow);
-                    }
-                    else if (typeVar.equalsIgnoreCase("Instagram"))  {
+                    } else if (typeVar.equalsIgnoreCase("Instagram")) {
                         final LinearLayout tableRow = (LinearLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
                         ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
                         Button signin = (Button) tableRow.findViewById(R.id.signIn);
@@ -103,7 +124,7 @@ public class ContactViewActivity extends AppCompatActivity {
                                     Intent lit = getOpenIGIntent(getApplicationContext(), social);
                                     startActivity(lit);
                                 } catch (Exception e) {
-                                    Intent intent =  new Intent (Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/" + social.keyInfo()));
+                                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/" + social.keyInfo()));
                                     startActivity(intent);
                                 }
 
@@ -111,8 +132,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         });
                         imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                         linearLayout.addView(tableRow);
-                    }
-                    else if (typeVar.equalsIgnoreCase("Twitter"))  {
+                    } else if (typeVar.equalsIgnoreCase("Twitter")) {
                         final LinearLayout tableRow = (LinearLayout) layoutInflater.inflate(R.layout.contact_view_row2, null, false);
                         ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
                         Button signin = (Button) tableRow.findViewById(R.id.signIn);
@@ -127,8 +147,7 @@ public class ContactViewActivity extends AppCompatActivity {
                         });
                         imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                         linearLayout.addView(tableRow);
-                    }
-                    else {
+                    } else {
                         final RelativeLayout tableRow = (RelativeLayout) layoutInflater.inflate(R.layout.contact_view_row, null, false);
                         ImageView imageView = (ImageView) tableRow.findViewById(R.id.imageView);
                         TextView textView = (TextView) tableRow.findViewById(R.id.handleTextView);
@@ -142,7 +161,6 @@ public class ContactViewActivity extends AppCompatActivity {
                         linearLayout.addView(tableRow);
 
                     }
-
 
 
                     //imageView.setImageResource(SOCIAL_ICON_IDS[i]);
@@ -180,25 +198,23 @@ public class ContactViewActivity extends AppCompatActivity {
                     TextView typeTextView = (TextView) tableRow.findViewById(R.id.typeTextView);
                     final CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
                     imageView.setImageResource(SOCIAL_ICON_IDS[i]);
-                    if (SendActivity.types[i].equalsIgnoreCase("Facebook")){
-                        handleTextView.setText(sharedPreferences.getString(SetupACtivity.FB_NAME,""));
-                    }
-                    else if (SendActivity.types[i].equalsIgnoreCase("Twitter")){
-                        handleTextView.setText(sharedPreferences.getString(SetupACtivity.TWIT_NAME,""));
-                    }
-                    else {
+                    if (SendActivity.types[i].equalsIgnoreCase("Facebook")) {
+                        handleTextView.setText(sharedPreferences.getString(SetupACtivity.FB_NAME, ""));
+                    } else if (SendActivity.types[i].equalsIgnoreCase("Twitter")) {
+                        handleTextView.setText(sharedPreferences.getString(SetupACtivity.TWIT_NAME, ""));
+                    } else {
                         handleTextView.setText(sharedPreferences.getString(SendActivity.keys[i], ""));
                     }
-                        typeTextView.setText(SendActivity.types[i]);
-                        checkBox.setChecked(sharedPreferences.getBoolean(SendActivity.enabledKeys[i], false));
-                        tableRow.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                checkBox.setChecked(!checkBox.isChecked());
-                            }
-                        });
-                        tableRow.setTag(SendActivity.enabledKeys[i]);
-                        linearLayout.addView(tableRow);
+                    typeTextView.setText(SendActivity.types[i]);
+                    checkBox.setChecked(sharedPreferences.getBoolean(SendActivity.enabledKeys[i], false));
+                    tableRow.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            checkBox.setChecked(!checkBox.isChecked());
+                        }
+                    });
+                    tableRow.setTag(SendActivity.enabledKeys[i]);
+                    linearLayout.addView(tableRow);
 
                 }
             }
@@ -226,32 +242,6 @@ public class ContactViewActivity extends AppCompatActivity {
             }
             editor.apply();
         }
-    }
-
-    public static Intent getOpenFacebookIntent(Context context, Social soc) {
-
-        try {
-            context.getPackageManager()
-                    .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("fb://facewebmodal/f?href=" + soc.keyInfo())); //Trys to make intent with FB's URI
-        } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(soc.keyInfo())); //catches and opens a url to the desired page
-        }
-    }
-
-    public static Intent getOpenIGIntent (Context context, Social soc) {
-        Intent intent;
-        try{
-            context.getPackageManager().getPackageInfo("com.instagram.android", 0);
-            intent =  new Intent(Intent.ACTION_VIEW, Uri.parse("instagram://user?username=" + soc.keyInfo()));
-
-        } catch (Exception e) {
-            intent =  new Intent (Intent.ACTION_VIEW, Uri.parse("http://www.instagram.com/" + soc.keyInfo()));
-        }
-
-        return intent;
     }
 
 

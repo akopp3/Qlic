@@ -23,14 +23,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:paddingLeft="16dp"
                 android:text="Change the sent profiles"
-                android:textSize="24sp"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
         </TableRow>
-
 
 
         <FrameLayout
@@ -43,31 +42,31 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/white"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"/>
+                android:layout_marginRight="8dp"
+                android:background="@color/white" />
 
             <android.support.design.widget.FloatingActionButton
+                android:id="@+id/selectAllFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/select_all"
                 android:layout_gravity="center_vertical|right"
                 android:layout_marginRight="16dp"
-                android:id="@+id/selectAllFab"
-                android:visibility="invisible"/>
+                android:src="@drawable/select_all"
+                android:visibility="invisible" />
         </FrameLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:layout_marginLeft="58dp"
+            android:layout_marginRight="75dp"
+            android:layout_marginTop="-15dp"
             android:gravity="left"
             android:text="Changes do not affect defaults"
-            android:textSize="16sp"
-            android:layout_below="@id/header"
-            android:layout_marginTop="-15dp"
-            android:layout_marginLeft="58dp"
-            android:layout_marginRight="75dp"/>
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
@@ -76,59 +75,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="70dp"
         android:layout_marginTop="-20dp"
         android:text="Facebook"
-        android:textSize="25sp"
-        android:layout_marginRight="70dp"/>
+        android:textSize="25sp" />
 
     <CheckBox
         android:id="@+id/instagramCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="10dp"
         android:text="Instagram"
-        android:textSize="25sp"
-        android:layout_marginRight="70dp"/>
+        android:textSize="25sp" />
 
     <CheckBox
         android:id="@+id/twitterCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="10dp"
         android:text="Twitter"
-        android:textSize="25sp"
-        android:layout_marginRight="70dp"/>
+        android:textSize="25sp" />
 
     <CheckBox
         android:id="@+id/phoneNumberCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="6dp"
         android:text="Phone Number"
-        android:textSize="25sp"
-        android:layout_marginRight="70dp"/>
+        android:textSize="25sp" />
 
     <CheckBox
         android:id="@+id/contactInfoCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="10dp"
         android:text="Email"
-        android:textSize="25sp"
-        android:layout_marginRight="70dp"/>
+        android:textSize="25sp" />
 
     <CheckBox
         android:id="@+id/linkedInCheckBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="10dp"
         android:text="LinkedIn"
-        android:textSize="25sp"
-        android:layout_marginRight="70dp"/>
+        android:textSize="25sp" />
 
 </LinearLayout>

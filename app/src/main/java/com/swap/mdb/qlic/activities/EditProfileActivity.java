@@ -49,13 +49,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 handleEditText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
             }
 
-            if (SendActivity.types[i].equalsIgnoreCase("Facebook")){
-                handleEditText.setText(sharedPreferences.getString(SetupACtivity.FB_NAME,""));
-            }
-            else if (SendActivity.types[i].equalsIgnoreCase("Twitter")){
+            if (SendActivity.types[i].equalsIgnoreCase("Facebook")) {
+                handleEditText.setText(sharedPreferences.getString(SetupACtivity.FB_NAME, ""));
+            } else if (SendActivity.types[i].equalsIgnoreCase("Twitter")) {
                 handleEditText.setText(sharedPreferences.getString(SetupACtivity.TWIT_NAME, ""));
-            }
-            else {
+            } else {
                 handleEditText.setText(sharedPreferences.getString(SendActivity.keys[i], ""));
             }
 

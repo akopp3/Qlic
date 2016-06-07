@@ -40,7 +40,7 @@ public class ParallaxSubtitleBehaviour extends WelcomePageBehavior {
     @Override
     protected void onCreate(WelcomeCoordinatorLayout coordinator) {
         final FrameLayout.LayoutParams params
-                = (FrameLayout.LayoutParams)getPage().getLayoutParams();
+                = (FrameLayout.LayoutParams) getPage().getLayoutParams();
         long startDelay;
         long duration;
         float rightTranslation;
@@ -68,9 +68,9 @@ public class ParallaxSubtitleBehaviour extends WelcomePageBehavior {
     protected void onPlaytimeChange(WelcomeCoordinatorLayout coordinator,
                                     float newPlaytime,
                                     float newScrollPosition) {
-        long currentPlaytime = (long)newScrollPosition;
+        long currentPlaytime = (long) newScrollPosition;
         if (newScrollPosition >= parallaxAnimator.getStartDelay()) {
-            currentPlaytime = (long)(newScrollPosition - parallaxAnimator.getStartDelay());
+            currentPlaytime = (long) (newScrollPosition - parallaxAnimator.getStartDelay());
         }
         parallaxAnimator.setCurrentPlayTime(currentPlaytime);
     }

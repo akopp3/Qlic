@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.redbooth.WelcomePageLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/welcome_page_top"
-    tools:background="@color/setup3"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:background="@color/setup3">
 
     <TextView
         android:id="@+id/title"
         style="@style/text_title_top"
-        android:paddingTop="16dp"
-        android:text="You're Done!"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:paddingTop="16dp"
+        android:text="You're Done!" />
 
     <TextView
         android:id="@+id/subtitle_top"
         style="@style/text_subtitle"
-        android:layout_below="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
         android:text="Press NEXT and start sharing \ninfo with friends!" />
+
     <ImageView
         android:id="@+id/checkmark"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_below="@+id/subtitle_top"
-        android:src="@drawable/check"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:src="@drawable/check" />
 </com.redbooth.WelcomePageLayout>

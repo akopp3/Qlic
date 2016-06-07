@@ -1,10 +1,10 @@
 package com.swap.mdb.qlic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,14 +27,26 @@ import java.util.Arrays;
 import java.util.List;
 
 
-
 public class FacebookTesting extends Activity {
 
-    private LoginButton loginButton;
-    private CallbackManager callbackManager;
     public static String name;
     public static String id;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
     private Button profile;
+
+    public static Intent getOpenFacebookIntent(Context context) {
+
+        try {
+            context.getPackageManager()
+                    .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/app_scoped_user_id/" + id)); //Trys to make intent with FB's URI
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.facebook.com/app_scoped_user_id/" + id)); //catches and opens a url to the desired page
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +78,7 @@ public class FacebookTesting extends Activity {
                                             //List <String> = object.getJSONArray()
                                             Toast.makeText(getApplicationContext(), "Facebook Login Successful", Toast.LENGTH_LONG).show();
                                             Log.i("NAME", name);
-                                            Log.i("ID",id);
+                                            Log.i("ID", id);
 
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -96,31 +108,19 @@ public class FacebookTesting extends Activity {
         profile = (Button) findViewById(R.id.button);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent facebookIntent = getOpenFacebookIntent(getApplicationContext());
                 startActivity(facebookIntent);
             }
         });
 
 
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-    public static Intent getOpenFacebookIntent(Context context) {
-
-        try {
-            context.getPackageManager()
-                    .getPackageInfo("com.facebook.katana", 0); //Checks if FB is even installed.
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.facebook.com/app_scoped_user_id/"+ id)); //Trys to make intent with FB's URI
-        } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.facebook.com/app_scoped_user_id/"+ id)); //catches and opens a url to the desired page
-        }
     }
 
 }

@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:paddingTop="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:paddingTop="16dp"
     android:theme="@style/AppTheme">
 
     <ImageView
@@ -33,6 +33,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
+        android:id="@+id/typeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/handleTextView"
@@ -43,8 +44,7 @@
         android:layout_toRightOf="@id/imageView"
         android:text="Facebook"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textSize="16dp"
-        android:id="@+id/typeTextView"/>
+        android:textSize="16dp" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -53,17 +53,17 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:checked="true"
-        android:layout_marginRight="12dp"/>
+        android:layout_marginRight="12dp"
+        android:checked="true" />
 
 
     <View xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#B6B6B6"
-        android:layout_below="@id/typeTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@id/typeTextView"
+        android:layout_marginTop="16dp"
+        android:background="#B6B6B6" />
 
 </RelativeLayout>

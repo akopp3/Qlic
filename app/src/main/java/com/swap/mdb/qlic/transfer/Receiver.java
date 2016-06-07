@@ -29,11 +29,11 @@ public class Receiver {
     public Receiver(String rep) {
         messageData = rep;
         Scanner scanner = new Scanner(rep);
-        Log.i("rep",rep);
+        Log.i("rep", rep);
 
         name = scanner.nextLine();
         socialMap = new HashMap<>();
-        while(scanner.hasNextLine()) {
+        while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] info = line.split(Constants.DELIMETER);
 
@@ -76,7 +76,7 @@ public class Receiver {
 
     private Social createSoc(String type, String message) {
         Log.i("TYPE", type);
-        switch(type) {
+        switch (type) {
             case "Facebook":
                 FacebookSocial fb = new FacebookSocial();
                 fb.setKeyInfo(message);

@@ -17,23 +17,20 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.LoggingBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.redbooth.WelcomeCoordinatorLayout;
-import com.facebook.FacebookSdk;
-
-
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.swap.mdb.qlic.R;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
@@ -43,20 +40,22 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-import io.fabric.sdk.android.Fabric;
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
+
 public class SetupACtivity extends AppCompatActivity {
     public static final String[] keys = {"name", "fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
     public static final String[] types = {"Name", "Facebook", "Instagram", "Twitter", "Phone", "Email", "LinkedIn"};
     public static final String FB_NAME = "facebookActualName";
     public static final String TWIT_NAME = "twitterActualName";
+    private static final String TWITTER_KEY = "NptijinFDrlzgdVWhoci8sWYy";
+    private static final String TWITTER_SECRET = "XJPTTs8D4YkgipBzXegfRlC3O26qfGBjYrzkTtyzToJsytaOAT";
+    public static String fbname, twitName, id, userID;
     private boolean animationReady = false;
     private ValueAnimator backgroundAnimator;
     private WelcomeCoordinatorLayout coordinatorLayout;
@@ -70,11 +69,7 @@ public class SetupACtivity extends AppCompatActivity {
     private EditText nameText;
     private SharedPreferences sharedPreferences;
     private CallbackManager callbackManager;
-    public static String fbname, twitName, id, userID;
     private LoginButton loginButton;
-    private static final String TWITTER_KEY = "NptijinFDrlzgdVWhoci8sWYy";
-    private static final String TWITTER_SECRET = "XJPTTs8D4YkgipBzXegfRlC3O26qfGBjYrzkTtyzToJsytaOAT";
-
     private TwitterLoginButton loginButton2;
 
     @Override
@@ -210,7 +205,7 @@ public class SetupACtivity extends AppCompatActivity {
                                 }
                             });
                         }
-                                    break;
+                        break;
                     case 2:
                         //AnimationUtils.circularHide(loginButton2);
                         //loginButton2.setVisibility(View.GONE);
@@ -227,7 +222,7 @@ public class SetupACtivity extends AppCompatActivity {
 
                             alert.show();
                         }
-                      break;
+                        break;
                     case 3:
                         //AnimationUtils.circularHide(loginButton2);
                         //loginButton2.setVisibility(View.GONE);
@@ -250,16 +245,14 @@ public class SetupACtivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), SendActivity.class);
                     startActivity(intent);
                     finish();
-                }
-                else {
+                } else {
                     coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 1, true);
                 }
 
                 //coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() + 2, true);
-                 if (coordinatorLayout.getPageSelected() == 2) {
+                if (coordinatorLayout.getPageSelected() == 2) {
                     final EditText[] editViews = {nameText, instaEdit, phoneEdit, contactEdit, linkEdit};
 
-                    
 
                     String fbKey = keys[1];
                     String twitKey = keys[3];
@@ -303,8 +296,6 @@ public class SetupACtivity extends AppCompatActivity {
         coordinatorLayout.addPage(R.layout.setup_page_1, R.layout.setup_page_2, R.layout.setup_page_3);
         initializeBackgroundTransitions();
     }
-
-
 
 
     @Override

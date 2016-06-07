@@ -30,20 +30,6 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.swap.mdb.qlic.animation.AnimationUtils;
-import com.swap.mdb.qlic.transfer.Carrier;
-import com.swap.mdb.qlic.Constants;
-import com.swap.mdb.qlic.social.ContactSocial;
-import com.swap.mdb.qlic.social.FacebookSocial;
-import com.swap.mdb.qlic.social.InstagramSocial;
-import com.swap.mdb.qlic.social.LinkedinSocial;
-import com.swap.mdb.qlic.social.PhoneNumberSocial;
-import com.swap.mdb.qlic.R;
-import com.swap.mdb.qlic.transfer.Receiver;
-import com.swap.mdb.qlic.social.Social;
-import com.swap.mdb.qlic.social.TwitterSocial;
-import com.swap.mdb.qlic.Utils;
-import com.swap.mdb.qlic.database.HistoryDatabaseHelper;
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -59,6 +45,20 @@ import com.google.android.gms.nearby.messages.PublishCallback;
 import com.google.android.gms.nearby.messages.PublishOptions;
 import com.google.android.gms.nearby.messages.SubscribeCallback;
 import com.google.android.gms.nearby.messages.SubscribeOptions;
+import com.swap.mdb.qlic.Constants;
+import com.swap.mdb.qlic.R;
+import com.swap.mdb.qlic.Utils;
+import com.swap.mdb.qlic.animation.AnimationUtils;
+import com.swap.mdb.qlic.database.HistoryDatabaseHelper;
+import com.swap.mdb.qlic.social.ContactSocial;
+import com.swap.mdb.qlic.social.FacebookSocial;
+import com.swap.mdb.qlic.social.InstagramSocial;
+import com.swap.mdb.qlic.social.LinkedinSocial;
+import com.swap.mdb.qlic.social.PhoneNumberSocial;
+import com.swap.mdb.qlic.social.Social;
+import com.swap.mdb.qlic.social.TwitterSocial;
+import com.swap.mdb.qlic.transfer.Carrier;
+import com.swap.mdb.qlic.transfer.Receiver;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -74,12 +74,19 @@ import xyz.hanks.library.SmallBang;
 
 public class SendActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     public static final String PEOPLE_KEY = "people_key";
-    public boolean[] enabled = {false, false, false, false, false , false};
     public static final String[] keys = {"fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
     public static final String[] types = {"Facebook", "Instagram", "Twitter", "Phone", "Email", "LinkedIn"};
     public static final String[] enabledKeys = {"fb_enabled", "ig_enabled", "twit_enabled", "phone_enabled", "contact_enabled", "link_enabled"};
-
-
+    public boolean[] enabled = {false, false, false, false, false, false};
+    FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
+    View bottomSheet;
+    BottomSheetBehavior bottomSheetBehavior;
+    FloatingActionButton selectAllFAB;
+    ImageView arrowImageView;
+    TableRow bottomSheetHeader;
+    CheckBox[] bottomSheetCheckBoxes = new CheckBox[6];
+    HistoryDatabaseHelper historyDatabaseHelper;
+    int numPeople = 0;
     private SharedPreferences pref;
     private GoogleApiClient mGoogleApiClient;
     private Message mDeviceInfoMessage;
@@ -93,17 +100,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
     private FloatingActionButton stopBtn;
     private String key;
     private ExplosionField explosionField;
-
-    FloatingActionButton person1, person2, person3, person4, person5, person6, person7, person8;
-
-    View bottomSheet;
-    BottomSheetBehavior bottomSheetBehavior;
-    FloatingActionButton selectAllFAB;
-    ImageView arrowImageView;
-    TableRow bottomSheetHeader;
-    CheckBox[] bottomSheetCheckBoxes = new CheckBox[6];
-
-    HistoryDatabaseHelper historyDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +127,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 .build();
 
         pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        explosionField= ExplosionField.attach2Window(SendActivity.this);
+        explosionField = ExplosionField.attach2Window(SendActivity.this);
         final SmallBang mSmallBang = SmallBang.attach2Window(this);
         final FABProgressCircle fabProgressCircle = (FABProgressCircle) findViewById(R.id.fabProgressCircle);
         final FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.big_fab);
@@ -171,7 +167,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                                         populateMessageListener();
                                         subscribe();
                                     }
-                                } catch (NoSuchAlgorithmException|InvalidKeySpecException e) {
+                                } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
                                     Log.i("Error", e.toString());
                                 }
                             }
@@ -237,7 +233,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     arrowImageView.setImageResource(R.drawable.up_arrow);
                     AnimationUtils.circularHide(selectAllFAB);
-                } else if (newState == BottomSheetBehavior.STATE_EXPANDED){
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     arrowImageView.setImageResource(R.drawable.down_arrow);
                     AnimationUtils.circularReveal(selectAllFAB);
                 }
@@ -279,7 +275,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         refreshInitialBottomSheetBoxes();
         super.onResume();
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -527,7 +522,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 if (!newSocial.keyInfo().equals("")) {
                     carrier.addSocial(newSocial);
                     Log.i("SOCIAL", keys[i]);
-            }
+                }
 //                Log.i("SOCIAL", keys[i] + " " + getSocial(keys[i]).keyInfo());
             }
         }
@@ -634,7 +629,6 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         return super.onOptionsItemSelected(item);
     }
 
-    int numPeople = 0;
     private FloatingActionButton showAndGetNextFAB() {
         if (numPeople == 0) {
             numPeople++;
