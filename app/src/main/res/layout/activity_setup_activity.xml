@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SetupACtivity">
+    tools:context=".activities.LoaderActivity">
 
     <!--<include layout="@layout/setup_page_2"
         android:id="@+id/fb_login_button"
@@ -40,5 +40,5 @@
 
         android:layout_marginBottom="75dp"
         android:visibility="gone"
-        tools:context=".activities.SetupACtivity" />
+        tools:context=".activities.LoaderActivity" />
 </RelativeLayout>

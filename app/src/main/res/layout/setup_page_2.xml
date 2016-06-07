@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
     tools:background="@color/setup2"
-    tools:context=".activities.SetupACtivity">
+    tools:context=".activities.LoaderActivity">
 
     <!--<include layout="@layout/activity_setup_activity"
         android:id="@+id/twit"

@@ -50,9 +50,9 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
             if (SendActivity.types[i].equalsIgnoreCase("Facebook")) {
-                handleEditText.setText(sharedPreferences.getString(SetupACtivity.FB_NAME, ""));
+                handleEditText.setText(sharedPreferences.getString(LoaderActivity.FB_NAME, ""));
             } else if (SendActivity.types[i].equalsIgnoreCase("Twitter")) {
-                handleEditText.setText(sharedPreferences.getString(SetupACtivity.TWIT_NAME, ""));
+                handleEditText.setText(sharedPreferences.getString(LoaderActivity.TWIT_NAME, ""));
             } else {
                 handleEditText.setText(sharedPreferences.getString(SendActivity.keys[i], ""));
             }

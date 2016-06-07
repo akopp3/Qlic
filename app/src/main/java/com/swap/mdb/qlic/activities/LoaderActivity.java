@@ -48,7 +48,7 @@ import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 
-public class SetupACtivity extends AppCompatActivity {
+public class LoaderActivity extends AppCompatActivity {
     public static final String[] keys = {"name", "fb_name", "ig_name", "twit_name", "phone_name", "contact_name", "link_name"};
     public static final String[] types = {"Name", "Facebook", "Instagram", "Twitter", "Phone", "Email", "LinkedIn"};
     public static final String FB_NAME = "facebookActualName";
@@ -211,7 +211,7 @@ public class SetupACtivity extends AppCompatActivity {
                         //loginButton2.setVisibility(View.GONE);
                         if (nameText.getText().toString().isEmpty()) {
                             coordinatorLayout.setCurrentPage(coordinatorLayout.getPageSelected() - 1, true);
-                            AlertDialog.Builder alert = new AlertDialog.Builder(SetupACtivity.this);
+                            AlertDialog.Builder alert = new AlertDialog.Builder(LoaderActivity.this);
                             alert.setTitle(R.string.name_error_title);
                             alert.setMessage(R.string.name_error_txt);
                             alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -199,9 +199,9 @@ public class ContactViewActivity extends AppCompatActivity {
                     final CheckBox checkBox = (CheckBox) tableRow.findViewById(R.id.checkBox);
                     imageView.setImageResource(SOCIAL_ICON_IDS[i]);
                     if (SendActivity.types[i].equalsIgnoreCase("Facebook")) {
-                        handleTextView.setText(sharedPreferences.getString(SetupACtivity.FB_NAME, ""));
+                        handleTextView.setText(sharedPreferences.getString(LoaderActivity.FB_NAME, ""));
                     } else if (SendActivity.types[i].equalsIgnoreCase("Twitter")) {
-                        handleTextView.setText(sharedPreferences.getString(SetupACtivity.TWIT_NAME, ""));
+                        handleTextView.setText(sharedPreferences.getString(LoaderActivity.TWIT_NAME, ""));
                     } else {
                         handleTextView.setText(sharedPreferences.getString(SendActivity.keys[i], ""));
                     }

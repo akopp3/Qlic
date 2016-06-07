@@ -34,7 +34,7 @@
             android:value="4c0def813e869c0e9be200fa5645bd4aac9edeb4" />
 
         <activity
-            android:name=".activities.SetupACtivity"
+            android:name=".activities.LoaderActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
