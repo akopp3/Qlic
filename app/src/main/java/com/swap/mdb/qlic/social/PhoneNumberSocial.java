@@ -1,10 +1,12 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.social;
+
+import com.swap.mdb.qlic.activities.SendActivity;
 
 /**
  * Created by Sirjan Kafle on 3/25/16.
  */
 
-public class PhoneNumber extends ActivateHandler {
+public class PhoneNumberSocial extends ActivateHandler {
     private String phoneNumber;
 
     @Override

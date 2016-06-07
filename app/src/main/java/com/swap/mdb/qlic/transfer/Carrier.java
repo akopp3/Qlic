@@ -1,4 +1,7 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.transfer;
+
+import com.swap.mdb.qlic.Constants;
+import com.swap.mdb.qlic.social.Social;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import static com.swap.mdb.qlic.SendActivity.types;
+import com.swap.mdb.qlic.R;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -60,7 +60,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
 
-            typeTextView.setText(types[i]);
+            typeTextView.setText(SendActivity.types[i]);
             linearLayout.addView(tableRow);
         }
 

@@ -19,7 +19,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name="com.swap.mdb.qlic.SendActivity"
+            android:name=".activities.SendActivity"
             android:label="@string/title_activity_send"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
@@ -32,7 +32,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="4c0def813e869c0e9be200fa5645bd4aac9edeb4" />
-        <activity android:name="com.swap.mdb.qlic.SetupACtivity"
+        <activity android:name=".activities.SetupACtivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,11 +40,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.swap.mdb.qlic.HistoryActivity"
+        <activity android:name=".activities.HistoryActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name="com.swap.mdb.qlic.ContactViewActivity" />
+        <activity android:name=".activities.ContactViewActivity" />
         <activity
-            android:name="com.swap.mdb.qlic.EditProfileActivity"
+            android:name=".activities.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:screenOrientation="portrait"/>
         <activity

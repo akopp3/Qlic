@@ -7,7 +7,7 @@
     tools:background="@color/setup2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SetupACtivity">
+    tools:context=".activities.SetupACtivity">
 
     <!--<include layout="@layout/activity_setup_activity"
         android:id="@+id/twit"

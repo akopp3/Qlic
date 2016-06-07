@@ -1,4 +1,4 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.activities;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -24,7 +24,6 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.LoggingBehavior;
-import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.redbooth.WelcomeCoordinatorLayout;
@@ -35,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.swap.mdb.qlic.R;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;

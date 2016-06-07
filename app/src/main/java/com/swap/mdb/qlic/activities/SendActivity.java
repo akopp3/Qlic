@@ -1,4 +1,4 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,6 +30,19 @@ import android.widget.TableRow;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.swap.mdb.qlic.animation.AnimationUtils;
+import com.swap.mdb.qlic.transfer.Carrier;
+import com.swap.mdb.qlic.Constants;
+import com.swap.mdb.qlic.social.ContactSocial;
+import com.swap.mdb.qlic.FacebookClass;
+import com.swap.mdb.qlic.social.InstagramSocial;
+import com.swap.mdb.qlic.social.LinkedinSocial;
+import com.swap.mdb.qlic.social.PhoneNumber;
+import com.swap.mdb.qlic.R;
+import com.swap.mdb.qlic.transfer.Receiver;
+import com.swap.mdb.qlic.social.Social;
+import com.swap.mdb.qlic.social.TwitterSocial;
+import com.swap.mdb.qlic.Utils;
 import com.swap.mdb.qlic.database.HistoryDatabaseHelper;
 import com.github.jorgecastilloprz.FABProgressCircle;
 import com.google.android.gms.common.ConnectionResult;

@@ -1,6 +1,5 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.activities;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.swap.mdb.qlic.R;
+import com.swap.mdb.qlic.transfer.Receiver;
+import com.swap.mdb.qlic.social.Social;
 
 public class ContactViewActivity extends AppCompatActivity {
 

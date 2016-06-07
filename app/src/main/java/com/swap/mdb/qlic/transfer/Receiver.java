@@ -1,6 +1,14 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.transfer;
 
 import android.util.Log;
+
+import com.swap.mdb.qlic.Constants;
+import com.swap.mdb.qlic.social.ContactSocial;
+import com.swap.mdb.qlic.social.InstagramSocial;
+import com.swap.mdb.qlic.social.LinkedinSocial;
+import com.swap.mdb.qlic.social.PhoneNumber;
+import com.swap.mdb.qlic.social.Social;
+import com.swap.mdb.qlic.social.TwitterSocial;
 
 import java.util.HashMap;
 import java.util.Map;

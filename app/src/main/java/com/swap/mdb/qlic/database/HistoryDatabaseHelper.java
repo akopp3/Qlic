@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.swap.mdb.qlic.Receiver;
+import com.swap.mdb.qlic.transfer.Receiver;
 
 /**
  * Created by aneeshjindal on 4/20/16.

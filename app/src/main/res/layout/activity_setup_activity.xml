@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SetupACtivity">
+    tools:context=".activities.SetupACtivity">
 
     <!--<include layout="@layout/setup_page_2"
         android:id="@+id/fb_login_button"
@@ -35,7 +35,7 @@
         android:id="@+id/twitter_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:context = ".SetupACtivity"
+        tools:context = ".activities.SetupACtivity"
         android:visibility="gone"
 
         android:layout_marginBottom="75dp"

@@ -22,7 +22,7 @@
  *
  * Contact: Txus Ballesteros <txus.ballesteros@gmail.com>
  */
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.animation;
 
 import android.animation.ObjectAnimator;
 import android.view.View;

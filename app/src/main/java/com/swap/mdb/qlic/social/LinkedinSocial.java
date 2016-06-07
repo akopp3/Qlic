@@ -1,4 +1,6 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.social;
+
+import com.swap.mdb.qlic.activities.SendActivity;
 
 /**
  * Created by Abhinav on 4/2/2016.

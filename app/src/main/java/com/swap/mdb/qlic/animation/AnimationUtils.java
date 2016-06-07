@@ -1,4 +1,4 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.animation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

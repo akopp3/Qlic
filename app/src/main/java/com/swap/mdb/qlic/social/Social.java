@@ -1,4 +1,4 @@
-package com.swap.mdb.qlic;
+package com.swap.mdb.qlic.social;
 
 /**
  * Created by Sirjan Kafle on 3/25/16.
