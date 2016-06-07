@@ -5,6 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SetupACtivity">
+
+    <!--<include layout="@layout/setup_page_2"
+        android:id="@+id/fb_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        /> -->
+
     <com.redbooth.WelcomeCoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
@@ -29,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:context = ".SetupACtivity"
+        android:visibility="gone"
+
         android:layout_marginBottom="75dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

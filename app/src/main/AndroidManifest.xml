@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.skafle.envoyer" >
+    package="com.swap.mdb.qlic" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
@@ -12,13 +13,13 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.nearby.messages.API_KEY"
-            android:value="AIzaSyB3AF7OhVPgSndjzNdYoge85lO3aTmXrlc" />
+            android:value="AIzaSyBJkMp0h22voCSiuHw_q5tIF9FNKU8ES6E" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".SendActivity"
+            android:name="com.swap.mdb.qlic.SendActivity"
             android:label="@string/title_activity_send"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
@@ -31,7 +32,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="4c0def813e869c0e9be200fa5645bd4aac9edeb4" />
-        <activity android:name=".SetupACtivity"
+        <activity android:name="com.swap.mdb.qlic.SetupACtivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,15 +40,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HistoryActivity"
+        <activity android:name="com.swap.mdb.qlic.HistoryActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ContactViewActivity" />
+        <activity android:name="com.swap.mdb.qlic.ContactViewActivity" />
         <activity
-            android:name=".EditProfileActivity"
+            android:name="com.swap.mdb.qlic.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".FacebookTesting"
+            android:name="com.swap.mdb.qlic.FacebookTesting"
             android:label="@string/title_activity_facebook_testing" >
         </activity>
         </application>

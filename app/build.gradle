@@ -20,7 +20,7 @@ android {
     buildToolsVersion "24.0.0 rc3"
 
     defaultConfig {
-        applicationId "com.example.skafle.envoyer"
+        applicationId "com.swap.mdb.qlic"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
