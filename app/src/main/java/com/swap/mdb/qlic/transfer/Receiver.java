@@ -4,9 +4,10 @@ import android.util.Log;
 
 import com.swap.mdb.qlic.Constants;
 import com.swap.mdb.qlic.social.ContactSocial;
+import com.swap.mdb.qlic.social.FacebookSocial;
 import com.swap.mdb.qlic.social.InstagramSocial;
 import com.swap.mdb.qlic.social.LinkedinSocial;
-import com.swap.mdb.qlic.social.PhoneNumber;
+import com.swap.mdb.qlic.social.PhoneNumberSocial;
 import com.swap.mdb.qlic.social.Social;
 import com.swap.mdb.qlic.social.TwitterSocial;
 
@@ -77,7 +78,7 @@ public class Receiver {
         Log.i("TYPE", type);
         switch(type) {
             case "Facebook":
-                FacebookClass fb = new FacebookClass();
+                FacebookSocial fb = new FacebookSocial();
                 fb.setKeyInfo(message);
                 fb.activate();
                 return fb;
@@ -93,7 +94,7 @@ public class Receiver {
                 return inst;
             case "Phone":
                 Log.i("CREATESOC", "goes here");
-                PhoneNumber phone = new PhoneNumber();
+                PhoneNumberSocial phone = new PhoneNumberSocial();
                 phone.setKeyInfo(message);
                 phone.activate();
                 return phone;

@@ -34,10 +34,10 @@ import com.swap.mdb.qlic.animation.AnimationUtils;
 import com.swap.mdb.qlic.transfer.Carrier;
 import com.swap.mdb.qlic.Constants;
 import com.swap.mdb.qlic.social.ContactSocial;
-import com.swap.mdb.qlic.FacebookClass;
+import com.swap.mdb.qlic.social.FacebookSocial;
 import com.swap.mdb.qlic.social.InstagramSocial;
 import com.swap.mdb.qlic.social.LinkedinSocial;
-import com.swap.mdb.qlic.social.PhoneNumber;
+import com.swap.mdb.qlic.social.PhoneNumberSocial;
 import com.swap.mdb.qlic.R;
 import com.swap.mdb.qlic.transfer.Receiver;
 import com.swap.mdb.qlic.social.Social;
@@ -567,7 +567,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         String mess = pref.getString(key, "");
         switch (key) {
             case "fb_name":
-                soc = new FacebookClass();
+                soc = new FacebookSocial();
                 soc.setKeyInfo(mess);
                 soc.activate();
                 break;
@@ -582,7 +582,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
                 soc.activate();
                 break;
             case "phone_name":
-                soc = new PhoneNumber();
+                soc = new PhoneNumberSocial();
                 soc.setKeyInfo(mess);
                 soc.activate();
                 break;

@@ -343,6 +343,4 @@ public class SetupACtivity extends AppCompatActivity {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-
 }
