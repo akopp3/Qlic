@@ -1,15 +1,15 @@
 package com.swap.mdb.qlic;
 
+import android.content.Context;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
@@ -22,14 +22,19 @@ import javax.crypto.spec.SecretKeySpec;
  */
 
 public class Utils {
+    public static final int SALTSIZE = 16;
+    public static final int IVSIZE = 16;
     public static byte[] salt;
     public static String iv;
 
-    public static void initialize() {
-        byte[] saltInit = {95, 105, 6, 70, 107, 26, 46, 117, 7, 82, 20, 69, 88, 123, 20, 40};
-        salt = saltInit;
+    public static void initialize(Context ctx) {
+        salt = readInValues("salt.txt", ctx, SALTSIZE);
+        byte[] bt = readInValues("bt.txt", ctx, IVSIZE);
 
-        byte[] bt = {114, 27, 26, 26, 64, 96, 81, 63, 58, 120, 91, 122, 48, 126, 124, 67};
+        if (salt == null || bt == null) {
+            Log.i("FILEERROR", "Security files not found");
+            return;
+        }
 
         iv = new String(bt);
     }
@@ -38,8 +43,8 @@ public class Utils {
         String[] individualNames = name.split(" ");
         String initial = "";
 
-        for (String virindh : individualNames) {
-            initial += virindh.charAt(0);
+        for (String individualName : individualNames) {
+            initial += individualName.charAt(0);
         }
 
         return initial;
@@ -48,45 +53,14 @@ public class Utils {
     public static String generateKey(byte[] salt, String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         int iterationCount = 1000;
         int keyLength = 256;
-        // int saltLength = keyLength / 8; // same size as key output
 
         SecureRandom random = new SecureRandom();
-        //byte[] salt = new byte[saltLength];
-        //random.nextBytes(salt);
         KeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt,
                 iterationCount, keyLength);
         SecretKeyFactory keyFactory = SecretKeyFactory
                 .getInstance("PBKDF2WithHmacSHA1");
         byte[] keyBytes = keyFactory.generateSecret(keySpec).getEncoded();
         return Base64.encodeToString(keyBytes, Base64.NO_WRAP);
-//        SecretKey key = new SecretKeySpec(keyBytes, "AES");
-//        Cipher cipher;
-//
-//        try {
-//            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-//        } catch (javax.crypto.NoSuchPaddingException e) {
-//            Log.i("Error", e.toString());
-//            return "";
-//        }
-//
-//        byte[] iv = new byte[cipher.getBlockSize()];
-//        random.nextBytes(iv);
-//        IvParameterSpec ivParams = new IvParameterSpec(iv);
-//        try {
-//            cipher.init(Cipher.ENCRYPT_MODE, key, ivParams);
-//        } catch (java.security.InvalidAlgorithmParameterException|java.security.InvalidKeyException e) {
-//            Log.i("Error", e.toString());
-//            return "";
-//        }
-//
-//        try {
-//            byte[] ciphertext = cipher.doFinal();
-//            String encoded = new String(ciphertext);
-//            return encoded;
-//        } catch (javax.crypto.IllegalBlockSizeException|javax.crypto.BadPaddingException e) {
-//            Log.i("Error", e.toString());
-//            return "";
-//        }
     }
 
     public static String encrypt(String key, String initVector, String value) {
@@ -125,9 +99,21 @@ public class Utils {
         }
     }
 
-    public static String dateString(Calendar calendar) {
-        Date date = calendar.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yyyy");
-        return sdf.format(date);
+    private static byte[] readInValues(String filename, Context ctx, int size) {
+        try {
+            InputStream stream = ctx.getAssets().open(filename);
+            byte[] securityArray = new byte[size];
+
+            int length = stream.read(securityArray);
+            if (length != size) {
+                Log.i("SECURITYERROR", "security files are whack");
+                return null;
+            } else {
+                return securityArray;
+            }
+        } catch (IOException e) {
+            Log.i("SECURITYERROR", "security files not found");
+            return null;
+        }
     }
 }
