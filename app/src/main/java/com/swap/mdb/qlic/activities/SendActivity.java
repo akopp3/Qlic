@@ -118,7 +118,7 @@ public class SendActivity extends AppCompatActivity implements ConnectionCallbac
         int color = getResources().getColor(R.color.tw__composer_red);
         stopBtn.setBackgroundColor(color);
         historyDatabaseHelper = new HistoryDatabaseHelper(getApplicationContext());
-        Utils.initialize();
+        Utils.initialize(getApplicationContext());
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Nearby.MESSAGES_API)
